@@ -2,11 +2,12 @@ import React, { useState, useEffect } from "react";
 import SideNavElements from "./SideNavElement";
 import MenuIcon from "@mui/icons-material/Menu";
 import { Drawer, Box, Typography, IconButton } from "@mui/material";
+import { Navigate, Outlet, useNavigate } from "react-router-dom";
 const SideNavbar = () => {
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
   const [windowSize, setWindowSize] = useState(getWindowSize());
   const nav = SideNavElements.data;
-
+  const navigate = useNavigate();
   function getWindowSize() {
     const { innerWidth, innerHeight } = window;
     return { innerWidth, innerHeight };
@@ -25,7 +26,7 @@ const SideNavbar = () => {
   }, []);
   return (
     <>
-      <IconButton
+      {/* <IconButton
         size="large"
         edge="start"
         color="inherit"
@@ -33,7 +34,7 @@ const SideNavbar = () => {
         onClick={() => setIsDrawerOpen(true)}
       >
         <MenuIcon/>
-      </IconButton>
+      </IconButton> */}
       
       <Drawer
         anchor="left"
@@ -46,7 +47,7 @@ const SideNavbar = () => {
           {nav.map((x) => (
               <Typography
               key={x.Id}
-              onClick={() => console.log(x.name)}
+              onClick={() => {navigate(x.route)}}
               style={{ cursor: "pointer" }}
               p={1}
               m={1}
@@ -61,6 +62,9 @@ const SideNavbar = () => {
             alt=""
             />
         </Box>
+        {/* <div>
+          <Outlet/>
+        </div> */}
       </Drawer>
     </>
   );
