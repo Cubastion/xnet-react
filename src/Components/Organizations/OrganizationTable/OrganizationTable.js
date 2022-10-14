@@ -2,6 +2,7 @@ import { chainPropTypes } from "@mui/utils";
 import React from "react";
 import {  useEffect, useState } from "react";
 import { Table,Container, Button } from 'semantic-ui-react'
+import { tokenRequestOption } from "../../Helpers/misellaneous";
 // import HttpService from '../../HTTPS-Services/HttpService';
 
 
@@ -23,17 +24,9 @@ const OrganizationTable = ({children}) => {
   
     useEffect(() => {
         var url = "https://devxnet.cubastion.net/api/v1/Organization/getAllOrganization";
-        var myHeaders = new Headers();
-        myHeaders.append("token","eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyRGF0YSI6eyJJZCI6IjRpbXE0d3JkZ3hrbnh2diIsImVtcGxveWVlIjoiMjIwNjAwMzUiLCJmaXJzdE5hbWUiOiJTaHJleWEiLCJtaWRkbGVOYW1lIjpudWxsLCJsYXN0TmFtZSI6Ik1haGVzaHdhcmkiLCJlbWFpbEFkZHJlc3MiOiJzaHJleWEubWFoZXNod2FyaUBDdWJhc3Rpb24uY29tIiwibW9iaWxlUGhvbmUiOiI2Mzc3ODc3MjQzIiwiYmlvbWV0cmljTWFuZGF0b3J5Ijp0cnVlfSwiaWF0IjoxNjY1NzI4MDE0LCJleHAiOjE2NjU3NDgwMTR9.EHss7d3fLQ8gURSdLMU5WawAU7i6fosEeGFWksppnLM")
-        var requestOptions = {
-            method : "GET",
-            headers: myHeaders,
-            redirect : 'follow'
-        }
-        
         const fetchData = async () => {
           try {
-            const response = await fetch(url, requestOptions);
+            const response = await fetch(url, tokenRequestOption());
             const json = await response.json();
             setOrganization(json.data)
           } catch (error) {
@@ -69,7 +62,7 @@ const OrganizationTable = ({children}) => {
                             <Table.Cell>{x.name}</Table.Cell>
                             <Table.Cell>{x.address.addressLine1}{x.address.addressLine2}{x.address.city}{x.address.state}{x.address.country}-{x.address.pincode}</Table.Cell>
                             <Table.Cell>{x.totalEmpCount}</Table.Cell>
-                            <Table.Cell>{x.totalResignedtotalEmpCount}</Table.Cell>
+                            <Table.Cell>{x.totalResignedEmpCount}</Table.Cell>
                     </Table.Row>
 
                     ))}

@@ -1,6 +1,5 @@
 import React from 'react';
-import OrganizationTable from './OrganizationTable';
-
+import OrganizationTable from '../Organizations/OrganizationTable/OrganizationTable';
 const Organizations = () => {
     return (
         <>
