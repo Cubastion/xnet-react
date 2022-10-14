@@ -1,6 +1,34 @@
-import React from 'react'
+import React,{useState,useEffect} from 'react'
 import { Table,Container, Button } from 'semantic-ui-react';
+import { tokenRequestOption } from "../Helpers/misellaneous";
+
 const Designation = () => {
+ 
+    const [designation, setDesignation] = useState("")
+    
+
+    useEffect(() => {
+        var url = "https://devxnet.cubastion.net/api/v1/Organization/getAllDepartment?id=5dvsy4x9phcsiyu";
+        const fetchData = async () => {
+          try {
+            const response = await fetch(url, tokenRequestOption());
+            const json = await response.json();
+            console.log(json.data)
+            setDesignation(json.data)
+          } catch (error) {
+            console.log("error", error);
+          }
+        };
+    
+        fetchData();
+    }, []);
+
+
+
+    console.log(designation)
+  
+
+
   return (
     <Table striped>
     <Table.Header>
