@@ -10,10 +10,10 @@ return (
   <div className="App">
     <BrowserRouter>
         <Routes>
-            <Route path = "/home/" element = {<Home/>}>
+            <Route path = "/" element = {<Home/>}>
             <Route path="organization" element={<Organizations/>}/>
             </Route>
-        </Routes>    
+        </Routes>
     </BrowserRouter>
     
   </div>

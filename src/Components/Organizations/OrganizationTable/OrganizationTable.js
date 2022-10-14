@@ -1,27 +1,13 @@
-import { chainPropTypes } from "@mui/utils";
 import React from "react";
 import {  useEffect, useState } from "react";
-import { Table,Container, Button } from 'semantic-ui-react'
+import { Table, Button } from 'semantic-ui-react'
 import { tokenRequestOption } from "../../Helpers/misellaneous";
-// import HttpService from '../../HTTPS-Services/HttpService';
-
-
-// const apicb =  new HttpService();
-
-
-const OrganizationTable = ({children}) => {
+const OrganizationTable = () => {
 
 
     let [organization,setOrganization] = useState([]);
 
-    // <Container style ={{margin:20}}>
-    //     {children}
-    // </Container>
-    // const styleLink = document.createElement("link");
-    // styleLink.rel = "stylesheet";
-    // styleLink.href = "https://cdn.jsdelivr.net/npm/semantic-ui/dist/semantic.min.css";
-    // document.head.appendChild(styleLink);
-  
+    
     useEffect(() => {
         var url = "https://devxnet.cubastion.net/api/v1/Organization/getAllOrganization";
         const fetchData = async () => {
@@ -37,8 +23,7 @@ const OrganizationTable = ({children}) => {
         fetchData();
     }, []);
       
-    console.log(organization)
-
+    
     return(
         <>
         <div style={{float:'right'}}>
@@ -46,7 +31,7 @@ const OrganizationTable = ({children}) => {
         <Button>Add</Button>
         <Button>Edit</Button>
         </div>
-            <Table striped>
+            <Table celled selectable>
                 <Table.Header>
                     <Table.Row>
                         <Table.HeaderCell>Name</Table.HeaderCell>
@@ -57,8 +42,8 @@ const OrganizationTable = ({children}) => {
                 </Table.Header>
 
                 <Table.Body>
-                    {organization?.length > 0 && organization?.map(x => (
-                        <Table.Row>
+                    {organization?.length > 0 && organization?.map((x,index=0) => (
+                        <Table.Row onClick={()=>console.log(x.name)} key={x.Id}>
                             <Table.Cell>{x.name}</Table.Cell>
                             <Table.Cell>{x.address.addressLine1}{x.address.addressLine2}{x.address.city}{x.address.state}{x.address.country}-{x.address.pincode}</Table.Cell>
                             <Table.Cell>{x.totalEmpCount}</Table.Cell>
