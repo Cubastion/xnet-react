@@ -2,11 +2,12 @@ import React from "react";
 import {  useEffect, useState } from "react";
 import { Table, Button } from 'semantic-ui-react'
 import { tokenRequestOption } from "../../Helpers/misellaneous";
+import Departments from "../Departments";
 const OrganizationTable = () => {
 
 
     let [organization,setOrganization] = useState([]);
-
+    let [departments, setDepartments] = useState("")
     
     useEffect(() => {
         var url = "https://devxnet.cubastion.net/api/v1/Organization/getAllOrganization";
@@ -22,7 +23,13 @@ const OrganizationTable = () => {
     
         fetchData();
     }, []);
-      
+    let onSelectOrganization = (id) => {
+     
+        setDepartments(id);
+       
+    }
+   
+  
     
     return(
         <>
@@ -42,8 +49,8 @@ const OrganizationTable = () => {
                 </Table.Header>
 
                 <Table.Body>
-                    {organization?.length > 0 && organization?.map((x,index=0) => (
-                        <Table.Row onClick={()=>console.log(x.name)} key={x.Id}>
+                    {organization?.length > 0 && organization?.map((x) => (
+                        <Table.Row onClick={()=> onSelectOrganization(x.Id)} key={x.Id} color="darkgreen">
                             <Table.Cell>{x.name}</Table.Cell>
                             <Table.Cell>{x.address.addressLine1}{x.address.addressLine2}{x.address.city}{x.address.state}{x.address.country}-{x.address.pincode}</Table.Cell>
                             <Table.Cell>{x.totalEmpCount}</Table.Cell>
@@ -54,6 +61,7 @@ const OrganizationTable = () => {
                       
                 </Table.Body>
             </Table>
+            <Departments id={departments} />
         </>
     );
 };
