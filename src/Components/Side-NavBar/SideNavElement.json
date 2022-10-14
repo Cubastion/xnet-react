@@ -10,6 +10,7 @@
             "activeFlag": true,
             "createdAt": "2022-03-16T09:07:42.000Z",
             "updatedAt": "2022-03-22T07:24:34.000Z",
+            "route":"/dashboard",
             "page": [
                 {
                     "Id": "a69kquv7h9mww2g",
@@ -159,6 +160,7 @@
             "Id": "qflpb453kr0h7bw",
             "name": "Recruitment",
             "displayName": "Recruitment",
+            "route":"/recruitment",
             "sequence": 11,
             "activeFlag": true,
             "createdAt": "2022-08-05T22:59:38.000Z",

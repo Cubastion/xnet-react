@@ -49,6 +49,7 @@ const SideNavbar = () => {
         <Box p={2} width="185px" textAlign="left" role="presentation">
           {nav.map((x) => (
               <Typography
+              onClick = {()=>navigate(`/home${x.route}`)}
               key={x.Id}
               style={{ cursor: "pointer" }}
               p={1}
