@@ -1,10 +1,12 @@
-import React from 'react'
+import React from 'react';
+import OrganizationTable from './OrganizationTable';
 
-const Oragnizations = () => {
+const Organizations = () => {
     return (
         <>
-            <h1>This is organisation please start developing @@Shreya
-            </h1>
+        <OrganizationTable/>
+            
+            
         </>
     );
 
@@ -19,4 +21,4 @@ const Oragnizations = () => {
 
 
 
- export default  Oragnizations;
+ export default  Organizations;

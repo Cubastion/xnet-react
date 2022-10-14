@@ -4,9 +4,13 @@ import SideNavbar from '../Side-NavBar/SideNavbar'
 
 const Home = () => {
   return (
-    <div>
+    <div style={{display:"flex"}}>
+    <div style={{width:'20%'}}>
     <SideNavbar/>
+    </div>
+    <div style={{width:'80%',marginLeft:'-10px'}}>
     <Outlet/>
+    </div>
     </div>
   )
 }
