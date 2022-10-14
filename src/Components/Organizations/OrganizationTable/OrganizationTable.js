@@ -14,13 +14,13 @@ const OrganizationTable = ({children}) => {
 
     let [organization,setOrganization] = useState([]);
 
-    <Container style ={{margin:20}}>
-        {children}
-    </Container>
-    const styleLink = document.createElement("link");
-    styleLink.rel = "stylesheet";
-    styleLink.href = "https://cdn.jsdelivr.net/npm/semantic-ui/dist/semantic.min.css";
-    document.head.appendChild(styleLink);
+    // <Container style ={{margin:20}}>
+    //     {children}
+    // </Container>
+    // const styleLink = document.createElement("link");
+    // styleLink.rel = "stylesheet";
+    // styleLink.href = "https://cdn.jsdelivr.net/npm/semantic-ui/dist/semantic.min.css";
+    // document.head.appendChild(styleLink);
   
     useEffect(() => {
         var url = "https://devxnet.cubastion.net/api/v1/Organization/getAllOrganization";
@@ -57,7 +57,7 @@ const OrganizationTable = ({children}) => {
                 </Table.Header>
 
                 <Table.Body>
-                    {organization.length > 0 && organization.map(x => (
+                    {organization?.length > 0 && organization?.map(x => (
                         <Table.Row>
                             <Table.Cell>{x.name}</Table.Cell>
                             <Table.Cell>{x.address.addressLine1}{x.address.addressLine2}{x.address.city}{x.address.state}{x.address.country}-{x.address.pincode}</Table.Cell>
