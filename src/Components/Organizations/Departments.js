@@ -16,6 +16,7 @@ const Departments = (props) => {
       try {
         const response = await fetch(url, tokenRequestOption());
         const json = await response.json();
+        setDesignation(json.data[0].designationData)
         setDepartment(json.data)
       } catch (error) {
         console.log("error", error);
@@ -33,7 +34,7 @@ const Departments = (props) => {
   }
 
   let onClickDesignationHandler = (x) => {
-    setEmployeeDetails({ model: "department", orgId: props.id, deptId: "8595", jobTitle: x.jobTitle })
+    setEmployeeDetails({ model: "department", orgId: props.id, deptId: deptId, jobTitle: x.jobTitle })
   }
  
 

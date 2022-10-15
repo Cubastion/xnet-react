@@ -7,7 +7,7 @@ const OrganizationTable = () => {
 
 
     let [organization,setOrganization] = useState([]);
-    let [departments, setDepartments] = useState("")
+    let [departments, setDepartments] = useState()
     
     useEffect(() => {
         var url = "https://devxnet.cubastion.net/api/v1/Organization/getAllOrganization";
@@ -15,14 +15,18 @@ const OrganizationTable = () => {
           try {
             const response = await fetch(url, tokenRequestOption());
             const json = await response.json();
+            setDepartments(json.data[0].Id)
             setOrganization(json.data)
           } catch (error) {
             console.log("error", error);
           }
         };
-    
+        
         fetchData();
     }, []);
+
+    console.log(organization)
+
     let onSelectOrganization = (id) => {
      
         setDepartments(id);
