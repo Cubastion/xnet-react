@@ -39,10 +39,16 @@ const OrganizationTable = () => {
         <>
         <div style={{float:'right'}}>
 
-        <Button>Add</Button>
+        <Button onClick={()=>setAddForm(true)}>Add</Button>
         <Button>Edit</Button>
         </div>
-            <Table celled selectable>
+        <Drawer
+        anchor="right"
+        open={addForm}
+        onClose={() => setAddForm(false)}
+        variant={"temporary"}
+      ><CompanyDetails></CompanyDetails></Drawer>
+            <Table striped>
                 <Table.Header>
                     <Table.Row>
                         <Table.HeaderCell>Name</Table.HeaderCell>
@@ -53,8 +59,8 @@ const OrganizationTable = () => {
                 </Table.Header>
 
                 <Table.Body>
-                    {organization?.length > 0 && organization?.map((x) => (
-                        <Table.Row onClick={()=> onSelectOrganization(x.Id)} key={x.Id} color="darkgreen">
+                    {organization.length > 0 && organization.map(x => (
+                        <Table.Row>
                             <Table.Cell>{x.name}</Table.Cell>
                             <Table.Cell>{x.address.addressLine1}{x.address.addressLine2}{x.address.city}{x.address.state}{x.address.country}-{x.address.pincode}</Table.Cell>
                             <Table.Cell>{x.totalEmpCount}</Table.Cell>

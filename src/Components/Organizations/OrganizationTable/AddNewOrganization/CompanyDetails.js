@@ -1,23 +1,14 @@
 import React from 'react'
 import { Form, Input, TextArea, Button, Select } from 'semantic-ui-react'
 
-const genderOptions = [
-  { key: 'm', text: 'Male', value: 'male' },
-  { key: 'f', text: 'Female', value: 'female' },
-  { key: 'o', text: 'Other', value: 'other' },
-]
-const [isDrawerOpen, setIsDrawerOpen] = useState(false);
-const [windowSize, setWindowSize] = useState(getWindowSize());
 
-const CompanyDetails = () => (
-  <Form>
-    <Drawer
-        anchor="right"
-        open={isDrawerOpen}
-        onClose={() => setIsDrawerOpen(false)}
-        variant={windowSize.innerWidth <= "750" ? "temporary" : "permanent"}
-      ></Drawer>
-    <Form.Group widths='equal'>
+
+const CompanyDetails = () => {
+
+  return(
+    <>
+     <Form style={{width:'900px'}}>
+    <Form.Group style={{width:'500px', display:'flex', flexDirection:'row'}}>
       <Form.Field
         id='form-input-control-first-name'
         control={TextArea}
@@ -84,6 +75,12 @@ const CompanyDetails = () => (
     />
     </Form.Group>
   </Form>
-)
+    </>
+   
+
+  );
+
+  
+  }
 
 export default CompanyDetails

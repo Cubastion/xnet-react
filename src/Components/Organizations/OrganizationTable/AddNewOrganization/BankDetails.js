@@ -1,17 +1,11 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { Form, Input, TextArea, Button, Select } from 'semantic-ui-react'
 
-const [isDrawerOpen, setIsDrawerOpen] = useState(false);
-const [windowSize, setWindowSize] = useState(getWindowSize());
 
-const BankDetails = () => (
-  <Form>
-    <Drawer
-        anchor="right"
-        open={isDrawerOpen}
-        onClose={() => setIsDrawerOpen(false)}
-        variant={windowSize.innerWidth <= "750" ? "temporary" : "permanent"}
-      ></Drawer>
+const BankDetails = () => {
+  return (
+    <Form>
+     
     <Form.Group widths='equal'>
       <Form.Field
         id='form-input-control-pan'
@@ -68,6 +62,8 @@ const BankDetails = () => (
     />
     </Form.Group>
   </Form>
-)
+  )
+ 
+  }
 
 export default BankDetails
