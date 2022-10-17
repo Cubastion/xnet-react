@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-import SideNavElements from "./SideNavElement";
 import MenuIcon from "@mui/icons-material/Menu";
 import { Drawer, Box, Typography, IconButton } from "@mui/material";
 import {useNavigate } from "react-router-dom";
@@ -23,7 +22,6 @@ const SideNavbar = () => {
     fetchData()
   }, [])
 
-  // const nav = SideNavElements.data;
   const navigate = useNavigate();
   function getWindowSize() {
     const { innerWidth, innerHeight } = window;
