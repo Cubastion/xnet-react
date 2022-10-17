@@ -3,33 +3,30 @@ import { Table } from 'semantic-ui-react'
 import { tokenRequestOption } from '../Helpers/misellaneous';
 
 export const EmployeesByDeptDesignation = (props) => {
+    const [employeeDetails, setEmployeeDetails] = useState([]);
+    const fetchData = async () => {
+        try {
+            var url = `https://devxnet.cubastion.net/api/v1/employee/getEmployeesByDeptDesignation?mode=${props.params.model}&orgId=${props.params.orgId}&deptId=${props.params.deptId}&jobTitle=${props.params.jobTitle}`;
+            const response = await fetch(url, tokenRequestOption());
+            const json = await response.json();
+            setEmployeeDetails(json.data)
+            console.log('getEmployeesByDeptDesignation', json)
+        } catch (error) {
+            console.log("error", error);
+        }
+    };
+
     
-    let [callingState, setCallingState] = useState(false)
-
-    if (props.params.model !== "" && props.params.orgId !== "" && props.params.deptId !== "" && props.params.jobTitle !== "") setCallingState(true)
-
     useEffect(() => {
-        var url = `https://devxnet.cubastion.net/api/v1/employee/getEmployeesByDeptDesignation?mode=${props.params.model}&orgId=${props.params.orgId}&deptId=${props.params.deptId}&jobTitle=${props.params.jobTitle}`;
-        const fetchData = async () => {
-            try {
-                const response = await fetch(url, tokenRequestOption());
-                const json = await response.json();
-                console.log(json)
-            } catch (error) {
-                console.log("error", error);
-            }
-        };
-        
-        fetchData();
-        
-    }, [callingState]);
-
-
+    fetchData();
+    }, [props.params.jobTitle]);
+ 
 
 
   return (
       <div>
           <p>Employees</p>
+        
           <Table striped>
               <Table.Header>
                   <Table.Row>
@@ -42,16 +39,19 @@ export const EmployeesByDeptDesignation = (props) => {
                   </Table.Row>
               </Table.Header>
               <Table.Body>
+                  {employeeDetails.length > 0 && employeeDetails.map((x) => (
 
-
-                      <Table.Row >
-                          <Table.Cell>hhhhhhh</Table.Cell>
-                          <Table.Cell>hhhhhhh</Table.Cell>
-                          <Table.Cell>hhhhhhh</Table.Cell>
-                          <Table.Cell>hhhhhhh</Table.Cell>
-                          <Table.Cell>hhhhhhh</Table.Cell>
-                          <Table.Cell>hhhhhhh</Table.Cell>
+                      <Table.Row key={x.Id}>
+                          <Table.Cell>{x.employee}</Table.Cell>
+                          <Table.Cell>{x.firstName}</Table.Cell>
+                          <Table.Cell>{x.lastName}</Table.Cell>
+                          <Table.Cell>{x.emailAddress}</Table.Cell>
+                          <Table.Cell>{x.joiningDate}</Table.Cell>
+                          <Table.Cell>{x.resignationDate}</Table.Cell>
                       </Table.Row>
+
+
+                  ))}
 
                 
               </Table.Body>
