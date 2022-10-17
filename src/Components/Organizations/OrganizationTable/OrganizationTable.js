@@ -1,13 +1,19 @@
 import React from "react";
 import {  useEffect, useState } from "react";
-import { Table, Button } from 'semantic-ui-react'
+import { Table, Button,Container } from 'semantic-ui-react'
 import { tokenRequestOption } from "../../Helpers/misellaneous";
 import Departments from "../Departments";
+import CompanyDetails from "./AddNewOrganization/CompanyDetails";
+
+import { Drawer } from "@mui/material";
+
 const OrganizationTable = () => {
 
 
     let [organization,setOrganization] = useState([]);
-    let [departments, setDepartments] = useState()
+    let [departments, setDepartments] = useState();
+git add .    let [addForm,setAddForm] = useState(false)
+
     
     useEffect(() => {
         var url = "https://devxnet.cubastion.net/api/v1/Organization/getAllOrganization";
