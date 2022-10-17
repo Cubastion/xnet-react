@@ -12,7 +12,7 @@ const OrganizationTable = () => {
 
     let [organization,setOrganization] = useState([]);
     let [departments, setDepartments] = useState();
-git add .    let [addForm,setAddForm] = useState(false)
+   let [addForm,setAddForm] = useState(false)
 
     
     useEffect(() => {
