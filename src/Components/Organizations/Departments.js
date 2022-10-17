@@ -3,20 +3,21 @@ import { Table, Container, Button } from 'semantic-ui-react';
 import isundefined from '../Helpers/isUndefined';
 import { tokenRequestOption } from "../Helpers/misellaneous";
 import { EmployeesByDeptDesignation } from './EmployeesByDeptDesignation';
-
+ 
 const Departments = (props) => {
 
   const [department, setDepartment] = useState("");
   const [designation, setDesignation] = useState([]);
-  let [deptId, setDeptId] = useState("")
-  const [employeeDetails, setEmployeeDetails] = useState({ model: "", orgId: "", deptId: "", jobTitle:  "" })
+  const [deptId, setDeptId] = useState("")
+  const [employeeDetails, setEmployeeDetails] = useState({ model: "", orgId: "", deptId: "", jobTitle: "" })
+ 
   useEffect(() => {
     var url = "https://devxnet.cubastion.net/api/v1/Organization/getAllDepartment?id=" + props.id;
     const fetchData = async () => {
       try {
         const response = await fetch(url, tokenRequestOption());
         const json = await response.json();
-        setDesignation(json.data[0].designationData)
+        if (json.data.length > 0) setDesignation(json.data[0].designationData)
         setDepartment(json.data)
       } catch (error) {
         console.log("error", error);
@@ -26,18 +27,18 @@ const Departments = (props) => {
     fetchData();
   }, [props.id]);
 
+  useEffect(() => {
+    
+  }, [employeeDetails.jobTitle]);
 
-
+  
   let onClickDepartmentHandler = (x) => {
     setDeptId(x.Id)
     setDesignation(x.designationData)
+    if (x.designationData.length > 0) setEmployeeDetails({ model: "department", orgId: props.id, deptId: deptId, jobTitle: x.designationData[0].jobTitle })
   }
 
-  let onClickDesignationHandler = (x) => {
-    setEmployeeDetails({ model: "department", orgId: props.id, deptId: deptId, jobTitle: x.jobTitle })
-  }
  
-
   return (
 
     <>
@@ -51,9 +52,7 @@ const Departments = (props) => {
           </Table.Row>
         </Table.Header>
         <Table.Body>
-
           {department?.length > 0 && department?.map((x) => (
-
 
             <Table.Row onClick={()=> onClickDepartmentHandler(x) } key={x.Id}>
               <Table.Cell>{x.name}</Table.Cell>
@@ -82,10 +81,10 @@ const Departments = (props) => {
         </Table.Header>
         <Table.Body>
 
-          {designation?.length > 0 && designation?.map((x) => (
+          {designation?.length > 0 && designation?.map((x, index) => (
 
 
-            <Table.Row onClick={()=> onClickDesignationHandler(x) } key={x.Id}>
+            <Table.Row onClick={() => setEmployeeDetails({ model: "department", orgId: props.id, deptId: deptId, jobTitle: x.jobTitle })} key={index++}>
               <Table.Cell>{x.jobTitle}</Table.Cell>
               <Table.Cell>{x.headCount}</Table.Cell>
               <Table.Cell>{x.resigCount}</Table.Cell>
@@ -94,7 +93,10 @@ const Departments = (props) => {
           ))}
         </Table.Body>
       </Table>
-      {/* <EmployeesByDeptDesignation params={employeeDetails}></EmployeesByDeptDesignation> */}
+        {employeeDetails.model !== "" && employeeDetails.orgId !== "" && employeeDetails.deptId !== "" && employeeDetails.jobTitle !== "" &&
+          <EmployeesByDeptDesignation params={employeeDetails}></EmployeesByDeptDesignation>
+        }
+    
     </>
 
     
