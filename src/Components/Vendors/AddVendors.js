@@ -1,13 +1,29 @@
 import { Box } from '@mui/material';
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form';
+import { Button } from 'semantic-ui-react';
+import { tokenPostRequestOption, tokenRequestOption } from '../Helpers/misellaneous';
 
-const AddVendors = () => {
+const AddVendors = (props) => {
     const { register, handleSubmit, formState: { errors } } = useForm();
-    const [addVendorsData, setAddVendorsData] = useState({})
     const onSubmit = data => {
-        
-        setAddVendorsData(data)
+        const fetchData = async () => {
+            try {
+                let url = 'https://devxnet.cubastion.net/api/v1/vendor/addVendor'
+               
+                const response = await fetch(url, tokenPostRequestOption(data));
+                const json = await response.json();
+              
+                if (json.statusCode === '200') {
+                    alert('Vendors Created SUccessfully...!!!')
+                    props.fun(false)
+                }
+                else alert(json.statusMessage)
+            } catch (error) {
+                console.log("error", error);
+            }
+        };
+        fetchData();
     }
     
     return (
@@ -36,7 +52,7 @@ const AddVendors = () => {
                     </div>
                     <div>
                         <label name='PINCODE'>PINCODE</label>
-                        <input type="tel"  {...register("pincode")} htmlFor='PINCODE' />
+                        <input type="tel"  {...register("pincode", {required : true })} htmlFor='PINCODE' />
                     </div>
                     <div>
                         <label name='COUNTRY'>COUNTRY</label>
@@ -72,9 +88,8 @@ const AddVendors = () => {
                             <option value="OTHERS">OTHERS</option>
                         </select>
                     </div>
-                    <div>
-                        <input type="submit" />
-                    </div>
+                    <Button onClick={onSubmit}>Add</Button>
+                    <Button>Cancel</Button>
                 </div>
             </form>
             </Box>

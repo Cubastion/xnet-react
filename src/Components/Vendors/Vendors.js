@@ -27,7 +27,7 @@ const Vendors = () => {
         <>
             <Button>Vendors</Button>
             <Drawer open={openAddForm} onClose={() => setOpenAddForm(false)} anchor='right'>
-                <AddVendors/>
+                <AddVendors fun={setOpenAddForm} />
             </Drawer>
             <Button onClick={() => setOpenAddForm(true)}>Add</Button>
             <Table celled selectable>
