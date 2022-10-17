@@ -39,7 +39,7 @@ export const EmployeesByDeptDesignation = (props) => {
                   </Table.Row>
               </Table.Header>
               <Table.Body>
-                  {employeeDetails.length > 0 && employeeDetails.map((x) => (
+                  {employeeDetails && employeeDetails.length > 0 && employeeDetails.map((x) => (
 
                       <Table.Row key={x.Id}>
                           <Table.Cell>{x.employee}</Table.Cell>
