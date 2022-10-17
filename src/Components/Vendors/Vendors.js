@@ -3,15 +3,19 @@ import React, { useEffect, useState } from 'react';
 import { Button, Table } from 'semantic-ui-react';
 import { tokenRequestOption } from '../Helpers/misellaneous';
 import AddVendors from './AddVendors';
+import EditVendors from './EditVendors';
 
 const Vendors = () => {
     const [vendorsData, setVendorsData] = useState([]);
-    const [openAddForm, setOpenAddForm] = useState(false)
-    const fetchData = async () => {
+    const [vendorFirstData, setVendorFirstData] = useState({});
+    const [openAddForm, setOpenAddForm] = useState(false);
+    const [openEditForm, setOpenEditForm] = useState(false);
+     const fetchData = async () => {
         try {
             var url = `https://devxnet.cubastion.net/api/v1/vendor/getAllVendors?page=1`;
             const response = await fetch(url, tokenRequestOption());
             const json = await response.json();
+            setVendorFirstData(json.data[0])
             setVendorsData(json.data)
         } catch (error) {
             console.log("error", error);
@@ -25,11 +29,17 @@ const Vendors = () => {
      
     return (
         <>
-            <Button>Vendors</Button>
+           <p>Vendors</p>
             <Drawer open={openAddForm} onClose={() => setOpenAddForm(false)} anchor='right'>
                 <AddVendors fun={setOpenAddForm} />
             </Drawer>
             <Button onClick={() => setOpenAddForm(true)}>Add</Button>
+
+            <Drawer open={openEditForm} onClose={() => setOpenEditForm(false)} anchor='right'>
+                <EditVendors fun={setOpenEditForm} vendorData={vendorFirstData} />
+            </Drawer>
+            <Button onClick={() => setOpenEditForm(true)}>Edit</Button>
+
             <Table celled selectable>
                 <Table.Header>
                     <Table.Row>
@@ -48,7 +58,7 @@ const Vendors = () => {
                 <Table.Body>
                     {vendorsData && vendorsData.length > 0 && vendorsData.map((x) => (
 
-                        <Table.Row key={x.Id}>
+                        <Table.Row onClick={() => setVendorFirstData(x)} key={x.Id}>
                             <Table.Cell>{x.name}</Table.Cell>
                             <Table.Cell>{x.type}</Table.Cell>
                             <Table.Cell>{x.address.city}</Table.Cell>
