@@ -1,9 +1,12 @@
+import { Drawer } from '@mui/material';
 import React, { useEffect, useState } from 'react';
-import { Table } from 'semantic-ui-react';
+import { Button, Table } from 'semantic-ui-react';
 import { tokenRequestOption } from '../Helpers/misellaneous';
+import AddVendors from './AddVendors';
 
 const Vendors = () => {
     const [vendorsData, setVendorsData] = useState([]);
+    const [openAddForm, setOpenAddForm] = useState(false)
     const fetchData = async () => {
         try {
             var url = `https://devxnet.cubastion.net/api/v1/vendor/getAllVendors?page=1`;
@@ -17,9 +20,16 @@ const Vendors = () => {
     useEffect(() => {
         fetchData()
     }, [])
+
+   
      
     return (
         <>
+            <Button>Vendors</Button>
+            <Drawer open={openAddForm} onClose={() => setOpenAddForm(false)} anchor='right'>
+                <AddVendors/>
+            </Drawer>
+            <Button onClick={() => setOpenAddForm(true)}>Add</Button>
             <Table celled selectable>
                 <Table.Header>
                     <Table.Row>
