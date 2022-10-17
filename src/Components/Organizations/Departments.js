@@ -9,7 +9,7 @@ const Departments = (props) => {
   const [department, setDepartment] = useState("");
   const [designation, setDesignation] = useState([]);
   const [deptId, setDeptId] = useState("")
-  const [employeeDetails, setEmployeeDetails] = useState({ model: "", orgId: "", deptId: "", jobTitle: "" })
+  const [employeeDetails, setEmployeeDetails] = useState("")
  
   useEffect(() => {
     var url = "https://devxnet.cubastion.net/api/v1/Organization/getAllDepartment?id=" + props.id;
@@ -17,7 +17,10 @@ const Departments = (props) => {
       try {
         const response = await fetch(url, tokenRequestOption());
         const json = await response.json();
-        if (json.data.length > 0) setDesignation(json.data[0].designationData)
+        if (json.data.length > 0) {
+          setDesignation(json.data[0].designationData)
+          setEmployeeDetails({ model: "", orgId: "", deptId: "", jobTitle: json.data[0].designationData[0].jobTitle })
+        }
         setDepartment(json.data)
       } catch (error) {
         console.log("error", error);
@@ -29,7 +32,7 @@ const Departments = (props) => {
 
   useEffect(() => {
     
-  }, [employeeDetails.jobTitle]);
+  }, [employeeDetails]);
 
   
   let onClickDepartmentHandler = (x) => {
