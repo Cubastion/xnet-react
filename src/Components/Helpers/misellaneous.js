@@ -1,9 +1,10 @@
 
 
+var myHeaders = new Headers();
+myHeaders.append("token", "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyRGF0YSI6eyJJZCI6Ims5ZzVmNTFmY2w4N3RjcSIsImVtcGxveWVlIjoiMjExMjAwMDUiLCJmaXJzdE5hbWUiOiJDaGlyYXl1IiwibWlkZGxlTmFtZSI6bnVsbCwibGFzdE5hbWUiOiJWYXJzaG5leSIsImVtYWlsQWRkcmVzcyI6ImNoaXJheXUudmFyc2huZXlAY3ViYXN0aW9uLmNvbSIsIm1vYmlsZVBob25lIjoiOTg3NjU0MzIxMCIsImJpb21ldHJpY01hbmRhdG9yeSI6ZmFsc2V9LCJpYXQiOjE2NjU5OTMxNjQsImV4cCI6MTY2NjAxMzE2NH0.RTbWE-dT4kLAg6pXDbPlCYRkyzkUd5I4Wb7hbiqY_jc")
+myHeaders.append("Content-Type", "application/json");
 let tokenRequestOption = () =>{
-    var myHeaders = new Headers();
-    myHeaders.append("token","eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyRGF0YSI6eyJJZCI6ImE2emhiYnh1ZWdoemNjMiIsImVtcGxveWVlIjoiMjAxMDAwMjgiLCJmaXJzdE5hbWUiOiJKYXRpbiIsIm1pZGRsZU5hbWUiOm51bGwsImxhc3ROYW1lIjoiQ2hldGl3YWwiLCJlbWFpbEFkZHJlc3MiOiJqYXRpbi5jaGV0aXdhbEBDdWJhc3Rpb24uY29tIiwibW9iaWxlUGhvbmUiOiI5ODk4OTg5ODk4IiwiYmlvbWV0cmljTWFuZGF0b3J5Ijp0cnVlfSwiaWF0IjoxNjY1NzUwNjEwLCJleHAiOjE2NjU3NzA2MTB9.ZW_Cks-7A8aiOscEcdPhhpv0X7DucO-dgIw2eay0uAg")
-    var requestOptions = {
+  var requestOptions = {
         method : "GET",
         headers: myHeaders,
         redirect : 'follow'
@@ -11,7 +12,19 @@ let tokenRequestOption = () =>{
     return requestOptions
 }
 
+let tokenPostRequestOption = (body) => {
+    var raw = JSON.stringify(body)
+    var requestOptions = {
+        method: 'POST',
+        headers: myHeaders,
+        body: raw,
+        redirect: 'follow'
+    }
+    return requestOptions
+}
+
 
 module.exports = {
-    tokenRequestOption
+    tokenRequestOption,
+    tokenPostRequestOption
 }
