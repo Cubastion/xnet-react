@@ -1,8 +1,10 @@
 import React, { useState, useEffect } from 'react'
 import { Table, Container, Button } from 'semantic-ui-react';
-import isundefined from '../Helpers/isUndefined';
-import { tokenRequestOption } from "../Helpers/misellaneous";
-import { EmployeesByDeptDesignation } from './EmployeesByDeptDesignation';
+import isundefined from '../../../Helpers/isUndefined';
+import { tokenRequestOption } from "../../../Helpers/misellaneous";
+import { EmployeesByDeptDesignation } from '../../EmployeesByDeptDesignation';
+import AddDepartment from './AddDepartments';
+import { Drawer } from '@mui/material';
  
 const Departments = (props) => {
 
@@ -10,7 +12,9 @@ const Departments = (props) => {
   const [designation, setDesignation] = useState([]);
   const [deptId, setDeptId] = useState("")
   const [employeeDetails, setEmployeeDetails] = useState("")
- 
+  const[addDepartmentForm, setAddDepartmentForm] = useState(false)
+  const [activeEmployees, setActiveEmployees] = useState([]);
+
   useEffect(() => {
     var url = "https://devxnet.cubastion.net/api/v1/Organization/getAllDepartment?id=" + props.id;
     const fetchData = async () => {
@@ -41,10 +45,37 @@ const Departments = (props) => {
     if (x.designationData.length > 0) setEmployeeDetails({ model: "department", orgId: props.id, deptId: deptId, jobTitle: x.designationData[0].jobTitle })
   }
 
- 
+  const fetchEmployeeData = async () => {
+    try {
+        let url = 'https://devxnet.cubastion.net/api/v1/employee/getEmployees'
+        
+        const response = await fetch(url, tokenRequestOption());
+        const json = await response.json();
+        console.log('json', json)
+        setActiveEmployees(json.data)
+       
+    } catch (error) {
+        console.log("error", error);
+        
+    }
+};
+useEffect(()=>{
+  fetchEmployeeData();
+}, [addDepartmentForm])
+
   return (
 
     <>
+    <Drawer
+        anchor="right"
+        open={addDepartmentForm}
+        onClose={() => setAddDepartmentForm(false)}
+        variant={"temporary"}
+      >
+        <AddDepartment fun={setAddDepartmentForm} orgId={props.id} employeeDetails={activeEmployees}></AddDepartment>
+        </Drawer>
+
+        <Button onClick={()=>setAddDepartmentForm(true)}>Add</Button>
       <Table celled selectable>
         <Table.Header>
           <Table.Row>

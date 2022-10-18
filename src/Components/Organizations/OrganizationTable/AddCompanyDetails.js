@@ -2,7 +2,7 @@ import React,{useEffect, useState} from 'react';
 import { useForm } from "react-hook-form";
 import { Box } from '@mui/material';
 import { Button } from 'semantic-ui-react';
-import { tokenPostRequestOption } from '../../../Helpers/misellaneous';
+import { tokenPostRequestOption } from '../../Helpers/misellaneous';
 
 
 
@@ -24,7 +24,7 @@ const CompanyDetails = (props) => {
               else alert(json.statusMessage)
           } catch (error) {
               console.log("error", error);
-              // debugger;
+              
           }
       };
       fetchData();
@@ -63,7 +63,7 @@ const CompanyDetails = (props) => {
                       <input type="tel"  {...register("country")} htmlFor='COUNTRY' />
                   </div>
                   <Button onClick={onSubmit}>Add</Button>
-                  <Button>Cancel</Button>
+                  <Button onClick={()=> props.fun(false)}>Cancel</Button>
               </div>
           </form>
           </Box>
