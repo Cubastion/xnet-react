@@ -67,7 +67,7 @@ const SideNavbar = () => {
       >
         
         <Box p={2} width="185px" textAlign="left" role="presentation">
-          {nav.map((x) => (
+          {nav && nav?.map((x) => (
               <Typography
               onClick = {()=> onClickSideNavBar(x)}
               key={x.Id}

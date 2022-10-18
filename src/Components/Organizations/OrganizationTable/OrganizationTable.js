@@ -17,6 +17,8 @@ const OrganizationTable = () => {
     let [departments, setDepartments] = useState();
    let [addForm,setAddForm] = useState(false)
     let [designationData, setDesignationData] = useState([]);
+    const[companyDetails, setCompanyDetails] = useState([]);
+    const[openAddForm, setOpenAddForm] = useState(false);
      
     useEffect(() => {
         var url = "https://devxnet.cubastion.net/api/v1/Organization/getAllOrganization";
@@ -44,6 +46,8 @@ const OrganizationTable = () => {
         setDesignationData(x.designationData)
        
     }
+
+    
    
   
     
