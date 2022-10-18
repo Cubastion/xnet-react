@@ -3,8 +3,9 @@ import { Table, Container, Button } from 'semantic-ui-react';
 import isundefined from '../../../Helpers/isUndefined';
 import { tokenRequestOption } from "../../../Helpers/misellaneous";
 import { EmployeesByDeptDesignation } from '../../EmployeesByDeptDesignation';
-import AddDepartment from './AddDepartments';
 import { Drawer } from '@mui/material';
+import AddDepartments from './AddDepartments';
+import EditDepartments from "./EditDepartments"; 
  
 const Departments = (props) => {
 
@@ -13,6 +14,8 @@ const Departments = (props) => {
   const [deptId, setDeptId] = useState("")
   const [employeeDetails, setEmployeeDetails] = useState("")
   const[addDepartmentForm, setAddDepartmentForm] = useState(false)
+  const[editDepartmentForm, setEditDepartmentForm] = useState(false)
+
   const [activeEmployees, setActiveEmployees] = useState([]);
 
   useEffect(() => {
@@ -72,7 +75,7 @@ useEffect(()=>{
         onClose={() => setAddDepartmentForm(false)}
         variant={"temporary"}
       >
-        <AddDepartment fun={setAddDepartmentForm} orgId={props.id} employeeDetails={activeEmployees}></AddDepartment>
+        <AddDepartments fun={setAddDepartmentForm} orgId={props.id} employeeDetails={activeEmployees}></AddDepartments>
         </Drawer>
 
         <Button onClick={()=>setAddDepartmentForm(true)}>Add</Button>
@@ -82,9 +85,9 @@ useEffect(()=>{
         onClose={() => setEditDepartmentForm(false)}
         variant={"temporary"}
       >
-        <EditDepartment fun={setEditDepartmentForm} orgId={props.id} employeeDetails={activeEmployees}></EditDepartment>
+        <EditDepartments fun={setEditDepartmentForm} orgId={props.id} employeeDetails={activeEmployees}></EditDepartments>
         </Drawer>
-        <Button onClick={()=>setEditDepartmentForm(true)}>Add</Button>
+        <Button onClick={()=>setEditDepartmentForm(true)}>Edit</Button>
       <Table celled selectable>
         <Table.Header>
           <Table.Row>

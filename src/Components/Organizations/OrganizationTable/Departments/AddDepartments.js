@@ -50,7 +50,7 @@ const AddDepartment = (props) => {
                         </select>
                   </div>
 
-                  <Button onClick={onSubmit} style={{position:"absolute", float:"right"}}>Add</Button>
+                  <Button onClick={onSubmit} >Add</Button>
                   <Button onClick={()=> props.fun(false)}>Cancel</Button>
               </div>
           </form>
