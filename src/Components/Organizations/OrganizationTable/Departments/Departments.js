@@ -76,6 +76,15 @@ useEffect(()=>{
         </Drawer>
 
         <Button onClick={()=>setAddDepartmentForm(true)}>Add</Button>
+        <Drawer
+        anchor="right"
+        open={editDepartmentForm}
+        onClose={() => setEditDepartmentForm(false)}
+        variant={"temporary"}
+      >
+        <EditDepartment fun={setEditDepartmentForm} orgId={props.id} employeeDetails={activeEmployees}></EditDepartment>
+        </Drawer>
+        <Button onClick={()=>setEditDepartmentForm(true)}>Add</Button>
       <Table celled selectable>
         <Table.Header>
           <Table.Row>
