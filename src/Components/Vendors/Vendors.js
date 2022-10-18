@@ -10,26 +10,31 @@ const Vendors = () => {
     const [vendorFirstData, setVendorFirstData] = useState({});
     const [openAddForm, setOpenAddForm] = useState(false);
     const [openEditForm, setOpenEditForm] = useState(false);
-     const fetchData = async () => {
+    let [pageNumber, setPageNumber] = useState(1);
+    let [pagination, setPaginationData] = useState({totalRecords: 0,totalPerpage: 0,totalPage: 0,currentPage: 0,nextPage: 0,previousPage: 0});
+    
+    const fetchData = async () => {
         try {
-            var url = `https://devxnet.cubastion.net/api/v1/vendor/getAllVendors?page=1`;
+            var url = `https://devxnet.cubastion.net/api/v1/vendor/getAllVendors?page=${pageNumber}`;
             const response = await fetch(url, tokenRequestOption());
             const json = await response.json();
             setVendorFirstData(json.data[0])
             setVendorsData(json.data)
+            setPaginationData(json.paginate)
         } catch (error) {
             console.log("error", error);
         }
     };
     useEffect(() => {
         fetchData()
-    }, [])
+    }, [pageNumber])
 
-   
-     
+    console.log(pageNumber, 'pageNumber')
+
     return (
         <>
-           <p>Vendors</p>
+
+            <p>Vendors</p>
             <Drawer open={openAddForm} onClose={() => setOpenAddForm(false)} anchor='right'>
                 <AddVendors fun={setOpenAddForm} />
             </Drawer>
@@ -77,6 +82,10 @@ const Vendors = () => {
 
                 </Table.Body>
             </Table>
+            <div className='container d-flex justify-content-between'>
+                <button disabled={pageNumber === 1 ? true : false} type="button" onClick={() => setPageNumber(--pageNumber)} className="btn btn-dark">&larr; Previous</button>
+                <button disabled={pageNumber === pagination.totalPage} type="button" onClick={() => setPageNumber(++pageNumber)} className="btn btn-dark">Next &rarr;</button>
+            </div>
         </>
     );
 
