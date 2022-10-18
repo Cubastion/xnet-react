@@ -1,0 +1,66 @@
+.bg {
+    width: 100vw;
+    height: 100vh;
+    padding-top: 4rem;
+    background-color: #fcffff;
+    text-align: center;
+    display: block;
+    justify-items: center;
+  }
+  /* Labels of inputs */
+  .label {
+    position: absolute; /* Helps to keep label top on everything */
+    transform: translate(-9.8rem, -3.8rem); /* Position it on input */
+    font-size: 1rem;
+    padding: 0 5px;
+    background-color: #fcffff; /* Match the background */
+  }
+  /* Input boxes */
+  .textarea {
+    position: relative; /* Helps to keep label top on input */
+    border-radius: 0.4rem;
+    margin-top: 2rem;
+    background-color: #fcffff; /* Match the background */
+    border: lightgreen 0.1rem solid;
+    width: 20rem;
+    height: 3rem;
+    padding: 0rem 1rem;
+    font-size: 1.4rem;
+  }
+  /* Input box style on error => Not need if you follow method 1 in Js */
+  .errorTextarea {
+    border-color: red;
+  }
+  /* Input box style on selection */
+  .textarea:focus {
+    outline: none;
+  }
+  /* Button style */
+  .btn {
+    width: 6rem;
+    height: 2rem;
+    margin-top: 2rem;
+    font-size: 1.1rem;
+    border-radius: 5px;
+    border: none;
+    background-color: blue;
+    color: white;
+    position: relative; /* Responsible for translate left working */
+    transition: all 0.3s ease-in-out; /* Eases the moving of button */
+  }
+  /* Button syle on error => Not need if you follow method 1 in Js */
+  .errorBtn {
+    background-color: #ff3838;
+  }
+  .moveRight {
+    left: -6rem;
+  }
+  .moveleft {
+    left: 6rem;
+  }
+  /* Container to move the button around */
+  .btnContainer {
+    margin: 0 auto;
+    width: 20rem;
+  }
+  
