@@ -38,7 +38,7 @@ const OrganizationTable = () => {
     };
 
     fetchData();
-  }, [addCompanyForm, editCompanyForm]);
+  }, [ editCompanyForm]);
   console.log(organizationData,"------------------>>>>")
 
   let onSelectOrganization = (x) => {
