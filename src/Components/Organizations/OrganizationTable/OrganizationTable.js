@@ -19,7 +19,7 @@ const OrganizationTable = () => {
   
   let [designationData, setDesignationData] = useState([]);
   const [organizationData, setOrganzationData] = useState();
-  useEffect(() => {
+  useEffect(() => { 
     var url =
       "https://devxnet.cubastion.net/api/v1/Organization/getAllOrganization";
     const fetchData = async () => {
@@ -38,13 +38,15 @@ const OrganizationTable = () => {
     };
 
     fetchData();
-  }, []);
+  }, [addCompanyForm, editCompanyForm]);
+  console.log(organizationData,"------------------>>>>")
 
   let onSelectOrganization = (x) => {
     setDepartments(x.Id);
     setDesignationData(x.designationData);
     setOrganzationData(x);
   };
+  
 
   return (
     <>

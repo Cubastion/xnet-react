@@ -11,12 +11,14 @@ const Departments = (props) => {
 
   const [department, setDepartment] = useState("");
   const [designation, setDesignation] = useState([]);
-  const [deptId, setDeptId] = useState("")
+  const [deptId, setDeptId] = useState([])
   const [employeeDetails, setEmployeeDetails] = useState("")
   const[addDepartmentForm, setAddDepartmentForm] = useState(false)
   const[editDepartmentForm, setEditDepartmentForm] = useState(false)
-
+  const[employeeDept,setEmployeeDept]=useState([]);
   const [activeEmployees, setActiveEmployees] = useState([]);
+
+  
 
   useEffect(() => {
     var url = "https://devxnet.cubastion.net/api/v1/Organization/getAllDepartment?id=" + props.id;
@@ -34,9 +36,9 @@ const Departments = (props) => {
       }
     };
     setDesignation([])
+    setEmployeeDept([props.deptId])
     fetchData();
   }, [props.id]);
-
   useEffect(() => {
     
   }, [employeeDetails]);
@@ -44,8 +46,10 @@ const Departments = (props) => {
   
   let onClickDepartmentHandler = (x) => {
     setDeptId(x.Id)
+    setEmployeeDept(x.deptId)
     setDesignation(x.designationData)
     if (x.designationData.length > 0) setEmployeeDetails({ model: "department", orgId: props.id, deptId: deptId, jobTitle: x.designationData[0].jobTitle })
+    
   }
 
   const fetchEmployeeData = async () => {
@@ -85,7 +89,7 @@ useEffect(()=>{
         onClose={() => setEditDepartmentForm(false)}
         variant={"temporary"}
       >
-        <EditDepartments fun={setEditDepartmentForm} orgId={props.id} employeeDetails={activeEmployees}></EditDepartments>
+        <EditDepartments fun={setEditDepartmentForm} orgId={props.id} employeeDept={deptId} employeeDetails={activeEmployees}></EditDepartments>
         </Drawer>
         <Button onClick={()=>setEditDepartmentForm(true)}>Edit</Button>
       <Table celled selectable>

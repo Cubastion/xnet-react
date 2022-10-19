@@ -10,8 +10,11 @@ const EditCompanyDetails = (props) => {
     handleSubmit,
     formState: { errors },
   } = useForm();
-  console.log(props, 'props')
+  let [organization, setOrganization] = useState([]);
+  let [organizationData, setOrganizationData] = useState([]);
+
   const onSubmit = (data) => {
+    console.log(organizationData,"------------------>>>>")
     const fetchData = async () => {
       try {
         let url =
@@ -22,13 +25,18 @@ const EditCompanyDetails = (props) => {
         if (json.statusCode === "200") {
           alert("Company Details Edited Successfully!");
           props.fun(false);
+          
+         
+          
         } else alert(json.statusMessage);
       } catch (error) {
         console.log("error", error);
       }
     };
     fetchData();
+   
   };
+  
   
   return (
     <Box p={2} width="500px" textAlign="left" role="presentation">
