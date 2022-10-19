@@ -1,88 +1,112 @@
-import React, { useEffect, useState } from "react";
-import { Table, Button } from "semantic-ui-react";
+import React, { useEffect, useState,useContext } from "react";
+import { Table } from "semantic-ui-react";
 import { tokenRequestOption } from "../../Helpers/misellaneous";
-import TablePagination from '@mui/material/TablePagination';
-
-
+import Pagination from "@mui/material/Pagination";
+import { Button } from "@mui/material";
+import { SelectedContextPO } from "../PurchaseOrders";
 const AllPurchaseOrders = () => {
   const [allPO, setAllPO] = useState([]);
-  const [selectedPO, setSelectedPO] = useState("");
   const [pageNumber, setpageNumber] = useState(1);
+  const [totalPages, setTotalPages] = useState(0);
+
+  const [selectedPO, setSelectedPO] = useContext(SelectedContextPO)
   useEffect(() => {
     var url = `https://devxnet.cubastion.net/api/v1/purchaseOrder/getAllPurchaseOrder?page=${pageNumber}`;
     const fetchData = async () => {
       try {
         const response = await fetch(url, tokenRequestOption());
         const json = await response.json();
-        setSelectedPO(json.data[0].Id);
-
         setAllPO(json.data);
+        setTotalPages(json.paginate.totalPage);
+        setSelectedPO(json.data[0])
       } catch (error) {
         console.log("error", error);
       }
     };
     fetchData();
-  }, []);
+  }, [pageNumber]);
 
   const handleChangePage = (event, newPage) => {
     setpageNumber(newPage);
   };
 
+  const TableHeader = [
+    "PO #",
+    "PROJECT NAME",
+    "TOTAL",
+    "CONSUMED",
+    "REMAINING",
+    "UNIT OF MEASURE",
+    "CLIENT NAME",
+    "DESCRIPTION",
+    "ISSUE DATE",
+    "START DATE",
+    "END DATE",
+    "STATUS",
+    "CURRENCY",
+    "PAYMENT DUE IN DAYS",
+    "UOM ATTRIBUTE 2",
+    "BYPASS TIMESHEET FLAG",
+    "CREATED AT",
+  ];
 
+  const refreshTotal = () => {
+
+  }
+
+  const selectPOHandler= (x) => {
+    console.log(x)
+    setSelectedPO(x);
+  }
   return (
-    <div style={{ width: "1100px", "overflow-y": "scroll" }}>
-      <Table striped>
-        <Table.Header>
-          <Table.Row>
-            <Table.HeaderCell>PO #</Table.HeaderCell>
-            <Table.HeaderCell>PROJECT NAME</Table.HeaderCell>
-            <Table.HeaderCell>TOTAL</Table.HeaderCell>
-            <Table.HeaderCell>CONSUMED</Table.HeaderCell>
-            <Table.HeaderCell>REMAINING</Table.HeaderCell>
-            <Table.HeaderCell>UNIT OF MEASURE</Table.HeaderCell>
-            <Table.HeaderCell>CLIENT NAME</Table.HeaderCell>
-            <Table.HeaderCell>DESCRIPTION</Table.HeaderCell>
-            <Table.HeaderCell>ISSUE DATE</Table.HeaderCell>
-            <Table.HeaderCell>START DATE</Table.HeaderCell>
-            <Table.HeaderCell>END DATE</Table.HeaderCell>
-            <Table.HeaderCell>STATUS</Table.HeaderCell>
-            <Table.HeaderCell>CURRENCY</Table.HeaderCell>
-            <Table.HeaderCell>PAYMENT DUE IN DAYS</Table.HeaderCell>
-            <Table.HeaderCell>UOM ATTRIBUTE 2</Table.HeaderCell>
-            <Table.HeaderCell>BYPASS TIMESHEET FLAG</Table.HeaderCell>
-            <Table.HeaderCell>CREATED AT</Table.HeaderCell>
-          </Table.Row>
-        </Table.Header>
-        <Table.Body>
-          {allPO &&
-            allPO?.map((x) => (
-              <Table.Row>
-                <Table.Cell>{x.po}</Table.Cell>
-                <Table.Cell>{x.project.name}</Table.Cell>
-                <Table.Cell>{x.totalValue}</Table.Cell>
-                <Table.Cell>{x.consumedValue}</Table.Cell>
-                <Table.Cell>{x.remainingValue}</Table.Cell>
-                <Table.Cell>{x.unitOfMeasure}</Table.Cell>
-                <Table.Cell>{x.client.name}</Table.Cell>
-                <Table.Cell>{x.description}</Table.Cell>
-                <Table.Cell>{x.issueDate}</Table.Cell>
-                <Table.Cell>{x.startDate}</Table.Cell>
-                <Table.Cell>{x.endDate}</Table.Cell>
-                <Table.Cell>{x.status}</Table.Cell>
-                <Table.Cell>{x.currencyCode}</Table.Cell>
-                <Table.Cell>{x.paymentDueInDays}</Table.Cell>
-                <Table.Cell>{x.uomAttribute2}</Table.Cell>
-                <Table.Cell>{x.bypassTimesheetFlag}</Table.Cell>
-                <Table.Cell>{x.createdAt}</Table.Cell>
-              </Table.Row>
-            ))}
-        </Table.Body>
-      </Table>
-        <TablePagination
-      component="div"
-      onPageChange={handleChangePage}
-    />
+    <>
+<div style={{display:'flex' }}>
+<div style={{marginTop:'2rem' }}>
+    <h3>All Purchase Orders</h3>
+</div>
+    <div style={{float:"right", marginRight:'1rem', marginLeft:'40rem'}}>
+        <Button onClick={refreshTotal} style={{'margin':'1rem'}} variant="contained">Refresh Total</Button>
+        <Button style={{'margin':'1rem'}} variant="contained">Add</Button>
+        <Button style={{'margin':'1rem'}} variant="contained">Edit</Button>
     </div>
+</div>
+      <div style={{ width: "1100px", overflowY: "scroll" }}>
+        <Table striped>
+          <Table.Header>
+            <Table.Row>
+              {TableHeader.map((x) => (
+                <Table.HeaderCell key={x}>{x}</Table.HeaderCell>
+              ))}
+            </Table.Row>
+          </Table.Header>
+          <Table.Body>
+            {allPO &&
+              allPO?.map((x) => (
+                <Table.Row onClick={()=>selectPOHandler(x)} key={x.Id}>
+                  <Table.Cell>{x.po}</Table.Cell>
+                  <Table.Cell>{x.project.name}</Table.Cell>
+                  <Table.Cell>{x.totalValue}</Table.Cell>
+                  <Table.Cell>{x.consumedValue}</Table.Cell>
+                  <Table.Cell>{x.remainingValue}</Table.Cell>
+                  <Table.Cell>{x.unitOfMeasure}</Table.Cell>
+                  <Table.Cell>{x.client.name}</Table.Cell>
+                  <Table.Cell>{x.description}</Table.Cell>
+                  <Table.Cell>{x.issueDate}</Table.Cell>
+                  <Table.Cell>{x.startDate}</Table.Cell>
+                  <Table.Cell>{x.endDate}</Table.Cell>
+                  <Table.Cell>{x.status}</Table.Cell>
+                  <Table.Cell>{x.currencyCode}</Table.Cell>
+                  <Table.Cell>{x.paymentDueInDays}</Table.Cell>
+                  <Table.Cell>{x.uomAttribute2}</Table.Cell>
+                  <Table.Cell>{x.bypassTimesheetFlag}</Table.Cell>
+                  <Table.Cell>{x.createdAt}</Table.Cell>
+                </Table.Row>
+              ))}
+          </Table.Body>
+        </Table>
+      </div>
+        <Pagination count={totalPages} onChange={handleChangePage} />
+    </>
   );
 };
 
