@@ -1,6 +1,6 @@
 import React from "react";
 import { useEffect, useState } from "react";
-import { Table, Button, Container } from "semantic-ui-react";
+import { Table, Button } from "semantic-ui-react";
 import { tokenRequestOption } from "../../Helpers/misellaneous";
 import Departments from "../../Organizations/OrganizationTable/Departments/Departments";
 import AddCompanyDetails from "./AddCompanyDetails";
