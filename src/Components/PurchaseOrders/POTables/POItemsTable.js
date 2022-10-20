@@ -54,9 +54,9 @@ const POItemsTable = () => {
     'VND': "₫", // Vietnamese Dong
   };
 
+
   const convertToSymbol = (x) => {
     if (currency_symbols[x] !== undefined) {
-      console.log(currency_symbols[x])
       setCurrentCurrencySymbol(currency_symbols[x]);
     }
   };
@@ -90,7 +90,6 @@ const POItemsTable = () => {
             </Table.Row>
           </Table.Header>
           <Table.Body>
-            {poItems && console.log(poItems, "=====")}
             {poItems &&
               poItems?.poItemsData?.map((x) => (
                 <Table.Row key={x.Id}>

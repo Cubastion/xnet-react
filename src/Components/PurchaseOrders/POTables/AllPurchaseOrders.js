@@ -4,6 +4,8 @@ import { tokenRequestOption } from "../../Helpers/misellaneous";
 import Pagination from "@mui/material/Pagination";
 import { Button } from "@mui/material";
 import { SelectedContextPO } from "../PurchaseOrders";
+import moment from "moment";
+
 const AllPurchaseOrders = () => {
   const [allPO, setAllPO] = useState([]);
   const [pageNumber, setpageNumber] = useState(1);
@@ -55,7 +57,6 @@ const AllPurchaseOrders = () => {
   }
 
   const selectPOHandler= (x) => {
-    console.log(x)
     setSelectedPO(x);
   }
   return (
@@ -99,7 +100,7 @@ const AllPurchaseOrders = () => {
                   <Table.Cell>{x.paymentDueInDays}</Table.Cell>
                   <Table.Cell>{x.uomAttribute2}</Table.Cell>
                   <Table.Cell>{x.bypassTimesheetFlag}</Table.Cell>
-                  <Table.Cell>{x.createdAt}</Table.Cell>
+                  <Table.Cell>{moment(x.createdAt).utc().format('YYYY-MM-DD')}</Table.Cell>
                 </Table.Row>
               ))}
           </Table.Body>
