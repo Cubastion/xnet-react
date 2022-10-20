@@ -15,10 +15,9 @@ const Departments = (props) => {
   const [employeeDetails, setEmployeeDetails] = useState("")
   const[addDepartmentForm, setAddDepartmentForm] = useState(false)
   const[editDepartmentForm, setEditDepartmentForm] = useState(false)
-  const[employeeDept,setEmployeeDept]=useState([]);
   const [activeEmployees, setActiveEmployees] = useState([]);
-
-  
+  const[editDepartmentData, setEditDepartmentData] = useState({})
+  const [editDepartmentRefresh, setEditDepartmentRefresh] = useState(false);
 
   useEffect(() => {
     var url = "https://devxnet.cubastion.net/api/v1/Organization/getAllDepartment?id=" + props.id;
@@ -28,6 +27,7 @@ const Departments = (props) => {
         const json = await response.json();
         if (json.data.length > 0) {
           setDesignation(json.data[0].designationData)
+          setEditDepartmentData(json.data[0])
           setEmployeeDetails({ model: "", orgId: "", deptId: "", jobTitle: json.data[0].designationData[0].jobTitle })
         }
         setDepartment(json.data)
@@ -36,22 +36,22 @@ const Departments = (props) => {
       }
     };
     setDesignation([])
-    setEmployeeDept([props.deptId])
-    fetchData();
-  }, [props.id]);
-  useEffect(() => {
     
-  }, [employeeDetails]);
+    fetchData();
+  }, [props.id, editDepartmentRefresh]);
 
   
+
+  useEffect(() => {
+  }, [employeeDetails]);
+  console.log(activeEmployees,"------------")
+console.log(employeeDetails)
   let onClickDepartmentHandler = (x) => {
     setDeptId(x.Id)
-    setEmployeeDept(x.deptId)
+    setEditDepartmentData(x)
     setDesignation(x.designationData)
-    if (x.designationData.length > 0) setEmployeeDetails({ model: "department", orgId: props.id, deptId: deptId, jobTitle: x.designationData[0].jobTitle })
-    
+    if (x.designationData.length > 0) setEmployeeDetails({ model: props.department, orgId: props.id, deptId: deptId, jobTitle: x.designationData[0].jobTitle })
   }
-
   const fetchEmployeeData = async () => {
     try {
         let url = 'https://devxnet.cubastion.net/api/v1/employee/getEmployees'
@@ -60,7 +60,6 @@ const Departments = (props) => {
         const json = await response.json();
         console.log('json', json)
         setActiveEmployees(json.data)
-       
     } catch (error) {
         console.log("error", error);
         
@@ -68,7 +67,9 @@ const Departments = (props) => {
 };
 useEffect(()=>{
   fetchEmployeeData();
-}, [addDepartmentForm])
+}, [addDepartmentForm,editDepartmentForm])
+
+console.log(department)
 
   return (
 
@@ -89,7 +90,7 @@ useEffect(()=>{
         onClose={() => setEditDepartmentForm(false)}
         variant={"temporary"}
       >
-        <EditDepartments fun={setEditDepartmentForm} orgId={props.id} employeeDept={deptId} employeeDetails={activeEmployees}></EditDepartments>
+        {department && department.length>0 && <EditDepartments fun={setEditDepartmentForm} refresh={setEditDepartmentRefresh} orgId={props.id} employeeDept={deptId} employeeDepartment={editDepartmentData} employeeDetails={activeEmployees}></EditDepartments> }
         </Drawer>
         <Button onClick={()=>setEditDepartmentForm(true)}>Edit</Button>
       <Table celled selectable>
@@ -143,9 +144,9 @@ useEffect(()=>{
           ))}
         </Table.Body>
       </Table>
-        {employeeDetails.model !== "" && employeeDetails.orgId !== "" && employeeDetails.deptId !== "" && employeeDetails.jobTitle !== "" &&
+        {/* {employeeDetails.model !== "" && employeeDetails.orgId !== "" && employeeDetails.deptId !== "" && employeeDetails.jobTitle !== "" &&
           <EmployeesByDeptDesignation params={employeeDetails}></EmployeesByDeptDesignation>
-        }
+        } */}
     
     </>
 

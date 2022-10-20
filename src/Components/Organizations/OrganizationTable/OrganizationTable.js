@@ -1,10 +1,12 @@
 import React from "react";
 import { useEffect, useState } from "react";
-import { Table, Button } from "semantic-ui-react";
+import { Table, Button, Container } from "semantic-ui-react";
+
 import { tokenRequestOption } from "../../Helpers/misellaneous";
 import Departments from "../../Organizations/OrganizationTable/Departments/Departments";
 import AddCompanyDetails from "./AddCompanyDetails";
-import EditCompanyDetails from "./EditCompanyDetails";
+import EditCompanyDetails from "./EditCompanyDetails"
+
 import { Tab, Tabs, TabList, TabPanel } from "react-tabs";
 import "react-tabs/style/react-tabs.css";
 
@@ -17,9 +19,10 @@ const OrganizationTable = () => {
   let [addCompanyForm, setAddCompanyForm] = useState(false);
   let [editCompanyForm, setEditCompanyForm] = useState(false);
   
-  let [designationData, setDesignationData] = useState([]);
+  let [designationData, setDesignationData] = useState([])
+  const [companyDetails, setCompanyDetails] = useState([]);;
   const [organizationData, setOrganzationData] = useState();
-  useEffect(() => { 
+  useEffect(() =>  {
     var url =
       "https://devxnet.cubastion.net/api/v1/Organization/getAllOrganization";
     const fetchData = async () => {
@@ -38,15 +41,13 @@ const OrganizationTable = () => {
     };
 
     fetchData();
-  }, [ editCompanyForm]);
-  console.log(organizationData,"------------------>>>>")
+  }, [])
 
   let onSelectOrganization = (x) => {
     setDepartments(x.Id);
     setDesignationData(x.designationData);
     setOrganzationData(x);
-  };
-  
+  } 
 
   return (
     <>
