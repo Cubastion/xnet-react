@@ -8,9 +8,8 @@ const Budget = () => {
   const fetchData = async () => {
     try {
       let url = 'https://devxnet.cubastion.net/api/v1/listOfValues/findByType?type=FINANCIAL_YEAR'
-
       const response = await fetch(url, tokenRequestOption());
-      const json = await response.json();
+      let json = await response.json();
       setFinancialYearData(json.data)
     } catch (error) {
       console.log("error", error);

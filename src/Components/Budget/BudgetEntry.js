@@ -37,7 +37,9 @@ const BudgetEntry = (props) => {
             <option key={fbb.Id} value={fbb.name}>{fbb.displayValue}</option>
           )}
         </select>
-        <p>Budget</p>
+     </div>
+      <div style={{ width: "100%", overflow: "auto" }} >
+        <p >Budget</p>
         <Table celled selectable>
           <Table.Header>
             <Table.Row>
@@ -85,7 +87,6 @@ const BudgetEntry = (props) => {
           </Table.Body>
         </Table>
       </div>
-
       <div>
         {budgetHeadData.length > 0 &&
           <BudgetHead data={budgetHeadData}></BudgetHead>

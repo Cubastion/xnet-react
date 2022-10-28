@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { Table } from 'semantic-ui-react'
+import isUndefined from '../Helpers/isUndefined';
 import { tokenRequestOption } from '../Helpers/misellaneous'
 
 const Budgetleadger = (props) => {
@@ -62,7 +63,7 @@ const Budgetleadger = (props) => {
                               <Table.Cell>{x.referenceNum}</Table.Cell>
                               <Table.Cell>{x.source}</Table.Cell>
                               <Table.Cell>{x.type}</Table.Cell>
-                              <Table.Cell>{`${x.employeeLeadger?.employee}-${x.employeeLeadger?.firstName} ${x.employeeLeadger?.lastName}`}</Table.Cell>
+                              <Table.Cell>{`${isUndefined(x.employeeLeadger?.employee)}-${isUndefined(x.employeeLeadger?.firstName)} ${isUndefined(x.employeeLeadger?.lastName)}`}</Table.Cell>
                               <Table.Cell>{x.description}</Table.Cell>
                               <Table.Cell>{x.status}</Table.Cell>
                               <Table.Cell>{x.bugetSubHeadMonth}</Table.Cell>
