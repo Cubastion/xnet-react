@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
-import * as React from 'react';
-import { DataGrid } from '@mui/x-data-grid';
+
 import { useForm } from "react-hook-form";
 import { Box } from "@mui/material";
 import { Button } from "semantic-ui-react";
