@@ -17,7 +17,10 @@ const Departments = (props) => {
   const[editDepartmentForm, setEditDepartmentForm] = useState(false)
   const [activeEmployees, setActiveEmployees] = useState([]);
   const[editDepartmentData, setEditDepartmentData] = useState({})
+  const[addDepartmentData, setAddDepartmentData] = useState({})
   const [editDepartmentRefresh, setEditDepartmentRefresh] = useState(false);
+  const [addDepartmentRefresh, setAddDepartmentRefresh] = useState(false);
+  
 
   useEffect(() => {
     var url = "https://devxnet.cubastion.net/api/v1/Organization/getAllDepartment?id=" + props.id;
@@ -28,6 +31,8 @@ const Departments = (props) => {
         if (json.data.length > 0) {
           setDesignation(json.data[0].designationData)
           setEditDepartmentData(json.data[0])
+          setAddDepartmentData(json.data[0])
+
           setEmployeeDetails({ model: "", orgId: "", deptId: "", jobTitle: json.data[0].designationData[0].jobTitle })
         }
         setDepartment(json.data)
@@ -38,7 +43,7 @@ const Departments = (props) => {
     setDesignation([])
     
     fetchData();
-  }, [props.id, editDepartmentRefresh]);
+  }, [props.id, editDepartmentRefresh,addDepartmentRefresh]);
 
   
 
@@ -49,6 +54,7 @@ console.log(employeeDetails)
   let onClickDepartmentHandler = (x) => {
     setDeptId(x.Id)
     setEditDepartmentData(x)
+    setAddDepartmentData(x)
     setDesignation(x.designationData)
     if (x.designationData.length > 0) setEmployeeDetails({ model: props.department, orgId: props.id, deptId: deptId, jobTitle: x.designationData[0].jobTitle })
   }
@@ -80,7 +86,7 @@ console.log(department)
         onClose={() => setAddDepartmentForm(false)}
         variant={"temporary"}
       >
-        <AddDepartments fun={setAddDepartmentForm} orgId={props.id} employeeDetails={activeEmployees}></AddDepartments>
+        <AddDepartments fun={setAddDepartmentForm} orgId={props.id} employeeDetails={activeEmployees} addRefresh={setAddDepartmentRefresh} employeeDepartment={addDepartmentData}></AddDepartments>
         </Drawer>
 
         <Button onClick={()=>setAddDepartmentForm(true)}>Add</Button>

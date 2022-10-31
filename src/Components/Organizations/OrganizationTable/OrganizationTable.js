@@ -1,7 +1,8 @@
 import React from "react";
 import { useEffect, useState } from "react";
 import { Table, Button, Container } from "semantic-ui-react";
-
+import * as React from 'react';
+import { DataGrid } from '@mui/x-data-grid';
 import { tokenRequestOption } from "../../Helpers/misellaneous";
 import Departments from "../../Organizations/OrganizationTable/Departments/Departments";
 import AddCompanyDetails from "./AddCompanyDetails";
@@ -22,6 +23,12 @@ const OrganizationTable = () => {
   let [designationData, setDesignationData] = useState([])
   const [companyDetails, setCompanyDetails] = useState([]);;
   const [organizationData, setOrganzationData] = useState();
+  const[editOrganizationData, setEditOrganizationData] = useState({})
+  const[addOrganizationData, setAddOrganizationData] = useState({})
+  const [editOrganizationRefresh, setEditOrganizationRefresh] = useState(false);
+  const [addOrganizationRefresh, setAddOrganizationRefresh] = useState(false);
+  
+
   useEffect(() =>  {
     var url =
       "https://devxnet.cubastion.net/api/v1/Organization/getAllOrganization";
@@ -32,6 +39,8 @@ const OrganizationTable = () => {
         setDepartments(json.data[0].Id);
         setOrganzationData(json.data[0]);
         setOrganization(json.data);
+        setEditOrganizationData(json.data[0]);
+        setAddOrganizationData(json.data[0]);
 
         if (json.data[0].designationData.length > 0)
           setDesignationData(json.data[0].designationData);
@@ -41,12 +50,14 @@ const OrganizationTable = () => {
     };
 
     fetchData();
-  }, [])
+  }, [editOrganizationRefresh,addOrganizationRefresh])
 
   let onSelectOrganization = (x) => {
     setDepartments(x.Id);
     setDesignationData(x.designationData);
     setOrganzationData(x);
+    setEditOrganizationData(x);
+    setAddOrganizationData(x);
   } 
 
   return (
@@ -59,7 +70,7 @@ const OrganizationTable = () => {
             onClose={() => setAddCompanyForm(false)}
             variant={"temporary"}
           >
-            <AddCompanyDetails fun={setAddCompanyForm}></AddCompanyDetails>
+            <AddCompanyDetails fun={setAddCompanyForm} addRefresh={setAddOrganizationRefresh}></AddCompanyDetails>
             {/* <CompanyDetails></CompanyDetails> */}
           </Drawer>
 
@@ -73,6 +84,7 @@ const OrganizationTable = () => {
             <EditCompanyDetails
               fun={setEditCompanyForm}
               companyDetailsData={organizationData}
+              refresh={setEditOrganizationRefresh}
             ></EditCompanyDetails>
             {/* <CompanyDetails></CompanyDetails> */}
           </Drawer>

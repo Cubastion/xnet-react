@@ -1,4 +1,6 @@
 import React, { useEffect, useState } from "react";
+import * as React from 'react';
+import { DataGrid } from '@mui/x-data-grid';
 import { useForm } from "react-hook-form";
 import { Box } from "@mui/material";
 import { Button } from "semantic-ui-react";
@@ -22,6 +24,7 @@ const CompanyDetails = (props) => {
         if (json.statusCode === "200") {
           alert("Details Added Successfully!");
           props.fun(false);
+          props.addRefresh(true);
         } else alert(json.statusMessage);
       } catch (error) {
         console.log("error", error);

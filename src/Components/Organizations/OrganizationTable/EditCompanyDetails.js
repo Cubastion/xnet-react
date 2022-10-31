@@ -25,6 +25,7 @@ const EditCompanyDetails = (props) => {
         if (json.statusCode === "200") {
           alert("Company Details Edited Successfully!");
           props.fun(false);
+          props.refresh(true);
           
          
           

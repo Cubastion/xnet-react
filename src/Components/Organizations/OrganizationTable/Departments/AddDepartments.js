@@ -21,6 +21,7 @@ const AddDepartment = (props) => {
               if (json.statusCode === '200') {
                   alert('Department Added Successfully!')
                   props.fun(false)
+                  props.addRefresh(true)
               }
               else alert(json.statusMessage)
           } catch (error) {
