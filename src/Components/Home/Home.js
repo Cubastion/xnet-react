@@ -8,7 +8,7 @@ const Home = () => {
     <div style={{width:'20%'}}>
     <SideNavbar/>
     </div>
-    <div style={{width:'80%',marginLeft:'-10px'}}>
+    <div style={{width:'80%',marginLeft:'-10px', overflowX:"scroll"}}>
     <Outlet/>
     </div>
     </div>
