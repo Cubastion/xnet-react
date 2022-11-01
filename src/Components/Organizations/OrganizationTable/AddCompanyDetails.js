@@ -38,7 +38,7 @@ const CompanyDetails = (props) => {
       <form onSubmit={handleSubmit(onSubmit)}>
         <div>
           <div>
-            <div>
+            <div style={{'margin':'1rem', 'display':'flex','flexDirection':'column'}}>
               <label name="NAME">NAME</label>
               <input
                 type="text"
@@ -46,7 +46,7 @@ const CompanyDetails = (props) => {
                 htmlFor="NAME"
               />
             </div>
-            <div>
+            <div style={{'margin':'1rem', 'display':'flex','flexDirection':'column'}}>
               <label name="ADDRESS LINE1">ADDRESS LINE1</label>
               <input
                 type="text"
@@ -54,7 +54,7 @@ const CompanyDetails = (props) => {
                 htmlFor="ADDRESS LINE1"
               />
             </div>
-            <div>
+            <div style={{'margin':'1rem', 'display':'flex','flexDirection':'column'}}>
               <label name="ADDRESS LINE2">ADDRESS LINE2</label>
               <input
                 type="text"
@@ -62,15 +62,15 @@ const CompanyDetails = (props) => {
                 htmlFor="ADDRESS LINE2"
               />
             </div>
-            <div>
+            <div style={{'margin':'1rem', 'display':'flex','flexDirection':'column'}}>
               <label name="CITY">CITY</label>
               <input type="tel" {...register("city", { required: true })} htmlFor="CITY" />
             </div>
-            <div>
+            <div style={{'margin':'1rem', 'display':'flex','flexDirection':'column'}}>
               <label name="STATE">STATE</label>
               <input type="tel" {...register("state", { required: true })} htmlFor="STATE" />
             </div>
-            <div>
+            <div style={{'margin':'1rem', 'display':'flex','flexDirection':'column'}}>
               <label name="PINCODE">PINCODE</label>
               <input
                 type="tel"
@@ -78,14 +78,14 @@ const CompanyDetails = (props) => {
                 htmlFor="PINCODE"
               />
             </div>
-            <div>
+            <div style={{'margin':'1rem', 'display':'flex','flexDirection':'column'}}>
               <label name="COUNTRY">COUNTRY</label>
               <input type="tel" {...register("country", { required: true })} htmlFor="COUNTRY" />
             </div>
           </div>
 
           <div >
-            <div>
+            <div style={{'margin':'1rem', 'display':'flex','flexDirection':'column'}}>
               <label name="PAN NUMBER">PAN NUMBER</label>
               <input
                 type="tel"
@@ -93,7 +93,7 @@ const CompanyDetails = (props) => {
                 htmlFor="PAN NUMBER"
               />
             </div>
-            <div>
+            <div style={{'margin':'1rem', 'display':'flex','flexDirection':'column'}}>
               <label name="GST">GST</label>
               <input
                 type="tel"
@@ -101,7 +101,7 @@ const CompanyDetails = (props) => {
                 htmlFor="GST"
               />
             </div>
-            <div>
+            <div style={{'margin':'1rem', 'display':'flex','flexDirection':'column'}}>
               <label name="BANK ACCOUNT NUMBER">BANK ACCOUNT NUMBER</label>
               <input
                 type="tel"
@@ -110,7 +110,7 @@ const CompanyDetails = (props) => {
               />
             </div>
 
-            <div>
+            <div style={{'margin':'1rem', 'display':'flex','flexDirection':'column'}}>
               <label name="BANK IFSC CODE">BANK IFSC CODE</label>
               <input
                 type="tel"
@@ -118,7 +118,7 @@ const CompanyDetails = (props) => {
                 htmlFor="BANK IFSC CODE"
               />
             </div>
-            <div>
+            <div style={{'margin':'1rem', 'display':'flex','flexDirection':'column'}}>
               <label name="BANK NAME">BANK NAME</label>
               <input
                 type="tel"
@@ -126,7 +126,7 @@ const CompanyDetails = (props) => {
                 htmlFor="BANK NAME"
               />
             </div>
-            <div>
+            <div style={{'margin':'1rem', 'display':'flex','flexDirection':'column'}}>
               <label name="BANK BRANCH">BANK BRANCH</label>
               <input
                 type="tel"
@@ -134,7 +134,7 @@ const CompanyDetails = (props) => {
                 htmlFor="BANK BRANCH"
               />
             </div>
-            <div>
+            <div style={{'margin':'1rem', 'display':'flex','flexDirection':'column'}}>
               <label name="SWIFT CODE">SWIFT CODE</label>
               <input
                 type="tel"
@@ -143,7 +143,7 @@ const CompanyDetails = (props) => {
               />
             </div>
 
-            <div>
+            <div style={{'margin':'1rem', 'display':'flex','flexDirection':'column'}}>
               <label name="TYPE">CURRENCY</label>
               <select {...register("type", { required: true })} htmlFor="TYPE">
                 <option value="">Select</option>

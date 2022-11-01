@@ -53,12 +53,12 @@ console.log(props.department,"------------->>>>>>>>>>.")
       <Box p={2} width="500px" textAlign="left" role="presentation">
           <form onSubmit={handleSubmit(onSubmit)}>
               <div>
-                  <div>
+                  <div style={{'margin':'1rem', 'display':'flex','flexDirection':'column'}}>
                       <label name='DEPARTMENT NAME'>DEPARTMENT NAME</label>
                       <input type="text"  {...register("name", { required: true, value: props?.employeeDepartment?.name})} htmlFor='DEPARTMENT NAME' />
                   </div>
 
-                  <div>
+                  <div style={{'margin':'1rem', 'display':'flex','flexDirection':'column'}}>
                       <label name='DEPARTMENT HEAD'>DEPARTMENT HEAD</label>
                         <select {...register("ownerId", { required: true,value: props?.employeeDepartment?.ownerId  })} htmlFor='DEPARTMENT HEAD' >
                             {props.employeeDetails.map(x =>

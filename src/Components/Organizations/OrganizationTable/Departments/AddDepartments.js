@@ -37,12 +37,12 @@ const AddDepartment = (props) => {
       <Box p={2} width="500px" textAlign="left" role="presentation">
           <form onSubmit={handleSubmit(onSubmit)}>
               <div>
-                  <div>
+                  <div style={{'margin':'1rem', 'display':'flex','flexDirection':'column'}}>
                       <label name='DEPARTMENT NAME'>DEPARTMENT NAME</label>
                       <input type="text"  {...register("name", { required: true })} htmlFor='DEPARTMENT NAME' />
                   </div>
 
-                  <div>
+                  <div style={{'margin':'1rem', 'display':'flex','flexDirection':'column'}}>
                       <label name='DEPARTMENT HEAD'>DEPARTMENT HEAD</label>
                         <select {...register("ownerId", { required: true })} htmlFor='DEPARTMENT HEAD' >
                             {props.employeeDetails.map(x =>
