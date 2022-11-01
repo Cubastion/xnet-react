@@ -71,7 +71,7 @@ console.log(props.department,"------------->>>>>>>>>>.")
                   
               </div>
           </form>
-          <Button onClick={()=> props.fun(false)} >Cancel</Button>
+          <Button onClick={()=> props.fun(false)} style={{margin:5}}>Cancel</Button>
           </Box>
   );
 }

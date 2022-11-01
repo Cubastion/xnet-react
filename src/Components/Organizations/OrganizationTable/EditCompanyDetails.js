@@ -221,7 +221,7 @@ const EditCompanyDetails = (props) => {
           <Button onClick={onSubmit}>Edit</Button>
         </div>
       </form>
-      <Button onClick={() => props.fun(false)}>Cancel</Button>
+      <Button onClick={() => props.fun(false)} style={{margin:5}}>Cancel</Button>
     </Box>
   );
 };
