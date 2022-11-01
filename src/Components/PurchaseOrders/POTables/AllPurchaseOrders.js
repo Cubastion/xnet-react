@@ -5,14 +5,18 @@ import Pagination from "@mui/material/Pagination";
 import { Button } from "@mui/material";
 import { SelectedContextPO } from "../PurchaseOrders";
 import moment from "moment";
-
+import { Drawer } from "@mui/material";
+import AddPOForm from "../POForms/AddPOForm";
+import EditPOForm from "../POForms/AddPOForm";
 const AllPurchaseOrders = () => {
   const [allPO, setAllPO] = useState([]);
   const [pageNumber, setpageNumber] = useState(1);
   const [totalPages, setTotalPages] = useState(0);
   const [refreshedTotal, setRefreshedTotal] = useState("");
-
+  const [activeAddForm, setActiveAddForm] = useState(false);
+  const [activeEditForm, setActiveEditForm] = useState(false);
   const [selectedPO, setSelectedPO] = useContext(SelectedContextPO);
+  const [refreshCounter, setRefreshCounter] = useState(0);
   useEffect(() => {
     var url = `https://devxnet.cubastion.net/api/v1/purchaseOrder/getAllPurchaseOrder?page=${pageNumber}`;
     const fetchData = async () => {
@@ -27,9 +31,9 @@ const AllPurchaseOrders = () => {
       }
     };
     fetchData();
-  }, [pageNumber]);
+  }, [pageNumber, refreshCounter]);
 
-  const handleChangePage = (event, newPage) => {
+  const handleChangePage = (event,newPage) => {
     setpageNumber(newPage);
   };
 
@@ -65,6 +69,32 @@ const AllPurchaseOrders = () => {
   };
   return (
     <>
+      {activeAddForm && (
+        <Drawer
+          anchor="right"
+          open={activeAddForm}
+          onClose={() => setActiveAddForm(false)}
+          variant={"temporary"}
+        >
+          <AddPOForm
+            setRefreshCounter={setRefreshCounter}
+            setActiveForm={setActiveAddForm}
+          />
+        </Drawer>
+      )}
+      {activeEditForm && (
+        <Drawer
+          anchor="right"
+          open={activeEditForm}
+          onClose={() => setActiveEditForm(false)}
+          variant={"temporary"}
+        >
+          <EditPOForm
+            setRefreshCounter={setRefreshCounter}
+            setActiveEditForm={setActiveEditForm}
+          />
+        </Drawer>
+      )}
       <div style={{ display: "flex" }}>
         <div style={{ marginTop: "2rem" }}>
           <h3>All Purchase Orders</h3>
@@ -79,10 +109,18 @@ const AllPurchaseOrders = () => {
           >
             Refresh Total
           </Button>
-          <Button style={{ margin: "1rem" }} variant="contained">
+          <Button
+            onClick={() => setActiveAddForm(true)}
+            style={{ margin: "1rem" }}
+            variant="contained"
+          >
             Add
           </Button>
-          <Button style={{ margin: "1rem" }} variant="contained">
+          <Button
+            onClick={() => setActiveEditForm(true)}
+            style={{ margin: "1rem" }}
+            variant="contained"
+          >
             Edit
           </Button>
         </div>
@@ -103,18 +141,18 @@ const AllPurchaseOrders = () => {
                   <Table.Cell>{x.po}</Table.Cell>
                   <Table.Cell>{x.project.name}</Table.Cell>
                   <Table.Cell>
-                    {refreshTotal.totalValue
-                      ? refreshTotal.totalValue
+                    {refreshedTotal.totalValue
+                      ? refreshedTotal.totalValue
                       : x.totalValue}
                   </Table.Cell>
                   <Table.Cell>
-                    {refreshTotal.consumedValue
-                      ? refreshTotal.consumedValue
+                    {refreshedTotal.consumedValue
+                      ? refreshedTotal.consumedValue
                       : x.consumedValue}
                   </Table.Cell>
                   <Table.Cell>
-                    {refreshTotal.remainingValue
-                      ? refreshTotal.remainingValue
+                    {refreshedTotal.remainingValue
+                      ? refreshedTotal.remainingValue
                       : x.remainingValue}
                   </Table.Cell>
                   <Table.Cell>{x.unitOfMeasure}</Table.Cell>

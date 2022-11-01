@@ -12,7 +12,7 @@ const POForecastsTable = () => {
       try {
         const response = await fetch(url, tokenRequestOption());
         const json = await response.json();
-        console.log(json.data);
+       
         setPoItems(json.data);
       } catch (error) {
         console.log("error", error);

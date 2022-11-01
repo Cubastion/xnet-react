@@ -13,7 +13,6 @@ const POAttachmentsTable = () => {
       try {
         const response = await fetch(url, tokenRequestOption());
         const json = await response.json();
-        console.log(json.data);
         setPoItems(json.data);
       } catch (error) {
         console.log("error", error);
@@ -30,7 +29,6 @@ const POAttachmentsTable = () => {
   ];
 
   const typeOfFile = (filename) => {
-    console.log(filename.split(".").pop());
     return filename.split(".").pop();
   };
 

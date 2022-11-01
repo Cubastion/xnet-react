@@ -29,7 +29,6 @@ const SideNavbar = () => {
   }
 
   let onClickSideNavBar = (x) => {
-    console.log('onClickSideNavBar', x)
     navigate(x.page[0].route)
   }
 
