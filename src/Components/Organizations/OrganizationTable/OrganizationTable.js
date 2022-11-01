@@ -88,13 +88,13 @@ const OrganizationTable = () => {
           </Drawer>
           <Button onClick={() => setEditCompanyForm(true)}>Edit</Button>
         </div>
-        <Table striped>
+        <Table striped >
           <Table.Header>
-            <Table.Row>
-              <Table.HeaderCell>Name</Table.HeaderCell>
-              <Table.HeaderCell>Address</Table.HeaderCell>
-              <Table.HeaderCell>Head count</Table.HeaderCell>
-              <Table.HeaderCell>Resigned Count</Table.HeaderCell>
+            <Table.Row positive>
+              <Table.HeaderCell >Name</Table.HeaderCell>
+              <Table.HeaderCell >Address</Table.HeaderCell>
+              <Table.HeaderCell >Head count</Table.HeaderCell>
+              <Table.HeaderCell >Resigned Count</Table.HeaderCell>
             </Table.Row>
           </Table.Header>
 

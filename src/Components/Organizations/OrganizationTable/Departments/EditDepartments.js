@@ -26,15 +26,15 @@ const[dept,setDept] = useState("");
             // var bodyParser = require('body-parser');
             // app.use(bodyParser.json()); 
               let url = `https://devxnet.cubastion.net/api/v1/Organization/updateDepartment?id=${props.employeeDepartment.Id}`
-              data.organizationId = props?.orgId
+              data.organizationId = props.orgId
               const response = await fetch(url, tokenPutRequestOption(data));
               const json = await response.json();
              
               if (json.statusCode === '200') {
                   alert('Department Edited Successfully!')
-                  props?.fun(false)
-                  props.refresh(true)
-                  setDepartment(json.data)
+                  props.fun(false)
+                props.refresh(true)
+                setDepartment(json.data)
               }
               else alert(json.statusMessage)
           } catch (error) {
@@ -61,14 +61,14 @@ console.log(props.department,"------------->>>>>>>>>>.")
                   <div>
                       <label name='DEPARTMENT HEAD'>DEPARTMENT HEAD</label>
                         <select {...register("ownerId", { required: true,value: props?.employeeDepartment?.ownerId  })} htmlFor='DEPARTMENT HEAD' >
-                            {props?.employeeDetails.map(x =>
+                            {props.employeeDetails.map(x =>
                                 <option key={x.Id} value={x.Id} >{x.firstName} {x.lastName}</option>
                                 )}
                         </select>
                   </div>
 
                   <Button onClick={onSubmit} >Submit</Button>
-                  <Button onClick={()=> props?.fun(false)}>Cancel</Button>
+                  <Button onClick={()=> props.fun(false)}>Cancel</Button>
               </div>
           </form>
           </Box>

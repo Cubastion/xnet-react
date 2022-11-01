@@ -79,7 +79,7 @@ const EditCompanyDetails = (props) => {
           <div>
             <label name="CITY">CITY</label>
             <input
-              type="tel"
+              type="text"
               {...register("city", {
                 required: true,
                 value: props.companyDetailsData.address.city,
@@ -90,7 +90,7 @@ const EditCompanyDetails = (props) => {
           <div>
             <label name="STATE">STATE</label>
             <input
-              type="tel"
+              type="text"
               {...register("state", {
                 required: true,
                 value: props.companyDetailsData.address.state,
@@ -101,7 +101,7 @@ const EditCompanyDetails = (props) => {
           <div>
             <label name="COUNTRY">COUNTRY</label>
             <input
-              type="tel"
+              type="text"
               {...register("country", {
                 required: true,
                 value: props.companyDetailsData.address.country,
@@ -128,7 +128,7 @@ const EditCompanyDetails = (props) => {
             <input
               type="tel"
               {...register("panNumber", {
-                required: true,
+                
                 value: props.companyDetailsData.pan,
               })}
               htmlFor="PAN NUMBER"
@@ -139,7 +139,7 @@ const EditCompanyDetails = (props) => {
             <input
               type="tel"
               {...register("gst", {
-                required: true,
+                
                 value: props.companyDetailsData.gst,
               })}
               htmlFor="GST"
@@ -150,7 +150,7 @@ const EditCompanyDetails = (props) => {
             <input
               type="tel"
               {...register("bankAccountNumber", {
-                required: true,
+               
                 value: props.companyDetailsData.accountNumber,
               })}
               htmlFor="BANK ACCOUNT NUMBER"
@@ -162,7 +162,7 @@ const EditCompanyDetails = (props) => {
             <input
               type="tel"
               {...register("bankIFSCCode", {
-                required: true,
+                
                 value: props.companyDetailsData.IFSC,
               })}
               htmlFor="BANK IFSC CODE"
@@ -173,7 +173,7 @@ const EditCompanyDetails = (props) => {
             <input
               type="tel"
               {...register("bankName", {
-                required: true,
+                
                 value: props.companyDetailsData.bankName,
               })}
               htmlFor="BANK NAME"
@@ -184,7 +184,7 @@ const EditCompanyDetails = (props) => {
             <input
               type="tel"
               {...register("bankBranch", {
-                required: true,
+                
                 value: props.companyDetailsData.bankBranch,
               })}
               htmlFor="BANK BRANCH"
@@ -195,7 +195,7 @@ const EditCompanyDetails = (props) => {
             <input
               type="tel"
               {...register("swiftCode", {
-                required: true,
+                
                 value: props.companyDetailsData.swiftCode,
               })}
               htmlFor="SWIFT CODE"
@@ -218,7 +218,7 @@ const EditCompanyDetails = (props) => {
               <option value="JPY">JPY</option>
             </select>
           </div>
-          <Button onClick={()=>onSubmit}>Edit</Button>
+          <Button onClick={onSubmit}>Edit</Button>
           <Button onClick={() => props.fun(false)}>Cancel</Button>
         </div>
       </form>

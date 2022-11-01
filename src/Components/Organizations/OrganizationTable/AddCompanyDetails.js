@@ -1,3 +1,4 @@
+
 import React, { useEffect, useState } from "react";
 
 import { useForm } from "react-hook-form";
@@ -126,7 +127,7 @@ const CompanyDetails = (props) => {
               />
             </div>
             <div>
-              <label name="BANK NAME">BANK BRANCH</label>
+              <label name="BANK BRANCH">BANK BRANCH</label>
               <input
                 type="tel"
                 {...register("bankBranch")}
