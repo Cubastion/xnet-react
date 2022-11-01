@@ -89,6 +89,7 @@ const AddPOForm = (props) => {
 
   return (
     <Box p={2} width="500px" textAlign="left" role="presentation">
+      <h2>Add Purchase Order</h2>
       <form onSubmit={handleSubmit(onSubmit)}>
         <div>
           <div style={{'margin':'1rem', 'display':'flex','flexDirection':'column'}}>

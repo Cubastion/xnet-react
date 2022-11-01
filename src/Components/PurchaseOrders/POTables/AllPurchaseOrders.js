@@ -7,7 +7,7 @@ import { SelectedContextPO } from "../PurchaseOrders";
 import moment from "moment";
 import { Drawer } from "@mui/material";
 import AddPOForm from "../POForms/AddPOForm";
-import EditPOForm from "../POForms/AddPOForm";
+import EditPOForm from "../POForms/EditPOForm";
 const AllPurchaseOrders = () => {
   const [allPO, setAllPO] = useState([]);
   const [pageNumber, setpageNumber] = useState(1);
@@ -15,6 +15,8 @@ const AllPurchaseOrders = () => {
   const [refreshedTotal, setRefreshedTotal] = useState("");
   const [activeAddForm, setActiveAddForm] = useState(false);
   const [activeEditForm, setActiveEditForm] = useState(false);
+  const [activeForm, setActiveForm] = useState(false);
+
   const [selectedPO, setSelectedPO] = useContext(SelectedContextPO);
   const [refreshCounter, setRefreshCounter] = useState(0);
   useEffect(() => {
@@ -31,9 +33,9 @@ const AllPurchaseOrders = () => {
       }
     };
     fetchData();
-  }, [pageNumber, refreshCounter]);
+  }, [pageNumber, refreshCounter, setSelectedPO]);
 
-  const handleChangePage = (event,newPage) => {
+  const handleChangePage = (event, newPage) => {
     setpageNumber(newPage);
   };
 
@@ -69,32 +71,30 @@ const AllPurchaseOrders = () => {
   };
   return (
     <>
-      {activeAddForm && (
-        <Drawer
-          anchor="right"
-          open={activeAddForm}
-          onClose={() => setActiveAddForm(false)}
-          variant={"temporary"}
-        >
+      <Drawer
+        anchor="right"
+        open={(activeForm && activeAddForm) || activeEditForm}
+        onClose={() => {
+          setActiveForm(false);
+          setActiveAddForm(false);
+          setActiveEditForm(false);
+        }}
+        variant={"temporary"}
+      >
+        {!activeEditForm && activeAddForm && (
           <AddPOForm
             setRefreshCounter={setRefreshCounter}
             setActiveForm={setActiveAddForm}
           />
-        </Drawer>
-      )}
-      {activeEditForm && (
-        <Drawer
-          anchor="right"
-          open={activeEditForm}
-          onClose={() => setActiveEditForm(false)}
-          variant={"temporary"}
-        >
+        )}
+        {activeEditForm && !activeAddForm && (
           <EditPOForm
             setRefreshCounter={setRefreshCounter}
-            setActiveEditForm={setActiveEditForm}
+            setActiveForm={setActiveEditForm}
+            selectedPO={selectedPO}
           />
-        </Drawer>
-      )}
+        )}
+      </Drawer>
       <div style={{ display: "flex" }}>
         <div style={{ marginTop: "2rem" }}>
           <h3>All Purchase Orders</h3>
@@ -110,14 +110,20 @@ const AllPurchaseOrders = () => {
             Refresh Total
           </Button>
           <Button
-            onClick={() => setActiveAddForm(true)}
+            onClick={() => {
+              setActiveForm(true);
+              setActiveAddForm(true);
+            }}
             style={{ margin: "1rem" }}
             variant="contained"
           >
             Add
           </Button>
           <Button
-            onClick={() => setActiveEditForm(true)}
+            onClick={() => {
+              setActiveForm(true);
+              setActiveEditForm(true);
+            }}
             style={{ margin: "1rem" }}
             variant="contained"
           >
@@ -137,7 +143,11 @@ const AllPurchaseOrders = () => {
           <Table.Body>
             {allPO &&
               allPO?.map((x) => (
-                <Table.Row onClick={() => selectPOHandler(x)} key={x.Id}>
+                <Table.Row
+                  style={selectedPO.Id === x.Id ? { background: "grey" } : {}}
+                  onClick={() => selectPOHandler(x)}
+                  key={x.Id}
+                >
                   <Table.Cell>{x.po}</Table.Cell>
                   <Table.Cell>{x.project.name}</Table.Cell>
                   <Table.Cell>

@@ -3,7 +3,12 @@ import { SelectedContextPO } from "../PurchaseOrders";
 import { tokenRequestOption } from "../../Helpers/misellaneous";
 import { Table } from "semantic-ui-react";
 import { Button } from "@mui/material";
+import { Drawer } from "@mui/material";
+import AddPOItemsForm from "../POForms/AddPOItemsForm";
 const POItemsTable = () => {
+  const [activeAddForm, setActiveAddForm] = useState(false);
+  const [activeEditForm, setActiveEditForm] = useState(false);
+  const [activeForm, setActiveForm] = useState(false);
   const [selectedPO] = useContext(SelectedContextPO);
   const [poItems, setPoItems] = useState([]);
   var [currentCurrencySymbol, setCurrentCurrencySymbol] = useState("");
@@ -37,23 +42,22 @@ const POItemsTable = () => {
   ];
 
   const currency_symbols = {
-    'USD': "$", // US Dollar
-    'EUR': "€", // Euro
-    'CRC': "₡", // Costa Rican Colón
-    'GBP': "£", // British Pound Sterling
-    'ILS': "₪", // Israeli New Sheqel
-    'INR': "₹", // Indian Rupee
-    'JPY': "¥", // Japanese Yen
-    'KRW': "₩", // South Korean Won
-    'NGN': "₦", // Nigerian Naira
-    'PHP': "₱", // Philippine Peso
-    'PLN': "zł", // Polish Zloty
-    'PYG': "₲", // Paraguayan Guarani
-    'THB': "฿", // Thai Baht
-    'UAH': "₴", // Ukrainian Hryvnia
-    'VND': "₫", // Vietnamese Dong
+    USD: "$", // US Dollar
+    EUR: "€", // Euro
+    CRC: "₡", // Costa Rican Colón
+    GBP: "£", // British Pound Sterling
+    ILS: "₪", // Israeli New Sheqel
+    INR: "₹", // Indian Rupee
+    JPY: "¥", // Japanese Yen
+    KRW: "₩", // South Korean Won
+    NGN: "₦", // Nigerian Naira
+    PHP: "₱", // Philippine Peso
+    PLN: "zł", // Polish Zloty
+    PYG: "₲", // Paraguayan Guarani
+    THB: "฿", // Thai Baht
+    UAH: "₴", // Ukrainian Hryvnia
+    VND: "₫", // Vietnamese Dong
   };
-
 
   const convertToSymbol = (x) => {
     if (currency_symbols[x] !== undefined) {
@@ -63,6 +67,19 @@ const POItemsTable = () => {
 
   return (
     <>
+      <Drawer
+        anchor="right"
+        open={(activeForm && activeAddForm) || activeEditForm}
+        onClose={() => {
+          setActiveForm(false);
+          setActiveAddForm(false);
+          setActiveEditForm(false);
+        }}
+        variant={"temporary"}
+      >
+        {!activeEditForm && activeAddForm && <AddPOItemsForm />}
+        {activeEditForm && !activeAddForm && <div>hello</div>}
+      </Drawer>
       <div style={{ display: "flex" }}>
         <div style={{ marginTop: "2rem" }}>
           <h3>Purchase Order Items</h3>
@@ -70,10 +87,24 @@ const POItemsTable = () => {
         <div
           style={{ float: "right", marginRight: "1rem", marginLeft: "48rem" }}
         >
-          <Button style={{ margin: "1rem" }} variant="contained">
+          <Button
+            onClick={() => {
+              setActiveForm(true);
+              setActiveAddForm(true);
+            }}
+            style={{ margin: "1rem" }}
+            variant="contained"
+          >
             Add Items
           </Button>
-          <Button style={{ margin: "1rem" }} variant="contained">
+          <Button
+            onClick={() => {
+              setActiveForm(true);
+              setActiveEditForm(true);
+            }}
+            style={{ margin: "1rem" }}
+            variant="contained"
+          >
             Edit
           </Button>
         </div>
