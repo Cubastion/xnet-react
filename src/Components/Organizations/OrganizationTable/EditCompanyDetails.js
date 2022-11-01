@@ -219,9 +219,9 @@ const EditCompanyDetails = (props) => {
             </select>
           </div>
           <Button onClick={onSubmit}>Edit</Button>
-          <Button onClick={() => props.fun(false)}>Cancel</Button>
         </div>
       </form>
+      <Button onClick={() => props.fun(false)}>Cancel</Button>
     </Box>
   );
 };

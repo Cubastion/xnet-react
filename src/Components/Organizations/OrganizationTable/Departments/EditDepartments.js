@@ -68,9 +68,10 @@ console.log(props.department,"------------->>>>>>>>>>.")
                   </div>
 
                   <Button onClick={onSubmit} >Submit</Button>
-                  <Button onClick={()=> props.fun(false)}>Cancel</Button>
+                  
               </div>
           </form>
+          <Button onClick={()=> props.fun(false)} >Cancel</Button>
           </Box>
   );
 }
