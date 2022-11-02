@@ -33,7 +33,7 @@ const AllPurchaseOrders = () => {
       }
     };
     fetchData();
-  }, [pageNumber, refreshCounter, setSelectedPO]);
+  }, [pageNumber, refreshCounter]);
 
   const handleChangePage = (event, newPage) => {
     setpageNumber(newPage);
@@ -144,7 +144,7 @@ const AllPurchaseOrders = () => {
             {allPO &&
               allPO?.map((x) => (
                 <Table.Row
-                  style={selectedPO.Id === x.Id ? { background: "grey" } : {}}
+                  style={selectedPO.Id === x.Id ? { background: "lightgrey" } : {}}
                   onClick={() => selectPOHandler(x)}
                   key={x.Id}
                 >

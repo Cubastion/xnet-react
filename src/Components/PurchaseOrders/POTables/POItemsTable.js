@@ -5,12 +5,14 @@ import { Table } from "semantic-ui-react";
 import { Button } from "@mui/material";
 import { Drawer } from "@mui/material";
 import AddPOItemsForm from "../POForms/AddPOItemsForm";
+import EditPOItemForm from "../POForms/EditPOItemForm";
 const POItemsTable = () => {
   const [activeAddForm, setActiveAddForm] = useState(false);
   const [activeEditForm, setActiveEditForm] = useState(false);
   const [activeForm, setActiveForm] = useState(false);
   const [selectedPO] = useContext(SelectedContextPO);
   const [poItems, setPoItems] = useState([]);
+  const [selectedLineItem, setSelectedLineItem] = useState("")
   var [currentCurrencySymbol, setCurrentCurrencySymbol] = useState("");
   useEffect(() => {
     var url = `https://devxnet.cubastion.net/api/v1/POItems/findPOItemsByPurchaseOrderId?id=${selectedPO.Id}`;
@@ -18,10 +20,11 @@ const POItemsTable = () => {
       try {
         const response = await fetch(url, tokenRequestOption());
         const json = await response.json();
+        setSelectedLineItem(json.data.poItemsData[0])
+        setPoItems(json.data);
         if (json.data.poItemsData[0].currencyCode) {
           convertToSymbol(json.data.poItemsData[0].currencyCode);
         }
-        setPoItems(json.data);
       } catch (error) {
         console.log("error", error);
       }
@@ -65,6 +68,23 @@ const POItemsTable = () => {
     }
   };
 
+  const refreshDataFunction = () => {
+    var url = `https://devxnet.cubastion.net/api/v1/POItems/findPOItemsByPurchaseOrderId?id=${selectedPO.Id}`;
+    const fetchData = async () => {
+      try {
+        const response = await fetch(url, tokenRequestOption());
+        const json = await response.json();
+        if (json.data.poItemsData[0].currencyCode) {
+          convertToSymbol(json.data.poItemsData[0].currencyCode);
+        }
+        setPoItems(json.data);
+      } catch (error) {
+        console.log("error", error);
+      }
+    };
+    fetchData();
+  }
+
   return (
     <>
       <Drawer
@@ -77,8 +97,8 @@ const POItemsTable = () => {
         }}
         variant={"temporary"}
       >
-        {!activeEditForm && activeAddForm && <AddPOItemsForm />}
-        {activeEditForm && !activeAddForm && <div>hello</div>}
+        {!activeEditForm && activeAddForm && <AddPOItemsForm  refreshDataFunction={refreshDataFunction} setActiveForm={setActiveForm} setActiveEditForm={setActiveEditForm} setActiveAddForm={setActiveAddForm}/>}
+        {activeEditForm && !activeAddForm && <EditPOItemForm selectedLineItem={selectedLineItem} refreshDataFunction={refreshDataFunction} setActiveForm={setActiveForm} setActiveEditForm={setActiveEditForm} setActiveAddForm={setActiveAddForm} />}
       </Drawer>
       <div style={{ display: "flex" }}>
         <div style={{ marginTop: "2rem" }}>
@@ -123,7 +143,7 @@ const POItemsTable = () => {
           <Table.Body>
             {poItems &&
               poItems?.poItemsData?.map((x) => (
-                <Table.Row key={x.Id}>
+                <Table.Row style={selectedLineItem.Id === x.Id ? { background: "lightgrey" } : {}} onClick={()=>setSelectedLineItem(x)} key={x.Id}>
                   <Table.Cell>{x.name}</Table.Cell>
                   <Table.Cell>{x.displayName}</Table.Cell>
                   <Table.Cell>{x.description}</Table.Cell>

@@ -10,8 +10,8 @@ import {
 const AddPOForm = (props) => {
   const [clients, setClients] = useState("");
   const [selectedClientId, setSelectedClientId] = useState("");
-  const [projectUnderAClient, setProjectUnderAClient] = useState("")
-  const [owner, setOwner] = useState("")
+  const [projectUnderAClient, setProjectUnderAClient] = useState("");
+  const [owner, setOwner] = useState("");
   const {
     register,
     handleSubmit,
@@ -34,30 +34,29 @@ const AddPOForm = (props) => {
     fetchData();
   }, []);
 
-
   useEffect(() => {
-    var url = "https://devxnet.cubastion.net/api/v1/employee/getEmployees"
+    var url = "https://devxnet.cubastion.net/api/v1/employee/getEmployees";
     const fetchData = async () => {
       try {
         const response = await fetch(url, tokenRequestOption());
         const json = await response.json();
-        setOwner(json.data)
-        console.log(json.data)
+        setOwner(json.data);
+        console.log(json.data);
       } catch (error) {
         console.log("error", error);
       }
     };
-    
-      fetchData();
-  }, [])
-  
+
+    fetchData();
+  }, []);
+
   useEffect(() => {
     var url = `https://devxnet.cubastion.net/api/v1/projects/getAllProjectsByClientId?clientId=${selectedClientId}`;
     const fetchData = async () => {
       try {
         const response = await fetch(url, tokenRequestOption());
         const json = await response.json();
-        setProjectUnderAClient(json.data)
+        setProjectUnderAClient(json.data);
       } catch (error) {
         console.log("error", error);
       }
@@ -70,14 +69,15 @@ const AddPOForm = (props) => {
   const onSubmit = (data) => {
     const fetchData = async () => {
       try {
-        let url = "https://devxnet.cubastion.net/api/v1/purchaseOrder/addpurchaseorder";
+        let url =
+          "https://devxnet.cubastion.net/api/v1/purchaseOrder/addpurchaseorder";
 
         const response = await fetch(url, tokenPostRequestOption(data));
         const json = await response.json();
 
         if (json.statusCode === "200") {
-          props.setRefreshCounter(Math.random.toString())
-          props.setActiveForm(false)
+          props.setRefreshCounter(Math.random.toString());
+          props.setActiveForm(false);
           alert("PO Created SUccessfully...!!!");
         } else alert(json.statusMessage);
       } catch (error) {
@@ -92,7 +92,9 @@ const AddPOForm = (props) => {
       <h2>Add Purchase Order</h2>
       <form onSubmit={handleSubmit(onSubmit)}>
         <div>
-          <div style={{'margin':'1rem', 'display':'flex','flexDirection':'column'}}>
+          <div
+            style={{ margin: "1rem", display: "flex", flexDirection: "column" }}
+          >
             <label name="PO#">PO#</label>
             <input
               type="text"
@@ -100,7 +102,9 @@ const AddPOForm = (props) => {
               htmlFor="PO#"
             />
           </div>
-          <div style={{'margin':'1rem', 'display':'flex','flexDirection':'column'}}>
+          <div
+            style={{ margin: "1rem", display: "flex", flexDirection: "column" }}
+          >
             <label name="CLIENT NAME">CLIENT NAME</label>
             <select
               {...register("clientId", { required: true })}
@@ -109,30 +113,45 @@ const AddPOForm = (props) => {
             >
               <option value="">Please Select Name of The Client</option>
               {clients &&
-                clients.map((x) => <option key={x.Id} value={x.Id}>{x.name}</option>)}
+                clients.map((x) => (
+                  <option key={x.Id} value={x.Id}>
+                    {x.name}
+                  </option>
+                ))}
             </select>
           </div>
-          <div style={{'margin':'1rem', 'display':'flex','flexDirection':'column'}}>
+          <div
+            style={{ margin: "1rem", display: "flex", flexDirection: "column" }}
+          >
             <label name="PROJECT NAME">PROJECT NAME</label>
             <select
               {...register("projectId", { required: true })}
               htmlFor="PROJECT NAME"
             >
-               <option value="">Please Select Name of The Project</option>
-             {projectUnderAClient && projectUnderAClient.map((x) => (
-              <option key={x.Id} value={x.Id}>{x.name}</option>
-             ))}
+              <option value="">Please Select Name of The Project</option>
+              {projectUnderAClient &&
+                projectUnderAClient.map((x) => (
+                  <option key={x.Id} value={x.Id}>
+                    {x.name}
+                  </option>
+                ))}
             </select>
           </div>
-          <div style={{'margin':'1rem', 'display':'flex','flexDirection':'column'}}>
+          <div
+            style={{ margin: "1rem", display: "flex", flexDirection: "column" }}
+          >
             <label name="DESCRIPTION">DESCRIPTION</label>
             <input type="text" {...register("description")} htmlFor="CITY" />
           </div>
-          <div style={{'margin':'1rem', 'display':'flex','flexDirection':'column'}}>
+          <div
+            style={{ margin: "1rem", display: "flex", flexDirection: "column" }}
+          >
             <label name="ISSUE DATE">ISSUE DATE</label>
             <input type="date" {...register("issueDate")} htmlFor="STATE" />
           </div>
-          <div style={{'margin':'1rem', 'display':'flex','flexDirection':'column'}}>
+          <div
+            style={{ margin: "1rem", display: "flex", flexDirection: "column" }}
+          >
             <label name="START DATE">START DATE</label>
             <input
               type="date"
@@ -140,11 +159,15 @@ const AddPOForm = (props) => {
               htmlFor="START DATE"
             />
           </div>
-          <div style={{'margin':'1rem', 'display':'flex','flexDirection':'column'}}>
+          <div
+            style={{ margin: "1rem", display: "flex", flexDirection: "column" }}
+          >
             <label name="END DATE">END DATE</label>
             <input type="date" {...register("endDate")} htmlFor="END DATE" />
           </div>
-          <div style={{'margin':'1rem', 'display':'flex','flexDirection':'column'}}>
+          <div
+            style={{ margin: "1rem", display: "flex", flexDirection: "column" }}
+          >
             <label name="PAYMENT DUE IN DAYS">PAYMENT DUE IN DAYS</label>
             <input
               type="number"
@@ -152,7 +175,9 @@ const AddPOForm = (props) => {
               htmlFor="PAYMENT DUE IN DAYS"
             />
           </div>
-          <div style={{'margin':'1rem', 'display':'flex','flexDirection':'column'}}>
+          <div
+            style={{ margin: "1rem", display: "flex", flexDirection: "column" }}
+          >
             <label name="STATUS">STATUS</label>
             <select
               {...register("status", { required: true })}
@@ -166,7 +191,9 @@ const AddPOForm = (props) => {
               <option value="Hold">Hold</option>
             </select>
           </div>
-          <div style={{'margin':'1rem', 'display':'flex','flexDirection':'column'}}>
+          <div
+            style={{ margin: "1rem", display: "flex", flexDirection: "column" }}
+          >
             <label name="UNIT OF MEASURE">UNIT OF MEASURE</label>
             <select
               {...register("unitOfMeasure", { required: true })}
@@ -182,7 +209,9 @@ const AddPOForm = (props) => {
               <option value="Man Days">Man Days</option>
             </select>
           </div>
-          <div style={{'margin':'1rem', 'display':'flex','flexDirection':'column'}}>
+          <div
+            style={{ margin: "1rem", display: "flex", flexDirection: "column" }}
+          >
             <label name="UOM ATTRIBUTE">UOM ATTRIBUTE</label>
             <input
               type="number"
@@ -190,7 +219,9 @@ const AddPOForm = (props) => {
               htmlFor="UOM ATTRIBUTE"
             />
           </div>
-          <div style={{'margin':'1rem', 'display':'flex','flexDirection':'column'}}>
+          <div
+            style={{ margin: "1rem", display: "flex", flexDirection: "column" }}
+          >
             <label name="uoMAttribute2">UOM ATTRIBUTE 2</label>
             <input
               type="number"
@@ -198,22 +229,26 @@ const AddPOForm = (props) => {
               htmlFor="uoMAttribute2"
             />
           </div>
-          <div style={{'margin':'1rem', 'display':'flex','flexDirection':'column'}}>
+          <div
+            style={{ margin: "1rem", display: "flex", flexDirection: "column" }}
+          >
             <label name="CURRENCY">CURRENCY</label>
             <select
               type="tel"
               {...register("currencyCode", { required: true })}
               htmlFor="CURRENCY"
             >
-              <option value = "">Select</option>
-              <option value = "INR">INR</option>
-              <option value = "USD">USD</option>
-              <option value = "EUR">EUR</option>
-              <option value = "JPY">JPY</option>
-              <option value = "OTH">OTH</option>
+              <option value="">Select</option>
+              <option value="INR">INR</option>
+              <option value="USD">USD</option>
+              <option value="EUR">EUR</option>
+              <option value="JPY">JPY</option>
+              <option value="OTH">OTH</option>
             </select>
           </div>
-          <div style={{'margin':'1rem', 'display':'flex','flexDirection':'column'}}>
+          <div
+            style={{ margin: "1rem", display: "flex", flexDirection: "column" }}
+          >
             <label name="BYPASS TIMESHEET">BYPASS TIMESHEET</label>
             <input
               type="checkbox"
@@ -221,19 +256,22 @@ const AddPOForm = (props) => {
               htmlFor="BYPASS TIMESHEET"
             />
           </div>
-          <div style={{'margin':'1rem', 'display':'flex','flexDirection':'column'}}>
+          <div
+            style={{ margin: "1rem", display: "flex", flexDirection: "column" }}
+          >
             <label name="OWNER">OWNER</label>
             <select
               type="tel"
               {...register("ownerId", { required: true })}
               htmlFor="OWNER"
             >
-              <option value = "">Select Owner</option>
-              {
-                owner && owner.map((x) =>(
-                  <option key= {x.Id} value= {x.Id}>{x.firstName+" "+x.lastName}</option>
-                ) )
-              }
+              <option value="">Select Owner</option>
+              {owner &&
+                owner.map((x) => (
+                  <option key={x.Id} value={x.Id}>
+                    {x.firstName + " " + x.lastName}
+                  </option>
+                ))}
             </select>
           </div>
           <Button onClick={onSubmit}>Add</Button>
