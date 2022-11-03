@@ -4,9 +4,12 @@ import { tokenRequestOption } from "../../Helpers/misellaneous";
 import { Table } from "semantic-ui-react";
 import { Button } from "@mui/material";
 import moment from "moment";
+import AddAttachmentsForm from "../POForms/AddAttachmentsForm";
+import Dialog from "@mui/material/Dialog";
 const POAttachmentsTable = () => {
   const [selectedPO] = useContext(SelectedContextPO);
   const [poItems, setPoItems] = useState([]);
+  const [openDialog, setOpenDialog] = useState(false);
   useEffect(() => {
     var url = ` https://devxnet.cubastion.net/api/v1/files/getAllOnedriveFiles?id=${selectedPO.Id}`;
     const fetchData = async () => {
@@ -45,6 +48,9 @@ const POAttachmentsTable = () => {
 
   return (
     <>
+      <Dialog open={openDialog} onClose={() => setOpenDialog(false)}>
+        <AddAttachmentsForm />
+      </Dialog>
       <div style={{ display: "flex" }}>
         <div style={{ marginTop: "2rem" }}>
           <h3>Purchase Order Attachments</h3>
@@ -52,7 +58,7 @@ const POAttachmentsTable = () => {
         <div
           style={{ float: "right", marginRight: "1rem", marginLeft: "48rem" }}
         >
-          <Button style={{ margin: "1rem" }} variant="contained">
+          <Button onClick={()=>setOpenDialog(true)} style={{ margin: "1rem" }} variant="contained">
             Add Document
           </Button>
         </div>
