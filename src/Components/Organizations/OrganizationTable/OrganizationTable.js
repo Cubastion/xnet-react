@@ -8,10 +8,8 @@ import EditCompanyDetails from "./EditCompanyDetails"
 
 import { Tab, Tabs, TabList, TabPanel } from "react-tabs";
 import "react-tabs/style/react-tabs.css";
-
 import { Drawer } from "@mui/material";
 import { Designation } from "../Designation";
-
 const OrganizationTable = () => {
   let [organization, setOrganization] = useState([]);
   let [departments, setDepartments] = useState();
@@ -25,7 +23,6 @@ const OrganizationTable = () => {
   const[addOrganizationData, setAddOrganizationData] = useState({})
   const [editOrganizationRefresh, setEditOrganizationRefresh] = useState(false);
   const [addOrganizationRefresh, setAddOrganizationRefresh] = useState(false);
-  
 
   useEffect(() =>  {
     var url =
@@ -101,7 +98,7 @@ const OrganizationTable = () => {
           <Table.Body>
             {organization.length > 0 &&
               organization.map((x) => (
-                <Table.Row onClick={() => onSelectOrganization(x)} key={x.Id}>
+                <Table.Row onClick={() => onSelectOrganization(x)} key={x.Id} style={departments === x.Id?{backgroundColor:"lightGrey"}:{}}>
                   <Table.Cell>{x.name}</Table.Cell>
                   <Table.Cell>
                     {x.address.addressLine1}
@@ -116,7 +113,7 @@ const OrganizationTable = () => {
               ))}
           </Table.Body>
         </Table>
-      </div>
+      
        
       <Tabs>
         <TabList>
@@ -130,6 +127,8 @@ const OrganizationTable = () => {
           <Designation data={designationData} deptId={departments} />
         </TabPanel>
       </Tabs>
+      
+      </div>
     </>
   );
 };

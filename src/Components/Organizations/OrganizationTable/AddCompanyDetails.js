@@ -155,9 +155,10 @@ const CompanyDetails = (props) => {
             </div>
           </div>
           <Button onClick={onSubmit}>Add</Button>
-          <Button onClick={() => props.fun(false)}>Cancel</Button>
+          
         </div>
       </form>
+      <Button onClick={() => props.fun(false)} style={{margin:5}}>Cancel</Button>
     </Box>
   );
 };
