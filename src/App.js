@@ -13,6 +13,7 @@ return (
         <Routes>
             <Route path = "/" element = {<Home/>}>
           <Route path="organization" element={<Organizations />} />
+          <Route path="clients" element={<clients />} />
           <Route path='vendors' element={<Vendors />} />
           <Route path='budget' element={<Budget/>} />
           <Route path='all-purchase' element={<PurchaseOrders/>}/>

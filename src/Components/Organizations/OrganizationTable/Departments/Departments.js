@@ -111,7 +111,7 @@ console.log(department)
         <Table.Body>
           {department?.length > 0 && department?.map((x) => (
 
-            <Table.Row onClick={()=> onClickDepartmentHandler(x) } key={x.Id}>
+            <Table.Row onClick={()=> onClickDepartmentHandler(x) } key={x.Id} style={deptId === x.Id?{backgroundColor:"lightGrey"}:{}}>
               <Table.Cell>{x.name}</Table.Cell>
               <Table.Cell>{`${isundefined(x?.owner?.firstName)} ${isundefined(x?.owner?.lastName)}`}</Table.Cell>
               <Table.Cell>{x.totalEmpCount}</Table.Cell>
