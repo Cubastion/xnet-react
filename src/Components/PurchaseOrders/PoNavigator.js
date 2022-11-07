@@ -6,6 +6,7 @@ const PoNavigator = (props) => {
     const poNavs = [
     { value: "all-purchase", label: "All Purchase Order" },
     { value: "my-purchase", label: "My Purchase Order" },
+    { value: "internal-po", label:"Internal PO"},
     {
       value: "internal-po-approval-level-1",
       label: "Internal PO Approval Level 1",

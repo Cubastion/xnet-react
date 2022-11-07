@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import {
   tokenPostRequestOption,
-  tokenPutRequestOption,
   tokenRequestOption,
 } from "../Helpers/misellaneous";
 import PoNavigator from "./PoNavigator";
@@ -70,7 +69,7 @@ const InternalPOL1 = () => {
     }
   };
   return (
-    <div style={{ overflow: "scroll" }}>
+    <div>
       <div style={{ display: "flex", flexDirection: "column" }}>
         <PoNavigator
           selection={{
@@ -90,7 +89,7 @@ const InternalPOL1 = () => {
         }}
       >
         <Button onClick={approveRequest}>Approve</Button>
-        <Button onClick={rejectRequest}> Reject </Button>
+        <Button onClick={rejectRequest}>Reject</Button>
       </div>
       <div style={{ width: "1100px" }}>
         <Table striped>

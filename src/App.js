@@ -10,6 +10,7 @@ import MyPurchaseOrder from './Components/PurchaseOrders/MyPurchaseOrder';
 import InternalPOL1 from './Components/PurchaseOrders/InternalPOL1';
 import InternalPOL2 from './Components/PurchaseOrders/InternalPOL2';
 import InternalPOAll from './Components/PurchaseOrders/InternalPOAll';
+import InternalPO from './Components/PurchaseOrders/InternalPO';
 function App() {  
 return (
   <div className="App">
@@ -22,6 +23,7 @@ return (
           <Route path='budget' element={<Budget/>} />
           <Route path='all-purchase' element={<PurchaseOrders/>}/>
           <Route path='my-purchase' element={<MyPurchaseOrder/>}/>
+          <Route path='internal-po' element={<InternalPO/>}/>
           <Route path='internal-po-approval-level-1' element={<InternalPOL1/>}/>
           <Route path='internal-po-approval-level-2' element={<InternalPOL2/>}/>
           <Route path='internal-po-approval-level-all' element={<InternalPOAll/>}/>
