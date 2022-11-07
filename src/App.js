@@ -6,7 +6,10 @@ import Home from './Components/Home/Home';
 import Budget from './Components/Budget/Budget';
 import Clients from './Components/Clients/Clients';
 import PurchaseOrders from './Components/PurchaseOrders/PurchaseOrders';
-
+import MyPurchaseOrder from './Components/PurchaseOrders/MyPurchaseOrder';
+import InternalPOL1 from './Components/PurchaseOrders/InternalPOL1';
+import InternalPOL2 from './Components/PurchaseOrders/InternalPOL2';
+import InternalPOAll from './Components/PurchaseOrders/InternalPOAll';
 function App() {  
 return (
   <div className="App">
@@ -18,6 +21,10 @@ return (
           <Route path='vendors' element={<Vendors />} />
           <Route path='budget' element={<Budget/>} />
           <Route path='all-purchase' element={<PurchaseOrders/>}/>
+          <Route path='my-purchase' element={<MyPurchaseOrder/>}/>
+          <Route path='internal-po-approval-level-1' element={<InternalPOL1/>}/>
+          <Route path='internal-po-approval-level-2' element={<InternalPOL2/>}/>
+          <Route path='internal-po-approval-level-all' element={<InternalPOAll/>}/>
             </Route>
         </Routes>
     </BrowserRouter>

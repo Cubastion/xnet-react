@@ -149,7 +149,7 @@ const AllPurchaseOrders = () => {
                   key={x.Id}
                 >
                   <Table.Cell>{x.po}</Table.Cell>
-                  <Table.Cell>{x.project.name}</Table.Cell>
+                  <Table.Cell>{x.project?.name}</Table.Cell>
                   <Table.Cell>
                     {refreshedTotal.totalValue
                       ? refreshedTotal.totalValue
@@ -166,7 +166,7 @@ const AllPurchaseOrders = () => {
                       : x.remainingValue}
                   </Table.Cell>
                   <Table.Cell>{x.unitOfMeasure}</Table.Cell>
-                  <Table.Cell>{x.client.name}</Table.Cell>
+                  <Table.Cell>{x.client?.name}</Table.Cell>
                   <Table.Cell>{x.description}</Table.Cell>
                   <Table.Cell>{x.issueDate}</Table.Cell>
                   <Table.Cell>{x.startDate}</Table.Cell>

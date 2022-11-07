@@ -1,6 +1,6 @@
 import { Box } from "@mui/material";
 import React, { useContext } from "react";
-import { tokenPutRequestOption } from "../../Helpers/misellaneous";
+import { tokenPostRequestOption } from "../../Helpers/misellaneous";
 import { useForm } from "react-hook-form";
 import { Button } from "semantic-ui-react";
 import { SelectedContextPO } from "../PurchaseOrders";
@@ -29,7 +29,9 @@ const EditForecastForm = (props) => {
         "11",
         "12",
       ];
+    const year = ["2021-2022","2022-2023","2023-2024"]
     const onSubmit = (data) => {
+        const paramsId =  props.selectedForcastItem.Id;
         const id = selection.Id;
         let helper = {
           ...data,
@@ -38,11 +40,11 @@ const EditForecastForm = (props) => {
         };
         const fetchData = async () => {
           try {
-            let url = `https://devxnet.cubastion.net/api/v1/purchaseOrder/addPOForecast?id=${id}`;
-            const response = await fetch(url, tokenPutRequestOption(helper));
+            let url = `https://devxnet.cubastion.net/api/v1/purchaseOrder/updatePOForecast?id=${paramsId}`;
+            const response = await fetch(url, tokenPostRequestOption(helper));
             const json = await response.json();
             if (json.statusCode === "200") {
-              alert("Forecast Added Successfully")
+              alert("Forecast Edited Successfully")
               props.refreshDataFunction();
               props.setOpenDialog(false);
               alert("PO Attachment Added Successfully...!!!");
@@ -69,20 +71,21 @@ const EditForecastForm = (props) => {
               <select
                 {...register("financialYear", { required: true })}
                 htmlFor="financialYear"
+                defaultValue={props.selectedForcastItem.financialYear}
               >
                 <option value="">Select</option>
-                <option value="2021-2022">2021-2022</option>
-                <option value="2022-2023">2022-2023</option>
-                <option value="2023-2024">2023-2024</option>
+                {year.map((x) => {
+                    return <option selected={props.selectedForcastItem.financialYear === x} value={x} key={x}>{x}</option>
+                })}
               </select>
             </div>
             <div
               style={{ margin: "1rem", display: "flex", flexDirection: "column" }}
             >
               <label name="month">Month</label>
-              <select {...register("month", { required: true })} htmlFor="month">
+              <select {...register("month", { required: true })} defaultValue={props.selectedForcastItem.month} htmlFor="month">
                 {months.map((x) => (
-                  <option key={x}>{x}</option>
+                  <option selected={props.selectedForcastItem.month === x} value={x} key={x}>{x}</option>
                 ))}
               </select>
             </div>
@@ -94,26 +97,30 @@ const EditForecastForm = (props) => {
                 {...register("expectedBilling", { required: true })}
                 htmlFor="expectedBilling"
                 type="number"
-              />
+                defaultValue={props.selectedForcastItem.expectedBilling}
+                />
             </div>
             <div
               style={{ margin: "1rem", display: "flex", flexDirection: "column" }}
-            >
+              >
               <label name="conversionFactor">Conversion Factor</label>
               <input
                 {...register("conversionFactor", { required: true })}
                 htmlFor="conversionFactor"
                 type="number"
-              />
+                defaultValue={props.selectedForcastItem.conversionFactor}
+                
+                />
             </div>
             <div
               style={{ margin: "1rem", display: "flex", flexDirection: "column" }}
-            >
+              >
               <label name="comments">Comments</label>
               <textarea
                 {...register("comments", { required: true })}
                 htmlFor="comments"
-              />
+                defaultValue={props.selectedForcastItem.comments}
+                />
             </div>
             <Button onClick={onSubmit}>Add</Button>
             <Button

@@ -10,7 +10,7 @@ const SideNavbar = () => {
 
   const fetchData = async () => {
     try {
-      var url = `https://devxnet.cubastion.net/api/v1/menu/findMenuByEmployeeId?empId=k9g5f51fcl87tcq`;
+      var url = `https://devxnet.cubastion.net/api/v1/menu/findMenuByEmployeeId?empId=2j85hmc1skb43gq`;
       const response = await fetch(url, tokenRequestOption());
       const json = await response.json();
       setNav(json.data)

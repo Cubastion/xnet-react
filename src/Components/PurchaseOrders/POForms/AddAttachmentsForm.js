@@ -15,11 +15,11 @@ const AddAttachmentsForm = (props) => {
 
   const onSubmit = (data) => {
     const id = selection.Id
-    console.log("file data",data.file)
+    console.log("file data",data)
     var sender = new FormData();
     sender.append("id", id);
     sender.append("filePath", "PO-Documents");
-    sender.append("xnetFiles", data.file);
+    sender.append("xnetFiles", data.file[0]);
     sender.append("comment", data.comments);
     console.log("============>",sender.get("xnetFiles"));
 

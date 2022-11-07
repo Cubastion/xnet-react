@@ -5,6 +5,7 @@ import POForecastsTable from "./POTables/POForecastsTable";
 import AllPurchaseOrders from "./POTables/AllPurchaseOrders";
 import PONotesTable from "./POTables/PONotesTable";
 import POItemsTable from "./POTables/POItemsTable";
+import PoNavigator from "./PoNavigator";
 import { Tab, Tabs, TabList, TabPanel } from "react-tabs";
 export const SelectedContextPO = createContext("");
 
@@ -12,6 +13,7 @@ const PurchaseOrders = () => {
   const [selectedPO, setSelectedPO] = useState("");
   return (
     <div>
+      <PoNavigator selection ={{value: "all-purchase", label: "All Purchase Order"}}/>
       <SelectedContextPO.Provider value={[selectedPO, setSelectedPO]}>
         <AllPurchaseOrders />
         <div style={{ marginTop: "2rem", marginBottom: "2rem" }}>
