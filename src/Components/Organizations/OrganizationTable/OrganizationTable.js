@@ -55,6 +55,8 @@ const OrganizationTable = () => {
     setAddOrganizationData(x);
   } 
 
+  console.log(organizationData,"=======")
+
   return (
     <>
       <div>

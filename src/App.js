@@ -4,6 +4,7 @@ import Organizations from './Components/Organizations/Organizations';
 import  Vendors  from './Components/Vendors/Vendors';
 import Home from './Components/Home/Home';
 import Budget from './Components/Budget/Budget';
+import Clients from './Components/Clients/Clients';
 import PurchaseOrders from './Components/PurchaseOrders/PurchaseOrders';
 
 function App() {  
@@ -13,7 +14,7 @@ return (
         <Routes>
             <Route path = "/" element = {<Home/>}>
           <Route path="organization" element={<Organizations />} />
-          <Route path="clients" element={<clients />} />
+          <Route path="clients" element={<Clients />} />
           <Route path='vendors' element={<Vendors />} />
           <Route path='budget' element={<Budget/>} />
           <Route path='all-purchase' element={<PurchaseOrders/>}/>
