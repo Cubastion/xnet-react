@@ -6,7 +6,6 @@ import {
 import PoNavigator from "./PoNavigator";
 import { Button, Table } from "semantic-ui-react";
 
-// https://devxnet.cubastion.net/api/v1/internalPOs/getIPOByStatus?status=Awaiting%20Department%20Approval
 const InternalPOL1 = () => {
   const [l1PO, setL1PO] = useState();
   const [selectedItem, setSelectedItem] = useState("");
@@ -24,6 +23,21 @@ const InternalPOL1 = () => {
     };
     fetchData();
   }, []);
+
+
+  const refreshData = () => {
+    var url = `https://devxnet.cubastion.net/api/v1/internalPOs/getIPOByStatus?status=Awaiting Department Approval`;
+    const fetchData = async () => {
+      try {
+        const response = await fetch(url, tokenRequestOption());
+        const json = await response.json();
+        setL1PO(json.data);
+      } catch (error) {
+        console.log("error", error);
+      }
+    };
+    fetchData();
+  }
 
   const TableHeader = [
     "PO NUMBER",
@@ -44,7 +58,8 @@ const InternalPOL1 = () => {
       const response = await fetch(url, tokenPostRequestOption());
       const json = await response.json();
       if (json.statusCode === "200") {
-        alert("Request Rejected");
+        alert("Request Approve");
+        refreshData();
       } else {
         alert(json.statusMessage);
       }
@@ -61,6 +76,7 @@ const InternalPOL1 = () => {
       const json = await response.json();
       if (json.statusCode === "200") {
         alert("Request Rejected");
+        refreshData();
       } else {
         alert(json.statusMessage);
       }
