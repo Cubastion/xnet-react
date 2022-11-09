@@ -6,7 +6,6 @@ import { Tab,TabList } from "semantic-ui-react";
 import { Drawer, Pagination, TableCell } from "@mui/material";
 import AddLeads from "./AddLeads";
 import EditLeads from "./EditLeads";
-import { set } from "react-hook-form";
 
 const Leads = (props) => {
     const[leads,setLeads] = useState([]);
@@ -44,7 +43,7 @@ const Leads = (props) => {
                     varient={"temporary"}
                     open={addLeadForm}
                     onClose={() => setAddLeadForm(false)}>
-                        <AddLeads fun={setAddLeadForm}></AddLeads>
+                    <AddLeads fun={setAddLeadForm} addRefresh={setAddLeadRefresh}></AddLeads>
                 </Drawer>
                 <Button onClick={() => setAddLeadForm(true)}>Add</Button>
                 <Drawer 

@@ -5,6 +5,7 @@ import  Vendors  from './Components/Vendors/Vendors';
 import Home from './Components/Home/Home';
 import Budget from './Components/Budget/Budget';
 import Clients from './Components/Clients/Clients';
+import ClientDetails from './Components/Clients/ClientsTable/ClientDetails/ClientDetails';
 import PurchaseOrders from './Components/PurchaseOrders/PurchaseOrders';
 import MyPurchaseOrder from './Components/PurchaseOrders/MyPurchaseOrder';
 import InternalPOL1 from './Components/PurchaseOrders/InternalPOL1';
@@ -19,6 +20,7 @@ return (
             <Route path = "/" element = {<Home/>}>
           <Route path="organization" element={<Organizations />} />
           <Route path="clients" element={<Clients />} />
+         < Route path="clientDetails/:id" element={<ClientDetails />} />
           <Route path='vendors' element={<Vendors />} />
           <Route path='budget' element={<Budget/>} />
           <Route path='all-purchase' element={<PurchaseOrders/>}/>

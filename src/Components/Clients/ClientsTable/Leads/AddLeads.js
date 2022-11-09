@@ -70,7 +70,7 @@ const AddLeads = (props) => {
         fetchStageData();
       },[]);
       console.log(stageData,"---------->")
-
+      
       return (
         <Box p={2} width="500px" textAlign="left" role="presentation">
       <form onSubmit={handleSubmit(onSubmit)}>
@@ -103,17 +103,17 @@ const AddLeads = (props) => {
             
                 </div>   
             <div style={{'margin':'1rem', 'display':'flex','flexDirection':'column'}}>
-                    <label name="STAGE" onClick={() =>setStageData() }>STAGE </label>
+                    <label name="STAGE" onClick={()=> setStageData() }>STAGE </label>
                     <select {...register("stage")} htmlFor="STAGE">
                         <option value="">SELECT</option>
             {stageData && stageData.map((x) => (
-                        <option value={x.Id} key={x.Id}>{x.stage}</option>
+                        <option value={x.Id} key={x.Id}>{x.name}</option>
                         ))}
                     </select>
                 </div>    
             <div style={{'margin':'1rem', 'display':'flex','flexDirection':'column'}}>
               <label name="REMARKS">REMARKS</label>
-              <input type="tel" {...register("remarks")} htmlFor="REMARKS" />
+              <textarea {...register("remarks")} htmlFor="REMARKS" />
             </div>
           </div>          
                  
@@ -124,5 +124,11 @@ const AddLeads = (props) => {
     </Box>
       );
 };
+
+
+
+let shreya = () =>{
+
+}
 
 export default AddLeads;

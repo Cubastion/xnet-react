@@ -2,12 +2,14 @@ import React from "react";
 import { useEffect, useState } from "react";
 import { Table, Button, Container } from "semantic-ui-react";
 import { tokenRequestOption } from "../../Helpers/misellaneous";
+import {useNavigate} from 'react-router-dom';
 import {Tab, Tabs,TabList,TabPanel} from "react-tabs";
 import "react-tabs/style/react-tabs.css";
 import { Drawer, Pagination, TableCell } from "@mui/material";
 import AddClients from "./AddClients";
 import EditClients from "./EditClients";
 import Leads from "./Leads/Leads";
+import ClientDetails from "./ClientDetails/ClientDetails";
 import Opportunity from "./Opportunity/Opportunity";
 import Project from "./ProjectCRTracker/Project";
 import { CompressOutlined } from "@mui/icons-material";
@@ -48,7 +50,16 @@ const ClientsTable = ()=> {
         setAddClient(x);
         setEditClient(x);
     };
-console.log(clientData,"--------------------")
+console.log(client,"--------------------")
+
+const navigate = useNavigate();
+
+const navigateToDetails = (id) => {
+    navigate(`/ClientDetails/${id}`);
+};
+
+
+
     return(
         <>
         <div>
@@ -66,7 +77,7 @@ console.log(clientData,"--------------------")
                     open={editClientForm}
                     onClose={() => setEditClientForm(false)}
                     varient={"temporary"}>
-                    <EditClients fun={setEditClientForm} refresh={setEditClienRefresh} clientsDetails={clientData}></EditClients>
+                    <EditClients fun={setEditClientForm} refresh={setEditClienRefresh} clientsDetails={client}></EditClients>
                 </Drawer>
                 <Button onClick={() => setEditClientForm(true)}>Edit</Button>
             </div>
@@ -91,7 +102,7 @@ console.log(clientData,"--------------------")
                         client.map((x) => (
                             <Table.Row onClick={() => onSelectClient(x)} key={x.Id} style={clientData.Id === x.Id?{backgroundColor:"lightGrey"}:{}}>
                             
-                                <TableCell>
+                                <TableCell onClick={()=>navigateToDetails(x.Id)} >
                                     {x.name}
                                 </TableCell>
                                  <TableCell>
