@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { tokenRequestOption } from "../../Helpers/misellaneous";
 import InvoiceNavigator from "../InvoiceNavigator/InvoiceNavigator";
 import { Table } from "semantic-ui-react";
-import { Pagination } from "@mui/material";
+import { Button, Pagination } from "@mui/material";
 
 const AllInvoices = () => {
   const [pageNumber, setPageNumber] = useState(1);
@@ -60,6 +60,11 @@ const AllInvoices = () => {
     <>
       <div>
         <InvoiceNavigator currentPage={1} />
+      </div>
+      <div style={{marginBottom:'1rem',display:'flex',justifyContent:'end' ,maxWidth:'1100px'}}>
+        <Button>Edit</Button>
+        <Button>Search</Button>
+        <Button>Export</Button>
       </div>
       <div>
         <div
