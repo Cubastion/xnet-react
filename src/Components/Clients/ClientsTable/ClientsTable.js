@@ -44,7 +44,7 @@ const ClientsTable = ()=> {
     const handleChangePage = (event, newPage) => {
         setpageNumber(newPage);
       };
-
+console.log(addClient,"-------")
     let onSelectClient =(x) => {
         setClientData(x);
         setAddClient(x);
