@@ -8,6 +8,7 @@ import Clients from "./Components/Clients/Clients";
 import ClientDetails from "./Components/Clients/ClientsTable/ClientDetails/ClientDetails";
 import PurchaseOrders from "./Components/PurchaseOrders/PurchaseOrders";
 import MyPurchaseOrder from "./Components/PurchaseOrders/MyPurchaseOrder";
+import EmployeeTable from "./Components/Staffing/EmployeeTable";
 import InternalPOL1 from "./Components/PurchaseOrders/InternalPOL1";
 import InternalPOL2 from "./Components/PurchaseOrders/InternalPOL2";
 import InternalPOAll from "./Components/PurchaseOrders/InternalPOAll";
@@ -25,6 +26,7 @@ function App() {
             <Route path="organization" element={<Organizations />} />
             <Route path="clients" element={<Clients />} />
             <Route path="clientDetails/:id" element={<ClientDetails />} />
+            <Route path = "employee-staffing" element={<EmployeeTable/>}/>
             <Route path="vendors" element={<Vendors />} />
             <Route path="budget" element={<Budget />} />
             <Route path="all-purchase" element={<PurchaseOrders />} />
