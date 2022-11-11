@@ -3,11 +3,13 @@ import { tokenRequestOption } from "../../Helpers/misellaneous";
 import InvoiceNavigator from "../InvoiceNavigator/InvoiceNavigator";
 import { Table } from "semantic-ui-react";
 import { Pagination } from "@mui/material";
-// https://devxnet.cubastion.net/api/v1/invoices/getDispatchInvoice?page=1&dispatchFlag=true&status=Submitted
+import { useNavigate } from "react-router-dom";
+
 const InvoicesPendingDispatch = () => {
   const [pageNumber, setPageNumber] = useState(1);
   const [totalPages, setTotalPages] = useState("");
   const [invoicesData, setInvoicesData] = useState("");
+  const navigate = useNavigate();
 
   useEffect(() => {
     var url = `https://devxnet.cubastion.net/api/v1/invoices/getDispatchInvoice?page=${pageNumber}&dispatchFlag=true&status=Submitted`;
@@ -70,8 +72,8 @@ const InvoicesPendingDispatch = () => {
               {invoicesData &&
                 invoicesData.map((x) => (
                   <Table.Row key={x.Id}>
-                    <Table.Cell>
-                      <a style={{ cursor: "pointer" }}>{x.invoiceNumber}</a>
+                    <Table.Cell onClick={()=>navigate(`/invoice/${x.Id}`)} style={{color:'blue', cursor: "pointer" }}>
+                      {x.Id}
                     </Table.Cell>
                     <Table.Cell>{x.invoiceDate}</Table.Cell>
                     <Table.Cell>{x.invoiceType}</Table.Cell>

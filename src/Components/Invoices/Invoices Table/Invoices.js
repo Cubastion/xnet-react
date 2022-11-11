@@ -4,12 +4,16 @@ import InvoiceNavigator from "../InvoiceNavigator/InvoiceNavigator";
 import { Table } from "semantic-ui-react";
 import { Button, Drawer, Pagination } from "@mui/material";
 import AddInvoice from "../Invoice Forms/AddInvoice";
+import { useNavigate } from "react-router-dom";
+
 const Invoices = () => {
   const [pageNumber, setPageNumber] = useState(1);
   const [totalPages, setTotalPages] = useState("");
   const [invoicesData, setInvoicesData] = useState("");
   const [selectedInvoice, setSelectedInvoice] = useState("");
   const [activateAddForm, setActivateAddForm] = useState(false);
+  const navigate = useNavigate();
+
   useEffect(() => {
     var url = `https://devxnet.cubastion.net/api/v1/invoices/findAll?page=${pageNumber}`;
     const fetchData = async () => {
@@ -130,8 +134,8 @@ const Invoices = () => {
                     onClick={() => setSelectedInvoice(x)}
                     key={x.Id}
                   >
-                    <Table.Cell>
-                      <a style={{ cursor: "pointer" }}>{x.Id}</a>
+                   <Table.Cell onClick={()=>navigate(`/invoice/${x.Id}`)} style={{color:'blue', cursor: "pointer" }}>
+                      {x.Id}
                     </Table.Cell>
                     <Table.Cell>{x.invoiceNumber}</Table.Cell>
                     <Table.Cell>{x.status}</Table.Cell>

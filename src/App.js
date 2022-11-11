@@ -6,7 +6,6 @@ import Home from "./Components/Home/Home";
 import Budget from "./Components/Budget/Budget";
 import Clients from "./Components/Clients/Clients";
 import ClientDetails from "./Components/Clients/ClientsTable/ClientDetails/ClientDetails";
-import EmployeeTable from "./Components/Staffing/EmployeeTable";
 import PurchaseOrders from "./Components/PurchaseOrders/PurchaseOrders";
 import MyPurchaseOrder from "./Components/PurchaseOrders/MyPurchaseOrder";
 import InternalPOL1 from "./Components/PurchaseOrders/InternalPOL1";
@@ -16,6 +15,7 @@ import InternalPO from "./Components/PurchaseOrders/InternalPO";
 import AllInvoices from "./Components/Invoices/Invoices Table/AllInvoices";
 import Invoices from "./Components/Invoices/Invoices Table/Invoices";
 import InvoicesPendingDispatch from "./Components/Invoices/Invoices Table/InvoicesPendingDispatch";
+import DetailedInvoice from "./Components/Invoices/Invoice Details/DetailedInvoice";
 function App() {
   return (
     <div className="App">
@@ -24,7 +24,6 @@ function App() {
           <Route path="/" element={<Home />}>
             <Route path="organization" element={<Organizations />} />
             <Route path="clients" element={<Clients />} />
-            <Route path="employee-staffing" element={<EmployeeTable />} />
             <Route path="clientDetails/:id" element={<ClientDetails />} />
             <Route path="vendors" element={<Vendors />} />
             <Route path="budget" element={<Budget />} />
@@ -47,6 +46,7 @@ function App() {
             <Route path="invoices" element={<Invoices/>}/>
             <Route path="invoices-pending-dispatch" element={<InvoicesPendingDispatch/>}/>
           </Route>
+            <Route path="invoice/:id" element={<DetailedInvoice/>}/>
         </Routes>
       </BrowserRouter>
 
