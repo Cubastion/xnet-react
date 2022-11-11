@@ -6,6 +6,7 @@ import Home from "./Components/Home/Home";
 import Budget from "./Components/Budget/Budget";
 import Clients from "./Components/Clients/Clients";
 import ClientDetails from "./Components/Clients/ClientsTable/ClientDetails/ClientDetails";
+import EmployeeTable from "./Components/Staffing/EmployeeTable";
 import PurchaseOrders from "./Components/PurchaseOrders/PurchaseOrders";
 import MyPurchaseOrder from "./Components/PurchaseOrders/MyPurchaseOrder";
 import InternalPOL1 from "./Components/PurchaseOrders/InternalPOL1";
@@ -23,6 +24,7 @@ function App() {
           <Route path="/" element={<Home />}>
             <Route path="organization" element={<Organizations />} />
             <Route path="clients" element={<Clients />} />
+            <Route path="employee-staffing" element={<EmployeeTable />} />
             <Route path="clientDetails/:id" element={<ClientDetails />} />
             <Route path="vendors" element={<Vendors />} />
             <Route path="budget" element={<Budget />} />
