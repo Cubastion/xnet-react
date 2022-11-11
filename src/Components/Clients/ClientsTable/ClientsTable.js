@@ -10,6 +10,7 @@ import AddClients from "./AddClients";
 import EditClients from "./EditClients";
 import Leads from "./Leads/Leads";
 import ClientDetails from "./ClientDetails/ClientDetails";
+import ProjectTable from "./ClientProject/ProjectTable"
 import Opportunity from "./Opportunity/Opportunity";
 import Project from "./ProjectCRTracker/Project";
 import { CompressOutlined } from "@mui/icons-material";
@@ -100,7 +101,7 @@ const navigateToDetails = (id) => {
                 <Table.Body>
                     {client &&
                         client.map((x) => (
-                            <Table.Row onClick={() => onSelectClient(x)} key={x.Id} style={clientData.Id === x.Id?{backgroundColor:"lightGrey"}:{}}>
+                            <Table.Row onClick={() => onSelectClient(x)} key={x.Id} style={clientData.Id === x.Id?{backgroundColor:"lightGrey"}:{}} >
                             
                                 <TableCell onClick={()=>navigateToDetails(x.Id)} >
                                     {x.name}
