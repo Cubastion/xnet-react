@@ -65,7 +65,7 @@ const SideNavbar = () => {
         variant={windowSize.innerWidth <= "750" ? "temporary" : "permanent"}
       >
         
-        <Box p={2} width="185px" textAlign="left" role="presentation">
+        <Box p={2} width="205px" textAlign="left" role="presentation">
           {nav && nav?.map((x) => (
               <Typography
               onClick = {()=> onClickSideNavBar(x)}

@@ -16,7 +16,6 @@ const AddPOItemsForm = (props) => {
   const id = currentSelectionId.Id;
   const onSubmit = (data) => {
     let object = {...data, 'currencyCode': currentSelectionId.currencyCode}
-    console.log(object)
     const fetchData = async () => {
       try {
         let url = `https://devxnet.cubastion.net/api/v1/POItems/addpOItems?id=${id}`;
