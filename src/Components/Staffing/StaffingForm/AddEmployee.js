@@ -5,14 +5,13 @@ import { Button } from "semantic-ui-react";
 import { tokenPostRequestOption,tokenRequestOption } from "../../Helpers/misellaneous";
 import { useEffect ,useState} from "react";
 
-const AddClients = (props) => {
+const AddEmployee = (props) => {
     const {
         register,
         handleSubmit,
         formState: { errors },
       } = useForm();
-      const [calenderData,setCalenderData] = useState()
-      const[image,setImage]=useState([]);
+      const[designation,setDesignation] = useState();
       const onSubmit = (data) => {
         const fetchData = async () => {
           try {
@@ -34,135 +33,86 @@ const AddClients = (props) => {
       };
 
       useEffect(() => {
-        var url=`https://devxnet.cubastion.net/api/v1/holidayCalendar/getAllHolidayCalendar`
-        const fetchCalenderData = async() => {
+        var url=`https://devxnet.cubastion.net/api/v1/listOfValues/findByType?type=DESIGNATION_CD`
+        const fetchDesignationData = async() => {
             try{
                 const response = await fetch(url, tokenRequestOption());
                 const json = await response.json();
                 console.log(json)
                 if(json.statusCode==="200") {
-                    setCalenderData(json.data)
+                    setDesignation(json.data)
                 } else alert(json.statusMessage);
             } catch(error) {
                 console.log("error",error)
             }
 
         }
-        fetchCalenderData();
+        fetchDesignationData();
       },[]);
 
-      const [imageURLs, setImageURLs] = useState([]);
-      useEffect(() => {
-        if(image.length < 1) return;
-        const newImageUrls =[];
-        image.forEach(image => newImageUrls.push(URL.createObjectURL(image)));
-        setImageURLs(newImageUrls);
-      },[image]);
-       
-      function onImageChange(e) {
-        setImage([...e.target.files]);
-      }
-
       
-
       return (
         <Box p={2} width="500px" textAlign="left" role="presentation">
       <form onSubmit={handleSubmit(onSubmit)}>
         <div>
           <div>
             <div style={{'margin':'1rem', 'display':'flex','flexDirection':'column'}}>
-              <label name="NAME">NAME</label>
+              <label name="EMPLOYEE">EMPLOYEE</label>
               <input
                 type="text"
-                {...register("name", { required: true })}
-                htmlFor="NAME"
+                {...register("employee", { required: true })}
+                htmlFor="EMPLOYEE"
               />
             </div>
             <div style={{'margin':'1rem', 'display':'flex','flexDirection':'column'}}>
-              <label name="ALIAS NAME">ALIAS NAME</label>
+              <label name="CLIENT NAME">CLIENT NAME</label>
               <input
                 type="text"
-                {...register("aliasName", { required: true })}
-                htmlFor="ALIAS NAME"
+                {...register("clientName", { required: true })}
+                htmlFor="CLIENT NAME"
               />
             </div>
             <div style={{'margin':'1rem', 'display':'flex','flexDirection':'column'}}>
-              <label name="ADDRESS LINE1">ADDRESS LINE1</label>
+              <label name="PROJECT">PROJECT</label>
               <input
                 type="text"
-                {...register("addressLine1")}
-                htmlFor="ADDRESS LINE1"
+                {...register("project")}
+                htmlFor="PROJECT"
               />
             </div>
             <div style={{'margin':'1rem', 'display':'flex','flexDirection':'column'}}>
-              <label name="ADDRESS LINE2">ADDRESS LINE2</label>
+              <label name="START DATE">START DATE</label>
               <input
                 type="text"
-                {...register("addressLine2")}
-                htmlFor="ADDRESS LINE2"
+                {...register("startDate")}
+                htmlFor="START DATE"
               />
             </div>
             <div style={{'margin':'1rem', 'display':'flex','flexDirection':'column'}}>
-              <label name="CITY">CITY</label>
-              <input type="tel" {...register("city")} htmlFor="CITY" />
+              <label name="END DATE">END DATE</label>
+              <input type="tel" {...register("endDate")} htmlFor="END DATE" />
             </div>
             <div style={{'margin':'1rem', 'display':'flex','flexDirection':'column'}}>
-              <label name="STATE">STATE</label>
-              <input type="tel" {...register("state")} htmlFor="STATE" />
-            </div>
-            <div style={{'margin':'1rem', 'display':'flex','flexDirection':'column'}}>
-              <label name="PINCODE">PINCODE</label>
+              <label name="STAFFING(%)">STAFFING(%)</label>
               <input
                 type="tel"
-                {...register("pincode")}
-                htmlFor="PINCODE"
+                {...register("staffing")}
+                htmlFor="STAFFING(%)"
               />
-            </div>
-            <div style={{'margin':'1rem', 'display':'flex','flexDirection':'column'}}>
-              <label name="COUNTRY">COUNTRY</label>
-              <input type="tel" {...register("country")} htmlFor="COUNTRY" />
             </div>
           </div>
 
           <div >
-            <div style={{'margin':'1rem', 'display':'flex','flexDirection':'column'}}>
-              <label name="PAN NUMBER">PAN NUMBER</label>
-              <input
-                type="tel"
-                {...register("pan")}
-                htmlFor="PAN NUMBER"
-              />
-            </div>
-            <div style={{'margin':'1rem', 'display':'flex','flexDirection':'column'}}>
-              <label name="GST">GST</label>
-              <input
-                type="tel"
-                {...register("gst")}
-                htmlFor="GST"
-              />
-            </div>
-            <div style={{'margin':'1rem', 'display':'flex','flexDirection':'column'}}>
-              <label name="ACCOUNT MANAGER">ACCOUNT MANAGER</label>
-              <input
-                type="text"
-                {...register("accountManager")}
-                htmlFor="ACCOUNT MANAGER"
-              />
-            </div>
                 <div style={{'margin':'1rem', 'display':'flex','flexDirection':'column'}}>
-                    <label name="HOLIDAY CALENDAR" onClick={() =>setCalenderData() }>HOLIDAY CALENDAR </label>
-                    <select {...register("holidayCalendar")} htmlFor="HOLIDAY CALENDAR">
+                    <label name="ROLE" onClick={() =>setDesignation() }>ROLE </label>
+                    <select {...register("role")} htmlFor="ROLE">
                         <option value="">SELECT</option>
-            {calenderData && calenderData.map((x) => (
-                        <option value={x.Id} key={x.Id}>{x.calendarName}</option>
+            {designation && designation.map((x) => (
+                        <option value={x.Id} key={x.Id}>{x.displayValue}</option>
                         ))}
                     </select>
             
               </div>
-              <div style={{'margin':'1rem', 'display':'flex','flexDirection':'column'}}>
-              <label name="attachment" onChange={onImageChange}>LOGO</label>
-              <input type="file" {...register("attachment")} htmlFor="LOGO" />
-            </div>
 
             
           </div>
@@ -174,4 +124,4 @@ const AddClients = (props) => {
       );
 };
 
-export default AddClients;
+export default AddEmployee;

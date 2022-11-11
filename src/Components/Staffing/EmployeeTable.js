@@ -5,6 +5,7 @@ import { tokenRequestOption } from "../Helpers/misellaneous";
 import "react-tabs/style/react-tabs.css";
 import { Drawer, TableCell,Pagination } from "@mui/material";
 import { set } from "react-hook-form";
+import AddEmployee from "./StaffingForm/AddEmployee";
 
 const EmployeeTable=() =>{
     const[employee, setEmployee] = useState([]);
@@ -25,6 +26,7 @@ const EmployeeTable=() =>{
                 const json = await response.json();
                 setEmployeeStaffing(json.data);
                 setTotalPages(json.paginate.totalPage);
+                setAddEmployee(json.data[0]);
             } catch(error) {
                 console.log("error", error);
             }
@@ -33,17 +35,34 @@ const EmployeeTable=() =>{
         fetchData();
     },[pageNumber]);
 
-    const handleChangePage=(newPage) => {
+    const handleChangePage=(event,newPage) => {
         setPageNumber(newPage);
     };
 
     let onSelectEmployee=(x) => {
         setEmployee(x);
+        setAddEmployee(x);
     };
 
     return(
         <>
         <div>
+            <div style={{float:"right"}}>
+                <Drawer anchor="right"
+                open={addEmployeeForm}
+                onClose={() =>setAddEmployeeForm(false)}
+                varient={"temporary"}>
+                <AddEmployee fun={setAddEmployeeForm}></AddEmployee>
+
+                </Drawer>
+                <Button>Add</Button>
+                <Drawer anchor="right">
+
+                </Drawer>
+                <Button>
+                    Edit
+                </Button>
+            </div>
             
             <h4>Employees</h4>
             <Table striped>
