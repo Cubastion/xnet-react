@@ -2,12 +2,15 @@ import React, { useEffect, useState } from "react";
 import { tokenRequestOption } from "../../Helpers/misellaneous";
 import InvoiceNavigator from "../InvoiceNavigator/InvoiceNavigator";
 import { Table } from "semantic-ui-react";
-import { Button, Pagination } from "@mui/material";
+import { Button, Drawer, Pagination } from "@mui/material";
+import EditAllInvoicesForm from "../Invoice Forms/EditAllInvoicesForm";
 
 const AllInvoices = () => {
   const [pageNumber, setPageNumber] = useState(1);
   const [totalPages, setTotalPages] = useState("");
   const [invoicesData, setInvoicesData] = useState("");
+  const [activateEditForm, setActivateEditForm] = useState(false);
+  const [selectedInvoice, setSelectedInvoice] = useState("");
   useEffect(() => {
     var url = `https://devxnet.cubastion.net/api/v1/invoices/findAll?page=${pageNumber}`;
     const fetchData = async () => {
@@ -27,6 +30,22 @@ const AllInvoices = () => {
     };
     fetchData();
   }, [pageNumber]);
+
+  const refreshData = async () => {
+    var url = `https://devxnet.cubastion.net/api/v1/invoices/findAll?page=${pageNumber}`;
+    try {
+      const response = await fetch(url, tokenRequestOption());
+      const json = await response.json();
+      setInvoicesData(json.data);
+      setTotalPages(json.paginate.totalPage);
+      window.scrollTo({
+        top: 0,
+        behavior: "smooth",
+      });
+    } catch (error) {
+      console.log("error", error);
+    }
+  };
 
   const TableHeader = [
     "INVOICE ID",
@@ -58,11 +77,34 @@ const AllInvoices = () => {
   };
   return (
     <>
+      <Drawer
+        anchor="right"
+        open={activateEditForm}
+        onClose={() => setActivateEditForm(false)}
+      >
+        <EditAllInvoicesForm
+          selectedInvoice={selectedInvoice}
+          setActivateEditForm={setActivateEditForm}
+          refreshData={refreshData}
+        />
+      </Drawer>
       <div>
         <InvoiceNavigator currentPage={1} />
       </div>
-      <div style={{marginBottom:'1rem',display:'flex',justifyContent:'end' ,maxWidth:'1100px'}}>
-        <Button>Edit</Button>
+      <div
+        style={{
+          marginBottom: "1rem",
+          display: "flex",
+          justifyContent: "end",
+          maxWidth: "1100px",
+        }}
+      >
+        <Button
+          disabled={!selectedInvoice}
+          onClick={() => setActivateEditForm(true)}
+        >
+          Edit
+        </Button>
         <Button>Search</Button>
         <Button>Export</Button>
       </div>
@@ -85,9 +127,17 @@ const AllInvoices = () => {
             <Table.Body>
               {invoicesData &&
                 invoicesData.map((x) => (
-                  <Table.Row key={x.Id}>
+                  <Table.Row
+                    style={
+                      selectedInvoice.Id === x.Id
+                        ? { background: "lightgrey" }
+                        : {}
+                    }
+                    onClick={() => setSelectedInvoice(x)}
+                    key={x.Id}
+                  >
                     <Table.Cell>
-                      <a>{x.Id}</a>
+                      <a style={{ cursor: "pointer" }}>{x.Id} </a>
                     </Table.Cell>
                     <Table.Cell>{x.invoiceNumber}</Table.Cell>
                     <Table.Cell>{x.status}</Table.Cell>

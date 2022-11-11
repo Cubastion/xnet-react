@@ -71,7 +71,7 @@ const InvoicesPendingDispatch = () => {
                 invoicesData.map((x) => (
                   <Table.Row key={x.Id}>
                     <Table.Cell>
-                      <a>{x.invoiceNumber}</a>
+                      <a style={{ cursor: "pointer" }}>{x.invoiceNumber}</a>
                     </Table.Cell>
                     <Table.Cell>{x.invoiceDate}</Table.Cell>
                     <Table.Cell>{x.invoiceType}</Table.Cell>
