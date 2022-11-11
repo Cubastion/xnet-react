@@ -1,9 +1,12 @@
-import React from 'react'
+import React from "react";
+import InvoiceNavigator from "../InvoiceNavigator/InvoiceNavigator";
 
 const DetailedInvoice = () => {
   return (
-    <div>DetailedInvoice</div>
-  )
-}
+    <div>
+      <InvoiceNavigator />
+    </div>
+  );
+};
 
-export default DetailedInvoice
+export default DetailedInvoice;

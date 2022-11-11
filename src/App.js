@@ -45,8 +45,8 @@ function App() {
             <Route path="all-invoices" element={<AllInvoices/>}/>
             <Route path="invoices" element={<Invoices/>}/>
             <Route path="invoices-pending-dispatch" element={<InvoicesPendingDispatch/>}/>
-          </Route>
             <Route path="invoice/:id" element={<DetailedInvoice/>}/>
+          </Route>
         </Routes>
       </BrowserRouter>
 
