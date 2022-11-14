@@ -26,7 +26,7 @@ function App() {
             <Route path="organization" element={<Organizations />} />
             <Route path="clients" element={<Clients />} />
             <Route path="clientDetails/:id" element={<ClientDetails />} />
-            <Route path = "employee-staffing" element={<EmployeeTable/>}/>
+            <Route path="employee-staffing" element={<EmployeeTable />} />
             <Route path="vendors" element={<Vendors />} />
             <Route path="budget" element={<Budget />} />
             <Route path="all-purchase" element={<PurchaseOrders />} />
@@ -44,10 +44,13 @@ function App() {
               path="internal-po-approval-level-all"
               element={<InternalPOAll />}
             />
-            <Route path="all-invoices" element={<AllInvoices/>}/>
-            <Route path="invoices" element={<Invoices/>}/>
-            <Route path="invoices-pending-dispatch" element={<InvoicesPendingDispatch/>}/>
-            <Route path="invoice/:id" element={<DetailedInvoice/>}/>
+            <Route path="all-invoices" element={<AllInvoices />} />
+            <Route path="invoices" element={<Invoices />} />
+            <Route
+              path="invoices-pending-dispatch"
+              element={<InvoicesPendingDispatch />}
+            />
+            <Route path="invoice/:id" element={<DetailedInvoice />} />
           </Route>
         </Routes>
       </BrowserRouter>
