@@ -6,7 +6,7 @@ const AttachmentsTable = () => {
   const id = useContext(Id);
   const [tabelData, setTableData] = useState("");
   useEffect(() => {
-    var url = `https://devxnet.cubastion.net/api/v1/invoicesItems/findByInvoiceId?id=${id}`;
+    var url = `https://devxnet.cubastion.net/api/v1/files/getAllOnedriveFiles?id=${id}`;
     const fetchData = async () => {
       try {
         const response = await fetch(url, tokenRequestOption());
