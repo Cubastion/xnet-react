@@ -1,7 +1,24 @@
-import React from "react";
+import React, { useContext, useEffect, useState } from "react";
+import { tokenRequestOption } from "../../Helpers/misellaneous";
+import { Id } from "./DetailedInvoice";
+const Banner = () => {
+  const id = useContext(Id)
+  const [data, setData] = useState("");
+  useEffect(() => {
+    var url = `https://devxnet.cubastion.net/api/v1/invoices/findById?id=${id}`;
+    const fetchData = async () => {
+      try {
+        const response = await fetch(url, tokenRequestOption());
+        const json = await response.json();
+        console.log(json.data)
+        setData(json.data);
+      } catch (error) {
+        console.log("error", error);
+      }
+    };
+    fetchData();
+  }, []);
 
-const Banner = (props) => {
-  const data = props.details;
   const currency_symbols = {
     USD: "$", // US Dollar
     EUR: "€", // Euro
@@ -38,7 +55,7 @@ const Banner = (props) => {
             <span
               style={{ float: "left", fontSize: "20px", marginLeft: "1rem" }}
             >
-              {data.client?.name + "-" + data.project?.name}
+              {data?.client?.name + "-" + data?.project?.name}
             </span>
           </div>
           <div style={{ marginTop: "-2rem" }}>
