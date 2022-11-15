@@ -6,12 +6,16 @@ import "react-tabs/style/react-tabs.css";
 import { Drawer, TableCell,Pagination } from "@mui/material";
 import { set } from "react-hook-form";
 import AddEmployee from "./StaffingForm/AddEmployee";
+import EditEmployee from "./StaffingForm/EditEmployee";
 
 const EmployeeTable=() =>{
     const[employee, setEmployee] = useState([]);
     const[employeeStaffing, setEmployeeStaffing] = useState([]);
     const[addEmployee, setAddEmployee] = useState(false);
     const[addEmployeeForm,setAddEmployeeForm] = useState(false);
+    const[addRefresh,setAdRefresh] = useState(false);
+    const[editEmployee, setEditEmployee] = useState(false);
+    const[editEmployeeForm, setEditEmployeeForm] = useState(false);
     const[pageNumber,setPageNumber] = useState(1);
     const[totalPages,setTotalPages] = useState(0);
 
@@ -55,11 +59,15 @@ const EmployeeTable=() =>{
                 <AddEmployee fun={setAddEmployeeForm}></AddEmployee>
 
                 </Drawer>
-                <Button>Add</Button>
-                <Drawer anchor="right">
+                <Button onClick={() => setAddEmployeeForm(true)}>Add</Button>
+                <Drawer anchor="right"
+                open={editEmployeeForm}
+                onClose={() => setEditEmployeeForm(false)}
+                varient={"temporary"}>
+                <EditEmployee fun={setEditEmployeeForm} />
 
                 </Drawer>
-                <Button>
+                <Button >
                     Edit
                 </Button>
             </div>

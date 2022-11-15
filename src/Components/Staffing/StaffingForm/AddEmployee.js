@@ -12,6 +12,7 @@ const AddEmployee = (props) => {
         formState: { errors },
       } = useForm();
       const[designation,setDesignation] = useState();
+      const[clientName, setClientName] = useState();
       const onSubmit = (data) => {
         const fetchData = async () => {
           try {
@@ -50,6 +51,30 @@ const AddEmployee = (props) => {
         fetchDesignationData();
       },[]);
 
+
+
+      useEffect(() => {
+        var url=`https://devxnet.cubastion.net/api/v1/projects/getAllProjectsByClientId?clientId`
+        const fetchClientData = async() => {
+            try{
+                const response = await fetch(url, tokenRequestOption());
+                const json = await response.json();
+                console.log(json)
+                if(json.statusCode==="200") {
+                  setClientName(json.data)
+                } else alert(json.statusMessage);
+            } catch(error) {
+                console.log("error",error)
+            }
+
+        }
+        fetchClientData();
+      },[]);
+
+console.log(clientName,"---")
+
+    
+
       
       return (
         <Box p={2} width="500px" textAlign="left" role="presentation">
@@ -64,14 +89,20 @@ const AddEmployee = (props) => {
                 htmlFor="EMPLOYEE"
               />
             </div>
-            <div style={{'margin':'1rem', 'display':'flex','flexDirection':'column'}}>
-              <label name="CLIENT NAME">CLIENT NAME</label>
-              <input
-                type="text"
-                {...register("clientName", { required: true })}
-                htmlFor="CLIENT NAME"
-              />
-            </div>
+            <div >
+                <div style={{'margin':'1rem', 'display':'flex','flexDirection':'column'}}>
+                    <label name="CLIENT" onClick={() =>setClientName() }>CLIENT </label>
+                    <select {...register("role")} htmlFor="CLIENT">
+                        <option value="">SELECT</option>
+            {clientName && clientName.map((x) => (
+                        <option value={x.Id} key={x.Id}>{x.displayValue}</option>
+                        ))}
+                    </select>
+            
+              </div>
+
+            
+          </div>
             <div style={{'margin':'1rem', 'display':'flex','flexDirection':'column'}}>
               <label name="PROJECT">PROJECT</label>
               <input
