@@ -1,6 +1,8 @@
 import React, { useContext, useEffect, useState } from "react";
 import { tokenRequestOption } from "../../../Helpers/misellaneous";
 import { Id } from "../DetailedInvoice";
+import { Table } from 'semantic-ui-react';
+
 const InvoiceItemsTable = () => {
   const id = useContext(Id);
   const [tabelData, setTableData] = useState("");
@@ -18,7 +20,21 @@ const InvoiceItemsTable = () => {
     };
     fetchData();
   }, []);
-  return <div>InvoiceItemsTable</div>;
+  const tableHeaders = ["INVOICE ITEMS","SELECTED HOURS","WORKING DAYS","ADDITIONAL TEXT","UNIT OF MEASURE","RATE","CHARGED UNIT","TOTAL AMOUNT"]
+  return (
+    <>
+    <Table celled selectable>
+        <Table.Header>
+            <Table.Row>
+                {tableHeaders.map((x) => (
+                    <Table.HeaderCell key={x}>{x}</Table.HeaderCell>
+                ))}
+            </Table.Row>
+        </Table.Header>
+
+    </Table>
+    </>
+  );
 };
 
 export default InvoiceItemsTable;
