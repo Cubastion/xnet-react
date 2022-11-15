@@ -1,7 +1,6 @@
 import React, { useContext, useEffect, useState } from "react";
 import { tokenRequestOption } from "../../../Helpers/misellaneous";
 import { Id } from "../DetailedInvoice";
-// https://devxnet.cubashttps://devxnet.cubastion.net/api/v1/invoicesItems/findByInvoiceId?id=tion.net/api/v1/invoicesItems/findByInvoiceId?id=katcfrznwt2ogcy
 const InvoiceItemsTable = () => {
   const id = useContext(Id);
   const [tabelData, setTableData] = useState("");
