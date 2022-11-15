@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useState } from "react";
 import { tokenRequestOption } from "../../../Helpers/misellaneous";
 import { Id } from "../DetailedInvoice";
-import { Table } from 'semantic-ui-react';
+import { Table } from "semantic-ui-react";
 
 const AttachmentsTable = () => {
   const id = useContext(Id);
@@ -12,7 +12,6 @@ const AttachmentsTable = () => {
       try {
         const response = await fetch(url, tokenRequestOption());
         const json = await response.json();
-        console.log(json.data);
         setTableData(json.data);
       } catch (error) {
         console.log("error", error);
@@ -21,19 +20,54 @@ const AttachmentsTable = () => {
     fetchData();
   }, []);
 
-  const tableHeaders = ["ATTACHMENT NAME","SIZE (IN BYTES)","TYPE","COMMENTS","CREATED"]
+  const tableHeaders = [
+    "ATTACHMENT NAME",
+    "SIZE (IN BYTES)",
+    "TYPE",
+    "COMMENTS",
+    "CREATED",
+  ];
+
+const dateFormatter = (x) => {
+    let d1 = new Date(x);
+    return d1.toLocaleDateString()
+}
+
+  const typeOfFile = (x) => {
+    return x.split('.').pop().toUpperCase()
+  }
   return (
     <>
-    <Table celled selectable>
+      <Table celled selectable>
         <Table.Header>
-            <Table.Row>
-                {tableHeaders.map((x) => (
-                    <Table.HeaderCell key={x}>{x}</Table.HeaderCell>
-                ))}
-            </Table.Row>
+          <Table.Row>
+            {tableHeaders.map((x) => (
+              <Table.HeaderCell key={x}>{x}</Table.HeaderCell>
+            ))}
+          </Table.Row>
         </Table.Header>
-
-    </Table>
+        <Table.Body>
+            {tabelData && tabelData.map((x) => (
+                <Table.Row key={x.Id}>
+                    <Table.Cell>
+                        {x.name}
+                    </Table.Cell>
+                    <Table.Cell>
+                        {(x.size/1000).toFixed(1)+" "+"MB"}
+                    </Table.Cell>
+                    <Table.Cell>
+                        {typeOfFile(x.name)}
+                    </Table.Cell>
+                    <Table.Cell>
+                        {x.comments}
+                    </Table.Cell>
+                    <Table.Cell>
+                        {dateFormatter(x.createdAt)}
+                    </Table.Cell>
+                </Table.Row>
+            ))}
+        </Table.Body>
+      </Table>
     </>
   );
 };
