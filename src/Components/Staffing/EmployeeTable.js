@@ -7,10 +7,13 @@ import { Drawer, TableCell,Pagination } from "@mui/material";
 import { set } from "react-hook-form";
 import AddEmployee from "./StaffingForm/AddEmployee";
 import EditEmployee from "./StaffingForm/EditEmployee";
+import SearchEmployee from "./StaffingForm/SearchEmployee";
 
 const EmployeeTable=() =>{
     const[employee, setEmployee] = useState([]);
     const[employeeStaffing, setEmployeeStaffing] = useState([]);
+    const[searchEmployee, setSearchEmployee] = useState(false);
+    const[searchEmployeeForm, setSearchEmployeeForm]= useState(false);
     const[addEmployee, setAddEmployee] = useState(false);
     const[addEmployeeForm,setAddEmployeeForm] = useState(false);
     const[addRefresh,setAddRefresh] = useState(false);
@@ -53,7 +56,7 @@ const EmployeeTable=() =>{
         setAddEmployee(x);
         setEditEmployee(x);
     };
-    console.log(client,"---")
+    console.log(employeeStaffing,"---")
 
     return(
         <>
@@ -63,7 +66,7 @@ const EmployeeTable=() =>{
                 open={addEmployeeForm}
                 onClose={() =>setAddEmployeeForm(false)}
                 varient={"temporary"}>
-                <AddEmployee fun={setAddEmployeeForm} addRefresh={setAddRefresh} ></AddEmployee>
+                <AddEmployee fun={setAddEmployeeForm} addRefresh={setAddRefresh} employeeStaffing={employeeStaffing}></AddEmployee>
 
                 </Drawer>
                 <Button onClick={() => setAddEmployeeForm(true)}>Add</Button>
@@ -76,6 +79,16 @@ const EmployeeTable=() =>{
                 </Drawer>
                 <Button onClick={() => setEditEmployeeForm(true)}>
                     Edit
+                </Button>
+                <Drawer anchor="right"
+                open={searchEmployeeForm}
+                onClose={() => setSearchEmployeeForm(false)}
+                varient={"temporary"}>
+                <SearchEmployee  />
+
+                </Drawer>
+                <Button onClick={() => setSearchEmployeeForm(true)}>
+                    Search
                 </Button>
             </div>
             

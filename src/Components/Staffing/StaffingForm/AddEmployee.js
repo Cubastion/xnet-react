@@ -20,14 +20,18 @@ const AddEmployee = (props) => {
       const handleInputChange = value => {
     setValue(value);
   };
+  console.log(props.employeeStaffing[0].employeeId,"-----")
 
   // handle selection
   const handleChange = value => {
+    console.log(value,"llllllllllllll")
     setSelectedValue(value);
+    
   }
 
   // load options using API call
   const loadOptions = async (inputValue) => {
+   let value={...inputValue, employeeId:value.Id}
     if(inputValue.length>3)
    { try {
       let url =
@@ -44,7 +48,7 @@ const AddEmployee = (props) => {
         const fetchData = async () => {
           try {
             let url =
-              "https://devxnet.cubastion.net/api/v1/clients/addClient";
+              "https://devxnet.cubastion.net/api/v1/employeeStaffing/addEmployeeStaffing";
             const response = await fetch(url, tokenPostRequestOption(data));
             const json = await response.json();
             console.log(data, "----------------->");
