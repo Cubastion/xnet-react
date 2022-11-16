@@ -13,19 +13,17 @@ const EmployeeTable=() =>{
     const[employeeStaffing, setEmployeeStaffing] = useState([]);
     const[addEmployee, setAddEmployee] = useState(false);
     const[addEmployeeForm,setAddEmployeeForm] = useState(false);
-    const[addRefresh,setAddRefresh] = useState(false);
+    const[addRefresh,setAdRefresh] = useState(false);
     const[editEmployee, setEditEmployee] = useState(false);
     const[editEmployeeForm, setEditEmployeeForm] = useState(false);
     const[pageNumber,setPageNumber] = useState(1);
     const[totalPages,setTotalPages] = useState(0);
-    const[editRefresh, setEditRefresh]=useState(false);
-    const [client, setClient] = useState([]);
 
 
 
 
     useEffect(() => {
-        var url = `https://devxnet.cubastion.net/api/v1/employeeStaffing/getAllEmployeeStaffing?page=${pageNumber}`;
+        var url = `https://devxnet.cubastion.net/api/v1/employeeStaffing/getAllEmployeeStaffing`
         const fetchData = async() => {
             try{
                 const response = await fetch(url,tokenRequestOption());
@@ -33,16 +31,13 @@ const EmployeeTable=() =>{
                 setEmployeeStaffing(json.data);
                 setTotalPages(json.paginate.totalPage);
                 setAddEmployee(json.data[0]);
-                setEditEmployee(json.data[0]);
-                setClient(json.data)
             } catch(error) {
                 console.log("error", error);
             }
             console.log(employeeStaffing,"---")
-            console.log(client);
-               };
+        };
         fetchData();
-    },[pageNumber, addRefresh, editRefresh]);
+    },[pageNumber]);
 
     const handleChangePage=(event,newPage) => {
         setPageNumber(newPage);
@@ -51,9 +46,7 @@ const EmployeeTable=() =>{
     let onSelectEmployee=(x) => {
         setEmployee(x);
         setAddEmployee(x);
-        setEditEmployee(x);
     };
-    console.log(client,"---")
 
     return(
         <>
@@ -63,7 +56,7 @@ const EmployeeTable=() =>{
                 open={addEmployeeForm}
                 onClose={() =>setAddEmployeeForm(false)}
                 varient={"temporary"}>
-                <AddEmployee fun={setAddEmployeeForm} addRefresh={setAddRefresh} ></AddEmployee>
+                <AddEmployee fun={setAddEmployeeForm}></AddEmployee>
 
                 </Drawer>
                 <Button onClick={() => setAddEmployeeForm(true)}>Add</Button>
@@ -71,10 +64,10 @@ const EmployeeTable=() =>{
                 open={editEmployeeForm}
                 onClose={() => setEditEmployeeForm(false)}
                 varient={"temporary"}>
-                <EditEmployee fun={setEditEmployeeForm} refresh={setEditRefresh} />
+                <EditEmployee fun={setEditEmployeeForm} />
 
                 </Drawer>
-                <Button onClick={() => setEditEmployeeForm(true)}>
+                <Button >
                     Edit
                 </Button>
             </div>
@@ -96,19 +89,19 @@ const EmployeeTable=() =>{
                 <Table.Body>
                     {employeeStaffing &&
                         employeeStaffing.map((x) => (
-                            <Table.Row onClick={() => onSelectEmployee(x)} key={x.Id} style={ client.Id=== x.Id?{backgroundColor:"lightGrey"}:{}}   >
+                            <Table.Row onClick={() => onSelectEmployee(x)} key={x.Id}  >
                             
                                 <TableCell >
-                                    {x.employee?.employee}
+                                    {x.employee.employee}
                                 </TableCell>
                                  <TableCell>
-                                    {x.employee?.firstName}{x.employee?.lastName}
+                                    {x.employee.firstName}{x.employee.lastName}
                                 </TableCell>                                
                                <TableCell>
-                                {x.client?.name}
+                                {x.client.name}
                                 </TableCell>                           
                                 <TableCell>
-                                    {x.project?.name}
+                                    {x.project.name}
                                 </TableCell>
                                 <TableCell>
                                     {x.role}

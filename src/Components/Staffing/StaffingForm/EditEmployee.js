@@ -5,7 +5,7 @@ import { Button } from "semantic-ui-react";
 import { tokenPutRequestOption,tokenRequestOption } from "../../Helpers/misellaneous";
 import { useEffect ,useState} from "react";
 
-const EditEmployee = (props) => {
+const AddEmployee = (props) => {
     const {
         register,
         handleSubmit,
@@ -20,7 +20,7 @@ const EditEmployee = (props) => {
             const json = await response.json();
             console.log(data, "----------------->");
             if (json.statusCode === "200") {
-              alert("Clients Edited Successfully!");
+              alert("Clients Added Successfully!");
               props.fun(false);
               props.Refresh(true);
             } else alert(json.statusMessage);
@@ -31,6 +31,10 @@ const EditEmployee = (props) => {
         fetchData();
       };
 
+
+
+    
+
       
       return (
         <Box p={2} width="500px" textAlign="left" role="presentation">
@@ -40,7 +44,7 @@ const EditEmployee = (props) => {
             <div style={{'margin':'1rem', 'display':'flex','flexDirection':'column'}}>
               <label name="END DATE">END DATE</label>
               <input
-                type="date"
+                type="text"
                 {...register("employee", { required: true })}
                 htmlFor="END DATE"
               />
@@ -54,4 +58,4 @@ const EditEmployee = (props) => {
       );
 };
 
-export default EditEmployee;
+export default AddEmployee;
