@@ -1,16 +1,23 @@
+import { Dialog, Modal } from "@mui/material";
 import React, { useContext, useEffect, useState } from "react";
 import { tokenRequestOption } from "../../Helpers/misellaneous";
+import CancellationForm from "./Detailed Forms/CancellationForm";
 import { Id } from "./DetailedInvoice";
+
+// cancel api - https://devxnet.cubastion.net/api/v1/invoices/cancelInvoice?id=${}
+// cancel body = comments:"cancelled"
+
 const Banner = () => {
-  const id = useContext(Id)
+  const id = useContext(Id);
   const [data, setData] = useState("");
+  const [cancellationForm, setCancellationForm] = useState(false);
   useEffect(() => {
     var url = `https://devxnet.cubastion.net/api/v1/invoices/findById?id=${id}`;
     const fetchData = async () => {
       try {
         const response = await fetch(url, tokenRequestOption());
         const json = await response.json();
-        console.log(json.data)
+        console.log(json.data);
         setData(json.data);
       } catch (error) {
         console.log("error", error);
@@ -46,6 +53,9 @@ const Banner = () => {
 
   return (
     <div className="">
+      <Dialog open={cancellationForm} onClose={() => setCancellationForm(false)}>
+        <CancellationForm />
+      </Dialog>
       <div
         className="card p-3 mt-1"
         style={{ width: "95%", backgroundColor: "RGB(235 235 235)" }}
@@ -65,6 +75,14 @@ const Banner = () => {
               style={{ float: "right", margin: "0rem 1rem 1rem 0rem" }}
             >
               Submit
+            </button>
+            <button
+              type="button"
+              className="btn btn-secondary"
+              style={{ float: "right", margin: "0rem 1rem 1rem 0rem" }}
+              onClick={() => setCancellationForm(true)}
+            >
+              Cancel
             </button>
             <button
               type="button"
@@ -166,7 +184,8 @@ const Banner = () => {
             }}
           >
             <h2>
-              Total Amount: {convertToSymbol(data.currencyCode) + " " + data.totalAmount}{" "}
+              Total Amount:{" "}
+              {convertToSymbol(data.currencyCode) + " " + data.totalAmount}{" "}
             </h2>
           </div>
         </div>

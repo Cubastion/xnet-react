@@ -17,7 +17,7 @@ const DetailedInvoice = () => {
       <div>
         <Banner/>
       </div>
-      <div className="mt-5">
+      <div className="mb-4 mt-5">
         <TableRender/>
       </div>
     </Id.Provider>
