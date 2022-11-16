@@ -5,9 +5,9 @@ import { Table } from "semantic-ui-react";
 import { POId } from "../DetailedInvoice";
 const InvoiceItemsTable = () => {
   const [selectPO, setSelectPO] = useContext(POId);
-
   const id = useContext(Id);
   const [tabelData, setTableData] = useState("");
+
   useEffect(() => {
     var url = `https://devxnet.cubastion.net/api/v1/invoicesItems/findByInvoiceId?id=${id}`;
     const fetchData = async () => {
@@ -21,6 +21,7 @@ const InvoiceItemsTable = () => {
     };
     fetchData();
   }, []);
+
   const tableHeaders = [
     "INVOICE ITEMS",
     "SELECTED HOURS",
@@ -33,8 +34,8 @@ const InvoiceItemsTable = () => {
   ];
 
   const poSelectorFunction = (x) => {
-    setSelectPO(x)
-  }
+    setSelectPO(x);
+  };
   return (
     <>
       <Table celled selectable>
@@ -52,7 +53,7 @@ const InvoiceItemsTable = () => {
                 style={
                   selectPO.Id === x.Id ? { backgroundColor: "lightgrey" } : {}
                 }
-                onClick={()=>poSelectorFunction(x)}
+                onClick={() => poSelectorFunction(x)}
                 key={x.Id}
               >
                 <Table.Cell>{x.itemName}</Table.Cell>

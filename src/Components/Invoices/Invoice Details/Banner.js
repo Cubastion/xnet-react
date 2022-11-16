@@ -5,6 +5,7 @@ import CancellationForm from "./Detailed Forms/CancellationForm";
 import UpdateIRNForm from "./Detailed Forms/UpdateIRNForm";
 import { Id } from "./DetailedInvoice";
 import { RefreshAttachmenstData } from "./DetailedInvoice";
+import { POId } from "./DetailedInvoice";
 //https://devxnet.cubastion.net/api/v1/poandinvoices/computeInvoice
 
 //{invoiceId: "xehz42u9tq62a7h", purchaseOrderId: "6luejwm8c8kfk28"}
@@ -14,6 +15,7 @@ const Banner = () => {
   const [data, setData] = useState("");
   const [cancellationForm, setCancellationForm] = useState(false);
   const [updateIRNForm, setUpdateIRNForm] = useState(false);
+  const [poId] = useContext(POId)
   const [refresherVariable, setRefresherVariable] = useContext(
     RefreshAttachmenstData
   );
@@ -104,14 +106,14 @@ const Banner = () => {
 
   const computeTotal = async () => {
 
-    var data = {invoiceId: id, purchaseOrderId: "6luejwm8c8kfk28"}
+    var data = {invoiceId: id, purchaseOrderId: poId.Id}
 
     var url = `https://devxnet.cubastion.net/api/v1/poandinvoices/computeInvoice`;
     try {
       const response = await fetch(url, tokenPostRequestOption(data));
       const json = await response.json();
-      if (json.statusCode === "200") {
-        alert("Invoice Dispatched");
+      if (json.statusCode === "203") {
+        alert("Invoice Computed");
         refreshBannerData();
       }
     } catch (error) {
