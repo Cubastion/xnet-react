@@ -1,11 +1,14 @@
 import { Dialog } from "@mui/material";
 import React, { useContext, useEffect, useState } from "react";
-import { tokenRequestOption } from "../../Helpers/misellaneous";
+import { tokenPostRequestOption, tokenRequestOption } from "../../Helpers/misellaneous";
 import CancellationForm from "./Detailed Forms/CancellationForm";
 import UpdateIRNForm from "./Detailed Forms/UpdateIRNForm";
 import { Id } from "./DetailedInvoice";
 import { RefreshAttachmenstData } from "./DetailedInvoice";
-// https://devxnet.cubastion.net/api/v1/invoices/updateInvoiceIRN?id=4x6oqgv4u1idlyk
+//https://devxnet.cubastion.net/api/v1/poandinvoices/computeInvoice
+
+//{invoiceId: "xehz42u9tq62a7h", purchaseOrderId: "6luejwm8c8kfk28"}
+
 const Banner = () => {
   const id = useContext(Id);
   const [data, setData] = useState("");
@@ -59,21 +62,20 @@ const Banner = () => {
     }
   };
 
- const dispatchInvoice = async () => {
-  var url = `https://devxnet.cubastion.net/api/v1/invoices/dispatchInvoice?id=${id}`;
-  try {
-    const response = await fetch(url, tokenRequestOption());
-    const json = await response.json();
-    if (json.statusCode === "200") {
-      alert("Invoice Dispatched");
-      refreshBannerData();
+  const dispatchInvoice = async () => {
+    var url = `https://devxnet.cubastion.net/api/v1/invoices/dispatchInvoice?id=${id}`;
+    try {
+      const response = await fetch(url, tokenRequestOption());
+      const json = await response.json();
+      if (json.statusCode === "200") {
+        alert("Invoice Dispatched");
+        refreshBannerData();
+      }
+    } catch (error) {
+      console.log("error", error);
     }
-  } catch (error) {
-    console.log("error", error);
-  }
- }
+  };
 
- 
   const currency_symbols = {
     USD: "$", // US Dollar
     EUR: "€", // Euro
@@ -99,6 +101,23 @@ const Banner = () => {
     return "OTH";
   };
 
+
+  const computeTotal = async () => {
+
+    var data = {invoiceId: id, purchaseOrderId: "6luejwm8c8kfk28"}
+
+    var url = `https://devxnet.cubastion.net/api/v1/poandinvoices/computeInvoice`;
+    try {
+      const response = await fetch(url, tokenPostRequestOption(data));
+      const json = await response.json();
+      if (json.statusCode === "200") {
+        alert("Invoice Dispatched");
+        refreshBannerData();
+      }
+    } catch (error) {
+      console.log("error", error);
+    }
+  }
   return (
     <div className="">
       <Dialog
@@ -107,10 +126,11 @@ const Banner = () => {
       >
         <CancellationForm setCancellationForm={setCancellationForm} />
       </Dialog>
-      <Dialog open={updateIRNForm}
-      onClose={()=>setUpdateIRNForm(false)}
-      >
-        <UpdateIRNForm refreshBannerData={refreshBannerData} setUpdateIRNForm={setUpdateIRNForm} />
+      <Dialog open={updateIRNForm} onClose={() => setUpdateIRNForm(false)}>
+        <UpdateIRNForm
+          refreshBannerData={refreshBannerData}
+          setUpdateIRNForm={setUpdateIRNForm}
+        />
       </Dialog>
       <div
         className="card p-3 mt-1"
@@ -124,63 +144,67 @@ const Banner = () => {
               {data?.client?.name + "-" + data?.project?.name}
             </span>
           </div>
-          <div style={{ marginTop: "-2rem" }}>
-            <button
-              type="button"
-              className="btn btn-secondary"
-              style={{ float: "right", margin: "0rem 1rem 1rem 0rem" }}
-            >
-              Submit
-            </button>
-            {data.status === "Submitted" && (
+          {data.status !== "Cancelled" && (
+            <div style={{ marginTop: "-2rem" }}>
               <button
                 type="button"
                 className="btn btn-secondary"
                 style={{ float: "right", margin: "0rem 1rem 1rem 0rem" }}
-                onClick={() => setCancellationForm(true)}
               >
-                Cancel
+                Submit
               </button>
-            )}
-            <button
-              type="button"
-              className="btn btn-secondary "
-              style={{ float: "right", margin: "0rem 1rem 1rem 0rem" }}
-            >
-              Compute Total
-            </button>
-            <button
-              type="button"
-              className="btn btn-secondary"
-              style={{ float: "right", margin: "0rem 1rem 1rem 0rem" }}
-            >
-              Reset Invoice
-            </button>
-            <button
-              onClick={() => generateReports()}
-              type="button"
-              className="btn btn-secondary"
-              style={{ float: "right", margin: "0rem 1rem 1rem 0rem" }}
-            >
-              Generate Report
-            </button>
-            <button
-            onClick={()=>setUpdateIRNForm(true)}
-              type="button"
-              className="btn btn-secondary"
-              style={{ float: "right", margin: "0rem 1rem 1rem 0rem" }}
-            >
-              Update IRN
-            </button>
-            <button
-              onClick={dispatchInvoice}
-              type="button"
-              className="btn btn-secondary"
-              style={{ float: "right", margin: "0rem 1rem 1rem 0rem" }}
-            >
-              Dispatch
-            </button>
-          </div>
+              {data.status === "Submitted" && (
+                <button
+                  type="button"
+                  className="btn btn-secondary"
+                  style={{ float: "right", margin: "0rem 1rem 1rem 0rem" }}
+                  onClick={() => setCancellationForm(true)}
+                >
+                  Cancel
+                </button>
+              )}
+              <button
+                
+                onClick={computeTotal}
+                type="button"
+                className="btn btn-secondary "
+                style={{ float: "right", margin: "0rem 1rem 1rem 0rem" }}
+              >
+                Compute Total
+              </button>
+              <button
+                type="button"
+                className="btn btn-secondary"
+                style={{ float: "right", margin: "0rem 1rem 1rem 0rem" }}
+              >
+                Reset Invoice
+              </button>
+              <button
+                onClick={() => generateReports()}
+                type="button"
+                className="btn btn-secondary"
+                style={{ float: "right", margin: "0rem 1rem 1rem 0rem" }}
+              >
+                Generate Report
+              </button>
+              <button
+                onClick={() => setUpdateIRNForm(true)}
+                type="button"
+                className="btn btn-secondary"
+                style={{ float: "right", margin: "0rem 1rem 1rem 0rem" }}
+              >
+                Update IRN
+              </button>
+              <button
+                onClick={dispatchInvoice}
+                type="button"
+                className="btn btn-secondary"
+                style={{ float: "right", margin: "0rem 1rem 1rem 0rem" }}
+              >
+                Dispatch
+              </button>
+            </div>
+          )}
         </div>
         <div className="row">
           <div style={{ marginTop: "3rem", width: "80%" }} className="row">

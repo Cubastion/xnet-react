@@ -2,8 +2,10 @@ import React, { useContext, useEffect, useState } from "react";
 import { tokenRequestOption } from "../../../Helpers/misellaneous";
 import { Id } from "../DetailedInvoice";
 import { Table } from "semantic-ui-react";
-
+import { POId } from "../DetailedInvoice";
 const InvoiceItemsTable = () => {
+  const [selectPO, setSelectPO] = useContext(POId);
+
   const id = useContext(Id);
   const [tabelData, setTableData] = useState("");
   useEffect(() => {
@@ -29,6 +31,10 @@ const InvoiceItemsTable = () => {
     "CHARGED UNIT",
     "TOTAL AMOUNT",
   ];
+
+  const poSelectorFunction = (x) => {
+    setSelectPO(x)
+  }
   return (
     <>
       <Table celled selectable>
@@ -40,33 +46,26 @@ const InvoiceItemsTable = () => {
           </Table.Row>
         </Table.Header>
         <Table.Body>
-            {tabelData && tabelData.map((x) => (
-                <Table.Row key={x.Id}>
-                    <Table.Cell>
-                        {x.itemName}
-                    </Table.Cell>
-                    <Table.Cell>
-                        {x.hours}
-                    </Table.Cell>
-                    <Table.Cell>
-                        {x.workingDays}
-                    </Table.Cell>
-                    <Table.Cell>
-                        {x.additionalTextForPrint?x.additionalTextForPrint:""}
-                    </Table.Cell>
-                    <Table.Cell>
-                        {x.unitOfMeasure}
-                    </Table.Cell>
-                    <Table.Cell>
-                        {x.rate}
-                    </Table.Cell>
-                    <Table.Cell>
-                        {x.chargedUnit}
-                    </Table.Cell>
-                    <Table.Cell>
-                        {x.totalAmount}
-                    </Table.Cell>
-                </Table.Row>
+          {tabelData &&
+            tabelData.map((x) => (
+              <Table.Row
+                style={
+                  selectPO.Id === x.Id ? { backgroundColor: "lightgrey" } : {}
+                }
+                onClick={()=>poSelectorFunction(x)}
+                key={x.Id}
+              >
+                <Table.Cell>{x.itemName}</Table.Cell>
+                <Table.Cell>{x.hours}</Table.Cell>
+                <Table.Cell>{x.workingDays}</Table.Cell>
+                <Table.Cell>
+                  {x.additionalTextForPrint ? x.additionalTextForPrint : ""}
+                </Table.Cell>
+                <Table.Cell>{x.unitOfMeasure}</Table.Cell>
+                <Table.Cell>{x.rate}</Table.Cell>
+                <Table.Cell>{x.chargedUnit}</Table.Cell>
+                <Table.Cell>{x.totalAmount}</Table.Cell>
+              </Table.Row>
             ))}
         </Table.Body>
       </Table>
