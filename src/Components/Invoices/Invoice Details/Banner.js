@@ -1,16 +1,17 @@
-import { Dialog, Modal } from "@mui/material";
+import { Dialog } from "@mui/material";
 import React, { useContext, useEffect, useState } from "react";
 import { tokenRequestOption } from "../../Helpers/misellaneous";
 import CancellationForm from "./Detailed Forms/CancellationForm";
 import { Id } from "./DetailedInvoice";
-
-// cancel api - https://devxnet.cubastion.net/api/v1/invoices/cancelInvoice?id=${}
-// cancel body = comments:"cancelled"
-
+import { RefreshAttachmenstData } from "./DetailedInvoice";
+//https://devxnet.cubastion.net/api/v1/reports/generateInvoiceReports?id=4x6oqgv4u1idlyk
 const Banner = () => {
   const id = useContext(Id);
   const [data, setData] = useState("");
   const [cancellationForm, setCancellationForm] = useState(false);
+  const [refresherVariable, setRefresherVariable] = useContext(
+    RefreshAttachmenstData
+  );
   useEffect(() => {
     var url = `https://devxnet.cubastion.net/api/v1/invoices/findById?id=${id}`;
     const fetchData = async () => {
@@ -25,6 +26,37 @@ const Banner = () => {
     };
     fetchData();
   }, []);
+
+
+  const refreshBannerData = () => {
+    var url = `https://devxnet.cubastion.net/api/v1/invoices/findById?id=${id}`;
+    const fetchData = async () => {
+      try {
+        const response = await fetch(url, tokenRequestOption());
+        const json = await response.json();
+        console.log(json.data);
+        setData(json.data);
+      } catch (error) {
+        console.log("error", error);
+      }
+    };
+    fetchData();
+  }
+
+  const generateReports = async () => {
+    var url = `https://devxnet.cubastion.net/api/v1/reports/generateInvoiceReports?id=${id}`;
+    try {
+      const response = await fetch(url, tokenRequestOption());
+      const json = await response.json();
+      if (json.statusCode === "200") {
+        alert("Report Generated");
+        setRefresherVariable(Math.random.toString());
+        refreshBannerData()
+      }
+    } catch (error) {
+      console.log("error", error);
+    }
+  };
 
   const currency_symbols = {
     USD: "$", // US Dollar
@@ -53,8 +85,11 @@ const Banner = () => {
 
   return (
     <div className="">
-      <Dialog open={cancellationForm} onClose={() => setCancellationForm(false)}>
-        <CancellationForm />
+      <Dialog
+        open={cancellationForm}
+        onClose={() => setCancellationForm(false)}
+      >
+        <CancellationForm setCancellationForm={setCancellationForm} />
       </Dialog>
       <div
         className="card p-3 mt-1"
@@ -76,14 +111,16 @@ const Banner = () => {
             >
               Submit
             </button>
-            <button
-              type="button"
-              className="btn btn-secondary"
-              style={{ float: "right", margin: "0rem 1rem 1rem 0rem" }}
-              onClick={() => setCancellationForm(true)}
-            >
-              Cancel
-            </button>
+            {data.status === "Submitted" && (
+              <button
+                type="button"
+                className="btn btn-secondary"
+                style={{ float: "right", margin: "0rem 1rem 1rem 0rem" }}
+                onClick={() => setCancellationForm(true)}
+              >
+                Cancel
+              </button>
+            )}
             <button
               type="button"
               className="btn btn-secondary "
@@ -97,6 +134,28 @@ const Banner = () => {
               style={{ float: "right", margin: "0rem 1rem 1rem 0rem" }}
             >
               Reset Invoice
+            </button>
+            <button
+              onClick={() => generateReports()}
+              type="button"
+              className="btn btn-secondary"
+              style={{ float: "right", margin: "0rem 1rem 1rem 0rem" }}
+            >
+              Generate Report
+            </button>
+            <button
+              type="button"
+              className="btn btn-secondary"
+              style={{ float: "right", margin: "0rem 1rem 1rem 0rem" }}
+            >
+              Update IRN
+            </button>
+            <button
+              type="button"
+              className="btn btn-secondary"
+              style={{ float: "right", margin: "0rem 1rem 1rem 0rem" }}
+            >
+              Dispatch
             </button>
           </div>
         </div>
