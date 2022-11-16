@@ -2,13 +2,15 @@ import { Dialog } from "@mui/material";
 import React, { useContext, useEffect, useState } from "react";
 import { tokenRequestOption } from "../../Helpers/misellaneous";
 import CancellationForm from "./Detailed Forms/CancellationForm";
+import UpdateIRNForm from "./Detailed Forms/UpdateIRNForm";
 import { Id } from "./DetailedInvoice";
 import { RefreshAttachmenstData } from "./DetailedInvoice";
-//https://devxnet.cubastion.net/api/v1/reports/generateInvoiceReports?id=4x6oqgv4u1idlyk
+// https://devxnet.cubastion.net/api/v1/invoices/updateInvoiceIRN?id=4x6oqgv4u1idlyk
 const Banner = () => {
   const id = useContext(Id);
   const [data, setData] = useState("");
   const [cancellationForm, setCancellationForm] = useState(false);
+  const [updateIRNForm, setUpdateIRNForm] = useState(false);
   const [refresherVariable, setRefresherVariable] = useContext(
     RefreshAttachmenstData
   );
@@ -27,7 +29,6 @@ const Banner = () => {
     fetchData();
   }, []);
 
-
   const refreshBannerData = () => {
     var url = `https://devxnet.cubastion.net/api/v1/invoices/findById?id=${id}`;
     const fetchData = async () => {
@@ -41,7 +42,7 @@ const Banner = () => {
       }
     };
     fetchData();
-  }
+  };
 
   const generateReports = async () => {
     var url = `https://devxnet.cubastion.net/api/v1/reports/generateInvoiceReports?id=${id}`;
@@ -51,13 +52,28 @@ const Banner = () => {
       if (json.statusCode === "200") {
         alert("Report Generated");
         setRefresherVariable(Math.random.toString());
-        refreshBannerData()
+        refreshBannerData();
       }
     } catch (error) {
       console.log("error", error);
     }
   };
 
+ const dispatchInvoice = async () => {
+  var url = `https://devxnet.cubastion.net/api/v1/invoices/dispatchInvoice?id=${id}`;
+  try {
+    const response = await fetch(url, tokenRequestOption());
+    const json = await response.json();
+    if (json.statusCode === "200") {
+      alert("Invoice Dispatched");
+      refreshBannerData();
+    }
+  } catch (error) {
+    console.log("error", error);
+  }
+ }
+
+ 
   const currency_symbols = {
     USD: "$", // US Dollar
     EUR: "€", // Euro
@@ -90,6 +106,11 @@ const Banner = () => {
         onClose={() => setCancellationForm(false)}
       >
         <CancellationForm setCancellationForm={setCancellationForm} />
+      </Dialog>
+      <Dialog open={updateIRNForm}
+      onClose={()=>setUpdateIRNForm(false)}
+      >
+        <UpdateIRNForm refreshBannerData={refreshBannerData} setUpdateIRNForm={setUpdateIRNForm} />
       </Dialog>
       <div
         className="card p-3 mt-1"
@@ -144,6 +165,7 @@ const Banner = () => {
               Generate Report
             </button>
             <button
+            onClick={()=>setUpdateIRNForm(true)}
               type="button"
               className="btn btn-secondary"
               style={{ float: "right", margin: "0rem 1rem 1rem 0rem" }}
@@ -151,6 +173,7 @@ const Banner = () => {
               Update IRN
             </button>
             <button
+              onClick={dispatchInvoice}
               type="button"
               className="btn btn-secondary"
               style={{ float: "right", margin: "0rem 1rem 1rem 0rem" }}
