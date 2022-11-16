@@ -1,15 +1,12 @@
 import { Dialog } from "@mui/material";
 import React, { useContext, useEffect, useState } from "react";
-import { tokenPostRequestOption, tokenRequestOption } from "../../Helpers/misellaneous";
+import { tokenDeleteRequestOption, tokenPostRequestOption, tokenRequestOption } from "../../Helpers/misellaneous";
 import CancellationForm from "./Detailed Forms/CancellationForm";
 import UpdateIRNForm from "./Detailed Forms/UpdateIRNForm";
 import { Id } from "./DetailedInvoice";
 import { RefreshAttachmenstData } from "./DetailedInvoice";
 import { POId } from "./DetailedInvoice";
-//https://devxnet.cubastion.net/api/v1/poandinvoices/computeInvoice
-
-//{invoiceId: "xehz42u9tq62a7h", purchaseOrderId: "6luejwm8c8kfk28"}
-
+//https://devxnet.cubastion.net/api/v1/invoicesItems/deleteAllInvoiceItemsByINId?id=xehz42u9tq62a7h
 const Banner = () => {
   const id = useContext(Id);
   const [data, setData] = useState("");
@@ -72,6 +69,7 @@ const Banner = () => {
       if (json.statusCode === "200") {
         alert("Invoice Dispatched");
         refreshBannerData();
+        setRefresherVariable(Math.random.toString());
       }
     } catch (error) {
       console.log("error", error);
@@ -115,6 +113,23 @@ const Banner = () => {
       if (json.statusCode === "203") {
         alert("Invoice Computed");
         refreshBannerData();
+        setRefresherVariable(Math.random.toString().length);
+      }
+    } catch (error) {
+      console.log("error", error);
+    }
+  }
+
+  const resetInvoice = async () => {
+    alert("Are You Sure ?")
+    var url = `https://devxnet.cubastion.net/api/v1/invoicesItems/deleteAllInvoiceItemsByINId?id=${id}`;
+    try {
+      const response = await fetch(url, tokenDeleteRequestOption());
+      const json = await response.json();
+      if (json.statusCode === "200") {
+        alert("PO related to this invoice are deleted");
+        refreshBannerData();
+        setRefresherVariable(Math.random.toString());
       }
     } catch (error) {
       console.log("error", error);
@@ -175,6 +190,7 @@ const Banner = () => {
                 Compute Total
               </button>
               <button
+                onClick={resetInvoice}
                 type="button"
                 className="btn btn-secondary"
                 style={{ float: "right", margin: "0rem 1rem 1rem 0rem" }}

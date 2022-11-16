@@ -3,11 +3,12 @@ import { tokenRequestOption } from "../../../Helpers/misellaneous";
 import { Id } from "../DetailedInvoice";
 import { Table } from "semantic-ui-react";
 import { POId } from "../DetailedInvoice";
+import { RefreshAttachmenstData } from "../DetailedInvoice";
 const InvoiceItemsTable = () => {
   const [selectPO, setSelectPO] = useContext(POId);
   const id = useContext(Id);
   const [tabelData, setTableData] = useState("");
-
+  const [refresh]  = useContext(RefreshAttachmenstData)
   useEffect(() => {
     var url = `https://devxnet.cubastion.net/api/v1/invoicesItems/findByInvoiceId?id=${id}`;
     const fetchData = async () => {
@@ -20,7 +21,7 @@ const InvoiceItemsTable = () => {
       }
     };
     fetchData();
-  }, []);
+  }, [refresh]);
 
   const tableHeaders = [
     "INVOICE ITEMS",
