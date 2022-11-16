@@ -28,14 +28,26 @@ const AttachmentsTable = () => {
     "CREATED",
   ];
 
-const dateFormatter = (x) => {
+  const dateFormatter = (x) => {
     let d1 = new Date(x);
-    return d1.toLocaleDateString()
-}
+    return d1.toLocaleDateString();
+  };
 
   const typeOfFile = (x) => {
-    return x.split('.').pop().toUpperCase()
-  }
+    return x.split(".").pop().toUpperCase();
+  };
+
+  const downloadFile = async (id, name) => {
+    let url = `https://devxnet.cubastion.net/api/v1/files/dowloadOnedriveFile?id=${id}&fileName=${name}`;
+    try {
+      const response = await fetch(url, tokenRequestOption());
+      const json = await response.json();
+      return window.location.assign(json.data, "_blank");
+    } catch (error) {
+      console.log("error", error);
+    }
+  };
+
   return (
     <>
       <Table celled selectable>
@@ -47,24 +59,22 @@ const dateFormatter = (x) => {
           </Table.Row>
         </Table.Header>
         <Table.Body>
-            {tabelData && tabelData.map((x) => (
-                <Table.Row key={x.Id}>
-                    <Table.Cell>
-                        {x.name}
-                    </Table.Cell>
-                    <Table.Cell>
-                        {(x.size/1000).toFixed(1)+" "+"MB"}
-                    </Table.Cell>
-                    <Table.Cell>
-                        {typeOfFile(x.name)}
-                    </Table.Cell>
-                    <Table.Cell>
-                        {x.comments}
-                    </Table.Cell>
-                    <Table.Cell>
-                        {dateFormatter(x.createdAt)}
-                    </Table.Cell>
-                </Table.Row>
+          {tabelData &&
+            tabelData.map((x) => (
+              <Table.Row key={x.Id}>
+                <Table.Cell
+                  onClick={() => downloadFile(x.itemId, x.name)}
+                  style={{ cursor: "pointer" }}
+                >
+                  {x.name}
+                </Table.Cell>
+                <Table.Cell>
+                  {(x.size / 1000).toFixed(1) + " " + "MB"}
+                </Table.Cell>
+                <Table.Cell>{typeOfFile(x.name)}</Table.Cell>
+                <Table.Cell>{x.comments}</Table.Cell>
+                <Table.Cell>{dateFormatter(x.createdAt)}</Table.Cell>
+              </Table.Row>
             ))}
         </Table.Body>
       </Table>

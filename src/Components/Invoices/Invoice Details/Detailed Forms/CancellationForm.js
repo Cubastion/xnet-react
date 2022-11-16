@@ -2,7 +2,7 @@ import React from 'react'
 
 const CancellationForm = () => {
   return (
-    <div>CancellationForm</div>
+    <div className='p-5'>CancellationForm</div>
   )
 }
 

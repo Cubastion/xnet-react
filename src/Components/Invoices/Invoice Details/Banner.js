@@ -58,7 +58,7 @@ const Banner = () => {
       </Dialog>
       <div
         className="card p-3 mt-1"
-        style={{ width: "95%", backgroundColor: "RGB(235 235 235)" }}
+        style={{ width: "100%", backgroundColor: "RGB(235 235 235)" }}
       >
         <div style={{ display: "flex", flexDirection: "column" }}>
           <div style={{ float: "left" }} className="bank-name">
