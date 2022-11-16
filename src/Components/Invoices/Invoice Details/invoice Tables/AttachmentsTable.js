@@ -1,10 +1,12 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useEffect, useState, createContext } from "react";
 import { tokenRequestOption } from "../../../Helpers/misellaneous";
 import { Id } from "../DetailedInvoice";
 import { Table } from "semantic-ui-react";
+import { RefreshAttachmenstData } from "../DetailedInvoice";
 
 const AttachmentsTable = () => {
   const id = useContext(Id);
+  const [refreshIt] = useContext(RefreshAttachmenstData)
   const [tabelData, setTableData] = useState("");
   useEffect(() => {
     var url = `https://devxnet.cubastion.net/api/v1/files/getAllOnedriveFiles?id=${id}`;
@@ -18,8 +20,10 @@ const AttachmentsTable = () => {
       }
     };
     fetchData();
-  }, []);
+  }, [refreshIt]);
 
+
+  
   const tableHeaders = [
     "ATTACHMENT NAME",
     "SIZE (IN BYTES)",
