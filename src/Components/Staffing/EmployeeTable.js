@@ -109,7 +109,7 @@ const EmployeeTable=() =>{
                 <Table.Body>
                     {employeeStaffing &&
                         employeeStaffing.map((x) => (
-                            <Table.Row onClick={() => onSelectEmployee(x)} key={x.Id} style={ client.Id=== x.Id?{backgroundColor:"lightGrey"}:{}}   >
+                            <Table.Row onClick={() => onSelectEmployee(x)} key={x.Id} style={ employeeStaffing.Id=== x.Id?{backgroundColor:"lightGrey"}:{}}   >
                             
                                 <TableCell >
                                     {x.employee?.employee}

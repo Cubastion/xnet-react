@@ -31,7 +31,6 @@ const AddEmployee = (props) => {
 
   // load options using API call
   const loadOptions = async (inputValue) => {
-   let value={...inputValue, employeeId:value.Id}
     if(inputValue.length>3)
    { try {
       let url =
@@ -99,23 +98,18 @@ const AddEmployee = (props) => {
       fetchClientData();
       },[]);
 
-
-      useEffect(() => {
-        let url=`https://devxnet.cubastion.net/api/v1/projects/getAllProjectsByClientId?clientId`
-        const fetchClientName = async() => {
-            try{
-                const response = await fetch(url, tokenRequestOption());
-                const json = await response.json();
-                console.log(json)
-                if(json.statusCode==="200") {
-                  setClientName(json.data)
-                  } else alert(json.statusMessage);
-            } catch(error) {
-                console.log("error",error)
-            }
-        }
-        fetchClientName();
-      },[]);
+const projectOptions = async(id) => {
+  let url=`https://devxnet.cubastion.net/api/v1/projects/getAllProjectsByClientId?clientId=${id}`
+  try{
+    const response = await fetch(url, tokenRequestOption());
+    const json = await response.json();
+    setClientName(json.data)
+    console.log(json)
+  } catch(error) {
+    console.log("error", error)
+  }
+};
+   console.log(clientName,"[[[")   
 
       return (
         <Box p={2} width="500px" textAlign="left" role="presentation">
@@ -137,8 +131,8 @@ const AddEmployee = (props) => {
             </div>
             <div >
                 <div style={{'margin':'1rem', 'display':'flex','flexDirection':'column'}}>
-                    <label name="CLIENT" onClick={() =>setClient()}>CLIENT</label>
-                    <select {...register("role")} htmlFor="CLIENT">
+                    <label name="CLIENT" >CLIENT</label>
+                    <select {...register("clientId")} htmlFor="CLIENT" onChange={(e) => projectOptions(e.target.value)}>
                         <option value="">SELECT</option>
             {client && client.map((x) => (
                         <option value={x.Id} key={x.Id}>{x.name}</option>
@@ -149,7 +143,7 @@ const AddEmployee = (props) => {
           <div >
                 <div style={{'margin':'1rem', 'display':'flex','flexDirection':'column'}}>
                     <label name="PROJECT" >PROJECT </label>
-                    <select {...register("role")} htmlFor="PROJECT">
+                      <select {...register("projectId")} htmlFor="PROJECT"  >
                         <option value="">SELECT</option>
             {clientName && clientName.map((x) => (
                         <option value={x.Id} key={x.Id}>{x.name}</option>
