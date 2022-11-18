@@ -17,16 +17,14 @@ const AddEmployee = (props) => {
       const[client,setClient] = useState();
       const [inputValue, setValue] = useState('');
       const [selectedValue, setSelectedValue] = useState(null);
+      const [projects,setProjects]=useState([]);
       const handleInputChange = value => {
     setValue(value);
   };
-  console.log(props.employeeStaffing[0].employeeId,"-----")
 
   // handle selection
   const handleChange = value => {
-    console.log(value,"llllllllllllll")
     setSelectedValue(value);
-    
   }
 
   // load options using API call
@@ -44,13 +42,15 @@ const AddEmployee = (props) => {
   };
 
       const onSubmit = (data) => {
+        data.employeeId=selectedValue?.Id;
+        console.log(JSON.stringify(data,null,4));
         const fetchData = async () => {
           try {
             let url =
               "https://devxnet.cubastion.net/api/v1/employeeStaffing/addEmployeeStaffing";
             const response = await fetch(url, tokenPostRequestOption(data));
             const json = await response.json();
-            console.log(data, "----------------->");
+            console.log("----------------->",data);
             if (json.statusCode === "200") {
               alert("Clients Added Successfully!");
               props.fun(false);
@@ -62,6 +62,8 @@ const AddEmployee = (props) => {
         };
         fetchData();
       };
+
+      console.log("----",selectedValue)
 
       useEffect(() => {
         var url=`https://devxnet.cubastion.net/api/v1/listOfValues/findByType?type=DESIGNATION_CD`
@@ -79,7 +81,7 @@ const AddEmployee = (props) => {
         }
         fetchDesignationData();
       },[]);
-
+console.log(designation, "------->>>")
 
       useEffect(() => {
         let url =`https://devxnet.cubastion.net/api/v1/clients/getAllClientsForFilter`
@@ -99,18 +101,18 @@ const AddEmployee = (props) => {
       },[]);
 
 const projectOptions = async(id) => {
+  console.log("calling client filter");
   let url=`https://devxnet.cubastion.net/api/v1/projects/getAllProjectsByClientId?clientId=${id}`
   try{
     const response = await fetch(url, tokenRequestOption());
+    console.log("response recieved");
     const json = await response.json();
-    setClientName(json.data)
+    setProjects(json.data)
     console.log(json)
   } catch(error) {
     console.log("error", error)
   }
 };
-   console.log(clientName,"[[[")   
-
       return (
         <Box p={2} width="500px" textAlign="left" role="presentation">
       <form onSubmit={handleSubmit(onSubmit)}>
@@ -127,14 +129,15 @@ const projectOptions = async(id) => {
         loadOptions={loadOptions}
         onInputChange={handleInputChange}
         onChange={handleChange}
+        // {...register("employeeId")}
       />
             </div>
             <div >
                 <div style={{'margin':'1rem', 'display':'flex','flexDirection':'column'}}>
                     <label name="CLIENT" >CLIENT</label>
-                    <select {...register("clientId")} htmlFor="CLIENT" onChange={(e) => projectOptions(e.target.value)}>
+                    <select {...register("clientId")}  onChange={(e) => projectOptions(e.target.value)}  >
                         <option value="">SELECT</option>
-            {client && client.map((x) => (
+            {client?.length>0 && client?.map((x) => (
                         <option value={x.Id} key={x.Id}>{x.name}</option>
                         ))}
                     </select>           
@@ -145,7 +148,7 @@ const projectOptions = async(id) => {
                     <label name="PROJECT" >PROJECT </label>
                       <select {...register("projectId")} htmlFor="PROJECT"  >
                         <option value="">SELECT</option>
-            {clientName && clientName.map((x) => (
+                        {projects?.length>0 && projects?.map((x) => (
                         <option value={x.Id} key={x.Id}>{x.name}</option>
                         ))}
                     </select>
@@ -169,7 +172,7 @@ const projectOptions = async(id) => {
                     <select {...register("role")} htmlFor="ROLE">
                         <option value="">SELECT</option>
             {designation && designation.map((x) => (
-                        <option value={x.Id} key={x.Id}>{x.displayValue}</option>
+                        <option value={x.displayValue} key={x.Id}>{x.displayValue}</option>
                         ))}
                     </select>            
               </div>           

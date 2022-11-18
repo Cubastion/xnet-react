@@ -15,12 +15,12 @@ const EditEmployee = (props) => {
         const fetchData = async () => {
           try {
             let url =
-              "https://devxnet.cubastion.net/api/v1/employeeStaffing/updateEmployeeStaffing?id";
+              `https://devxnet.cubastion.net/api/v1/employeeStaffing/updateEmployeeStaffing?id=${props.employeeStaffing}`;
             const response = await fetch(url, tokenPutRequestOption(data));
             const json = await response.json();
-            console.log(data, "----------------->");
+            console.log(json, "----------------->");
             if (json.statusCode === "200") {
-              alert("Clients Edited Successfully!");
+              alert("Staffing Edited Successfully!");
               props.fun(false);
               props.Refresh(true);
             } else alert(json.statusMessage);
@@ -30,7 +30,8 @@ const EditEmployee = (props) => {
         };
         fetchData();
       };
-
+      
+      console.log(props.employeeStaffing,"-------")
       
       return (
         <Box p={2} width="500px" textAlign="left" role="presentation">
@@ -41,15 +42,15 @@ const EditEmployee = (props) => {
               <label name="END DATE">END DATE</label>
               <input
                 type="date"
-                {...register("employee", { required: true })}
+                {...register("employee", { required: true,value:props.employeeStaffing })}
                 htmlFor="END DATE"
               />
             </div>
           </div>
-          <Button onClick={onSubmit}>Edit</Button>
+          <Button onClick={onSubmit} style={{margin:"1rem", display:"flex"}}>Edit</Button>
         </div>
       </form>
-      <Button onClick={() => props.fun(false)} style={{margin:5}}>Cancel</Button>
+      <Button onClick={() => props.fun(false)} style={{margin:"1rem", display:"flex"}}>Cancel</Button>
     </Box>
       );
 };

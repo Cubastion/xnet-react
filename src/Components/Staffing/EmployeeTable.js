@@ -41,23 +41,23 @@ const EmployeeTable=() =>{
             } catch(error) {
                 console.log("error", error);
             }
-            console.log(employeeStaffing,"---")
             console.log(client);
-               };
+        };
         fetchData();
     },[pageNumber, addRefresh, editRefresh]);
-
+    
     const handleChangePage=(event,newPage) => {
         setPageNumber(newPage);
     };
-
+    
     let onSelectEmployee=(x) => {
         setEmployee(x);
         setAddEmployee(x);
         setEditEmployee(x);
     };
     console.log(employeeStaffing,"---")
-
+    
+    console.log(employeeStaffing,"---")
     return(
         <>
         <div>
@@ -74,22 +74,13 @@ const EmployeeTable=() =>{
                 open={editEmployeeForm}
                 onClose={() => setEditEmployeeForm(false)}
                 varient={"temporary"}>
-                <EditEmployee fun={setEditEmployeeForm} refresh={setEditRefresh} />
+                <EditEmployee fun={setEditEmployeeForm} refresh={setEditRefresh} employeeStaffing={employeeStaffing} />
 
                 </Drawer>
-                <Button onClick={() => setEditEmployeeForm(true)}>
+                <Button onClick={() => setEditEmployeeForm(true)} >
                     Edit
                 </Button>
-                <Drawer anchor="right"
-                open={searchEmployeeForm}
-                onClose={() => setSearchEmployeeForm(false)}
-                varient={"temporary"}>
-                <SearchEmployee  />
-
-                </Drawer>
-                <Button onClick={() => setSearchEmployeeForm(true)}>
-                    Search
-                </Button>
+                
             </div>
             
             <h4>Employees</h4>
@@ -107,9 +98,9 @@ const EmployeeTable=() =>{
                     </Table.Row>
                 </Table.Header>
                 <Table.Body>
-                    {employeeStaffing &&
-                        employeeStaffing.map((x) => (
-                            <Table.Row onClick={() => onSelectEmployee(x)} key={x.Id} style={ employeeStaffing.Id=== x.Id?{backgroundColor:"lightGrey"}:{}}   >
+                    {client &&
+                        client.map((x) => (
+                            <Table.Row onClick={() => onSelectEmployee(x)} key={x.Id} style={ client.Id=== x.Id?{backgroundColor:"lightGrey"}:{}}   >
                             
                                 <TableCell >
                                     {x.employee?.employee}

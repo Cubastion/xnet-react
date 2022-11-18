@@ -42,7 +42,7 @@ const AddClientDetails = (props) => {
             <div style={{'margin':'1rem', 'display':'flex','flexDirection':'column'}}>
               <label name="TITLE">TITLE</label>
               <select 
-              {...register("title", {})}
+              {...register("title",)}
                  htmlFor="TITLE">
                 <option value="">Select</option>
                 <option value="Mr.">Mr.</option>
