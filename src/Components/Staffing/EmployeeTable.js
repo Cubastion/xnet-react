@@ -12,8 +12,6 @@ import SearchEmployee from "./StaffingForm/SearchEmployee";
 const EmployeeTable=() =>{
     const[employee, setEmployee] = useState([]);
     const[employeeStaffing, setEmployeeStaffing] = useState([]);
-    const[searchEmployee, setSearchEmployee] = useState(false);
-    const[searchEmployeeForm, setSearchEmployeeForm]= useState(false);
     const[addEmployee, setAddEmployee] = useState(false);
     const[addEmployeeForm,setAddEmployeeForm] = useState(false);
     const[addRefresh,setAddRefresh] = useState(false);
@@ -55,7 +53,7 @@ const EmployeeTable=() =>{
         setAddEmployee(x);
         setEditEmployee(x);
     };
-    console.log(employeeStaffing,"---")
+    console.log(addEmployee,"---")
     
     console.log(employeeStaffing,"---")
     return(
@@ -100,7 +98,7 @@ const EmployeeTable=() =>{
                 <Table.Body>
                     {client &&
                         client.map((x) => (
-                            <Table.Row onClick={() => onSelectEmployee(x)} key={x.Id} style={ client.Id=== x.Id?{backgroundColor:"lightGrey"}:{}}   >
+                            <Table.Row onClick={() => onSelectEmployee(x)} key={x.Id} style={ addEmployee.Id=== x.Id?{backgroundColor:"lightGrey"}:{}}   >
                             
                                 <TableCell >
                                     {x.employee?.employee}

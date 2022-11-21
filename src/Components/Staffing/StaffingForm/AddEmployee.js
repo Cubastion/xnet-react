@@ -180,7 +180,7 @@ const projectOptions = async(id) => {
             <div style={{'margin':'1rem', 'display':'flex','flexDirection':'column'}}>
               <label name="STAFFING(%)">STAFFING(%)</label>
               <input
-                type="tel"
+                value="100"
                 {...register("staffing")} 
                 htmlFor="STAFFING(%)"
               />

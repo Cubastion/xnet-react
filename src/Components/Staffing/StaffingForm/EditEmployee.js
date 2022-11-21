@@ -15,7 +15,7 @@ const EditEmployee = (props) => {
         const fetchData = async () => {
           try {
             let url =
-              `https://devxnet.cubastion.net/api/v1/employeeStaffing/updateEmployeeStaffing?id=${props.employeeStaffing}`;
+              `https://devxnet.cubastion.net/api/v1/employeeStaffing/updateEmployeeStaffing?id=${props?.addEmployee?.Id}`;
             const response = await fetch(url, tokenPutRequestOption(data));
             const json = await response.json();
             console.log(json, "----------------->");
@@ -42,7 +42,8 @@ const EditEmployee = (props) => {
               <label name="END DATE">END DATE</label>
               <input
                 type="date"
-                {...register("employee", { required: true,value:props.employeeStaffing })}
+                {...register("endDate", { required: true })}
+                defaultValue={props?.employeeStaffing?.endDate}
                 htmlFor="END DATE"
               />
             </div>
