@@ -6,9 +6,11 @@ import UpdateIRNForm from "./Detailed Forms/UpdateIRNForm";
 import { Id } from "./DetailedInvoice";
 import { RefreshAttachmenstData } from "./DetailedInvoice";
 import { POId } from "./DetailedInvoice";
+import { CurrentInvoice } from "./DetailedInvoice";
 //https://devxnet.cubastion.net/api/v1/invoicesItems/deleteAllInvoiceItemsByINId?id=xehz42u9tq62a7h
 const Banner = () => {
   const id = useContext(Id);
+  const [invoice, setInvoice] = useContext(CurrentInvoice)
   const [data, setData] = useState("");
   const [cancellationForm, setCancellationForm] = useState(false);
   const [updateIRNForm, setUpdateIRNForm] = useState(false);
@@ -24,6 +26,7 @@ const Banner = () => {
         const json = await response.json();
         console.log(json.data);
         setData(json.data);
+        setInvoice(json.data)
       } catch (error) {
         console.log("error", error);
       }
@@ -39,6 +42,7 @@ const Banner = () => {
         const json = await response.json();
         console.log(json.data);
         setData(json.data);
+        setInvoice(json.data)
       } catch (error) {
         console.log("error", error);
       }
@@ -154,9 +158,9 @@ const Banner = () => {
         style={{ width: "100%", backgroundColor: "RGB(235 235 235)" }}
       >
         <div style={{ display: "flex", flexDirection: "column" }}>
-          <div style={{ float: "left" }} className="bank-name">
+          <div style={{ float: "left",maxWidth:'340px' }} className="bank-name">
             <span
-              style={{ float: "left", fontSize: "20px", marginLeft: "1rem" }}
+              style={{ float: "left", fontSize: "20px"}}
             >
               {data?.client?.name + "-" + data?.project?.name}
             </span>

@@ -2,13 +2,17 @@ import React, { useContext, useEffect, useState } from "react";
 import { tokenRequestOption } from "../../../Helpers/misellaneous";
 import { Id } from "../DetailedInvoice";
 import { Table } from "semantic-ui-react";
-import { POId } from "../DetailedInvoice";
+import { POId, CurrentInvoice } from "../DetailedInvoice";
 import { RefreshAttachmenstData } from "../DetailedInvoice";
+import { Button, Dialog } from "@mui/material";
+// https://devxnet.cubastion.net/api/v1/POItems/findPOItemsBasedOnQuantity?id=4sq6taotr3b51b4
 const InvoiceItemsTable = () => {
   const [selectPO, setSelectPO] = useContext(POId);
+  const [invoice] = useContext(CurrentInvoice);
   const id = useContext(Id);
   const [tabelData, setTableData] = useState("");
-  const [refresh]  = useContext(RefreshAttachmenstData)
+  const [addItem, setAddItem] = useState(false);
+  const [refresh] = useContext(RefreshAttachmenstData);
   useEffect(() => {
     var url = `https://devxnet.cubastion.net/api/v1/invoicesItems/findByInvoiceId?id=${id}`;
     const fetchData = async () => {
@@ -39,6 +43,16 @@ const InvoiceItemsTable = () => {
   };
   return (
     <>
+      <Dialog open={addItem}>this is dialog</Dialog>
+      {invoice.status === "New" && <div style={{ float: "right", margin: "1rem" }}>
+        <Button onClick={() => setAddItem(true)} variant="contained">
+          Add
+        </Button>
+        &nbsp;
+        <Button variant="contained">Edit</Button>
+        &nbsp;
+        <Button variant="contained">Delete</Button>
+      </div>}
       <Table celled selectable>
         <Table.Header>
           <Table.Row>
